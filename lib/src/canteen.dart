@@ -281,9 +281,9 @@ class Canteen {
     if (url.contains('http://')) {
       url = url.replaceAll('http://', '');
     }
-    if (url.endsWith("/")) {
+    if (url.endsWith('/')) {
       url = url.substring(0, url.length - 1);
-    
+    }
     if (url.contains('@')) {
       url = url.substring(url.indexOf('@') + 1);
     }
