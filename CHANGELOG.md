@@ -1,3 +1,8 @@
+## 4.1.1
+
+- Opravena chyba, kdy např. adresa https://testing.autojidelna.cz/testing se automaticky přepsala na https://testing.autojidelna.cz.
+- Tato aktualizace tedy povoluje používat jakoukoliv adresu i s cestou.
+
 ## 4.1.0
 
 - Přidány toJson a fromJson metody
