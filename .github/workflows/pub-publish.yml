@@ -68,16 +68,18 @@ jobs:
         run: dart test
 
       # Testing pro obedy.ss-stavebnikolin.cz
-      - name: Credentials pro obedy.ss-stavebnikolin.cz
-        run: |
-          echo "URL= 'obedy.ss-stavebnikolin.cz'" > .env
-          echo "USER= '${{ secrets.USER3 }}'" >> .env
-          echo "PASS= '${{ secrets.PASS3 }}'" >> .env
+      # REASON: updated to a newer version (iCanteen 2.20.13)
+      # - name: Credentials pro obedy.ss-stavebnikolin.cz
+      #   run: |
+      #     echo "URL= 'obedy.ss-stavebnikolin.cz'" > .env
+      #     echo "USER= '${{ secrets.USER3 }}'" >> .env
+      #     echo "PASS= '${{ secrets.PASS3 }}'" >> .env
 
-      - name: Test pro obedy.ss-stavebnikolin.cz
-        run: dart test
+      # - name: Test pro obedy.ss-stavebnikolin.cz
+      #   run: dart test
 
       # Testing pro jidelna.cza-hu.cz
+      # REASON: Presumed to be wrong credentials on our side
       #- name: Credentials pro jidelna.cza-hu.cz
       #  run: |
       #    echo "URL= 'jidelna.cza-hu.cz'" > .env

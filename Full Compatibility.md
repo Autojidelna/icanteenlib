@@ -127,41 +127,41 @@
 
 ## SOŠ stavební a SOU stavební Kolín
 
-- Login ✅
-- Získej uživatele ✅
-  - kredit ✅
-  - jméno ✅
-  - Příjmení ✅
-  - Kategorie ✅
-  - Účet pro platby ✅
-  - Variabilní symbol ✅
-  - specifický symbol ➖
-  - Uživatelské jméno ✅
-- Jídelníček pro den ✅
-  - správný počet jídel ✅
-  - jídlo ✅
-    - název ✅
-    - cena ✅
-    - varianta ✅
-    - objednáno ✅
-    - lze objednat ✅
-    - na burze ➖
-    - alergeny ➖
-      - kódy➖
-      - podrobnosti➖
-      - název➖
-    - rozdělení na kategorie ✅
-    - blokováno (vypršela platnost) ✅
+- Login ❌
+- Získej uživatele ❌
+  - kredit ❌
+  - jméno ❌
+  - Příjmení ❌
+  - Kategorie ❌
+  - Účet pro platby ❌
+  - Variabilní symbol ❌
+  - specifický symbol ❌
+  - Uživatelské jméno ❌
+- Jídelníček pro den ❌
+  - správný počet jídel ❌
+  - jídlo ❌
+    - název ❌
+    - cena ❌
+    - varianta ❌
+    - objednáno ❌
+    - lze objednat ❌
+    - na burze ❌
+    - alergeny ❌
+      - kódy❌
+      - podrobnosti❌
+      - název❌
+    - rozdělení na kategorie ❌
+    - blokováno (vypršela platnost) ❌
 - Jídelníček pro měsíc ❌
-- Objednávání ✅
-  - funguje objednávání✅
-  - funguje zrušení✅
-- Burza➖
-  - získání burzy➖
-  - Objednávání z burzy➖
-  - vložení jídla na burzu➖
-  - zrušit vložení jídla na burzu➖
-- Výdejny (jiné lokace) ✅
+- Objednávání ❌
+  - funguje objednávání❌
+  - funguje zrušení❌
+- Burza❌
+  - získání burzy❌
+  - Objednávání z burzy❌
+  - vložení jídla na burzu❌
+  - zrušit vložení jídla na burzu❌
+- Výdejny (jiné lokace) ❌
 
 ## Česká zemědělská akademie v Humpolci
 
