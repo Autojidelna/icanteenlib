@@ -11,7 +11,7 @@ Future<Jidelnicek>? jidelnicek;
 Future<Jidelnicek>? druhaVydejnaJidelnicek;
 Future<List<Jidelnicek>>? jidelnicekMesic;
 Future<Uzivatel>? uzivatel;
-DateTime date = DateTime(2024, 3, 26);
+DateTime date = DateTime(2025, 2, 10);
 Future<Uzivatel> ziskatUzivatele() async {
   uzivatel ??= _ziskatUzivatele();
   return uzivatel!;
