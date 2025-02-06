@@ -1,54 +1,5 @@
 import 'package:canteenlib/canteenlib.dart';
 
-class JidloKategorizovano {
-  String? polevka;
-  String? hlavniJidlo;
-  String? salatovyBar;
-  String? piti;
-  String? ostatni;
-
-  JidloKategorizovano({
-    this.polevka,
-    this.hlavniJidlo,
-    this.salatovyBar,
-    this.piti,
-    this.ostatni,
-  });
-
-  /// Převést na JSON
-  Map<String, dynamic> toJson() => {
-        'polevka': polevka,
-        'hlavniJidlo': hlavniJidlo,
-        'salatovyBar': salatovyBar,
-        'piti': piti,
-        'ostatni': ostatni,
-      };
-
-  /// Převést z JSON
-  factory JidloKategorizovano.fromJson(Map<String, dynamic> json) => JidloKategorizovano(
-        polevka: json['polevka'],
-        hlavniJidlo: json['hlavniJidlo'],
-        salatovyBar: json['salatovyBar'],
-        piti: json['piti'],
-        ostatni: json['ostatni'],
-      );
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is JidloKategorizovano &&
-        other.polevka == polevka &&
-        other.hlavniJidlo == hlavniJidlo &&
-        other.salatovyBar == salatovyBar &&
-        other.piti == piti &&
-        other.ostatni == ostatni;
-  }
-
-  @override
-  int get hashCode => polevka.hashCode ^ hlavniJidlo.hashCode ^ salatovyBar.hashCode ^ piti.hashCode ^ ostatni.hashCode;
-}
-
 /// Reprezentuje jedno jídlo z jídelníčku
 class Jidlo {
   /// Název jídla
