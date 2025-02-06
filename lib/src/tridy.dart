@@ -127,42 +127,6 @@ class Jidlo {
   }
 }
 
-/// Reprezentuje cizí jídlo na burze
-class Burza {
-  /// Den, který je jídlo vydáváno
-  DateTime den;
-
-  /// URL pro objednání
-  final String? url;
-
-  /// Název jídla
-  String nazev;
-
-  /// Varianta
-  String? varianta;
-
-  /// Počet kusů tohoto jídla dostupného na burze
-  int pocet;
-
-  Burza({
-    required this.den,
-    required this.url,
-    required this.nazev,
-    required this.pocet,
-    this.varianta,
-  });
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Burza && other.den == den && other.url == url && other.nazev == nazev && other.varianta == varianta && other.pocet == pocet;
-  }
-
-  @override
-  int get hashCode => den.hashCode ^ url.hashCode ^ nazev.hashCode ^ varianta.hashCode ^ pocet.hashCode;
-}
-
 /// Reprezentuje jídelníček pro jeden den
 class Jidelnicek {
   /// Den, pro který je jídelníček zveřejněn
