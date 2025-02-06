@@ -29,14 +29,14 @@ _$JidloImpl _$$JidloImplFromJson(Map<String, dynamic> json) => _$JidloImpl(
 Map<String, dynamic> _$$JidloImplToJson(_$JidloImpl instance) =>
     <String, dynamic>{
       'nazev': instance.nazev,
-      'kategorizovano': instance.kategorizovano,
+      'kategorizovano': instance.kategorizovano?.toJson(),
       'objednano': instance.objednano,
       'varianta': instance.varianta,
       'cena': instance.cena,
       'lzeObjednat': instance.lzeObjednat,
       'naBurze': instance.naBurze,
       'den': instance.den.toIso8601String(),
-      'alergeny': instance.alergeny,
+      'alergeny': instance.alergeny.map((e) => e.toJson()).toList(),
       'orderUrl': instance.orderUrl,
       'burzaUrl': instance.burzaUrl,
     };

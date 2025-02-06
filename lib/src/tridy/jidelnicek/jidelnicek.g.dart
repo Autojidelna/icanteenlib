@@ -21,6 +21,6 @@ _$JidelnicekImpl _$$JidelnicekImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$JidelnicekImplToJson(_$JidelnicekImpl instance) =>
     <String, dynamic>{
       'den': instance.den.toIso8601String(),
-      'jidla': instance.jidla,
+      'jidla': instance.jidla.map((e) => e.toJson()).toList(),
       'vydejny': instance.vydejny.map((k, e) => MapEntry(k.toString(), e)),
     };
