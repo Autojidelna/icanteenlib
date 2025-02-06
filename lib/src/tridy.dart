@@ -1,3 +1,5 @@
+import 'package:canteenlib/canteenlib.dart';
+
 class JidloKategorizovano {
   String? polevka;
   String? hlavniJidlo;
@@ -172,43 +174,6 @@ class Jidlo {
   int _generovatAlergenyListHashCode(List<Alergen> list) {
     return list.fold(0, (prev, element) => prev ^ element.hashCode);
   }
-}
-
-/// Popisuje alergen v jídelníčku
-class Alergen {
-  final int? kod;
-  final String nazev;
-  final String? popis;
-
-  const Alergen({
-    this.kod,
-    required this.nazev,
-    this.popis,
-  });
-
-  /// Převést na JSON
-  Map<String, dynamic> toJson() => {
-        'kod': kod,
-        'nazev': nazev,
-        'popis': popis,
-      };
-
-  /// Převést z JSON
-  factory Alergen.fromJson(Map<String, dynamic> json) => Alergen(
-        kod: json['kod'],
-        nazev: json['nazev'],
-        popis: json['popis'],
-      );
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Alergen && other.kod == kod && other.nazev == nazev && other.popis == popis;
-  }
-
-  @override
-  int get hashCode => kod.hashCode ^ nazev.hashCode ^ popis.hashCode;
 }
 
 /// Reprezentuje cizí jídlo na burze
