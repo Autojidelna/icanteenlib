@@ -1,3 +1,7 @@
+## 4.2.0
+
+- Knihovna nyní používá [freezed](https://pub.dev/packages/freezed) pro generování `toJson` a `fromJson` metod
+
 ## 4.1.1
 
 - Opravena chyba, kdy např. adresa https://testing.autojidelna.cz/testing se automaticky přepsala na https://testing.autojidelna.cz.
