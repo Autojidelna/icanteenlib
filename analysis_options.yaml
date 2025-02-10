@@ -18,10 +18,15 @@ include: package:lints/recommended.yaml
 #   rules:
 #     - camel_case_types
 
-# analyzer:
-#   exclude:
-#     - path/to/excluded/files/**
-
+analyzer:
+  exclude:
+    - lib/**.g.dart
+    - lib/**.freezed.dart
+    - lib/**.gr.dart
+    - lib/**/*output/**.dart
+  errors:
+    invalid_annotation_target: ignore
+    avoid_dynamic_calls: ignore
 # For more information about the core and recommended set of lints, see
 # https://dart.dev/go/core-lints
 
