@@ -4,7 +4,7 @@ part 'jidlo_kategorizovano.freezed.dart';
 part 'jidlo_kategorizovano.g.dart';
 
 @freezed
-class JidloKategorizovano with _$JidloKategorizovano {
+sealed class JidloKategorizovano with _$JidloKategorizovano {
   const factory JidloKategorizovano({
     @JsonKey(name: 'polevka') String? polevka,
     @JsonKey(name: 'hlavniJidlo') String? hlavniJidlo,

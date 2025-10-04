@@ -1,6 +1,6 @@
 # O knihovně
 
-Experimentální **neoficiální** webscrape knihovna pro komunikaci se systémem [iCanteen](https://www.z-ware.cz/internetove-objednavky). Tento repozitář je nástupcem [hernik/canteenlib](https://git.mnau.xyz/hernik/canteenlib).
+Experimentální **neoficiální** webscrape knihovna pro komunikaci se systémem [iCanteen](https://www.z-ware.cz/internetove-objednavky). Tento repozitář je fork [App-Elevate/canteenlib](hhttps://github.com/App-Elevate/canteenlib).
 
 ## Funkční funkce(\*)
 
@@ -9,17 +9,15 @@ Experimentální **neoficiální** webscrape knihovna pro komunikaci se systéme
 - Nabídnutí jídla do burzy / zrušení
 - Získání a objednání cizího jídla z burzy
 
-[Příklad používání](https://github.com/App-Elevate/AUT.canteenlib/blob/main/example/test_everything_example.dart)
+[Příklad používání](https://github.com/Autojidelna/icanteenlib/blob/main/example/test_everything_example.dart)
 
-_\* Knihovna nemusí fungovat na všech instancích systému iCanteen, proto žádám každého, kdo může a je uživatelem iCanteen, aby otestoval funkčnost této knihovny a případné problémy [nahlásil na github issues](https://github.com/tpkowastaken/icanteenlib/issues/new?assignees=tpkowastaken&labels=kompatibilita&projects=&template=hl--en--kompatibility.md&title=Kompatibilita%3A+)_
+_\* Knihovna nemusí fungovat na všech instancích systému iCanteen, proto žádám každého, kdo může a je uživatelem iCanteen, aby otestoval funkčnost této knihovny a případné problémy [nahlásil na github issues](https://github.com/Autojidelna/icanteenlib/issues/new?assignees=tpkowastaken&labels=kompatibilita&projects=&template=hl--en--kompatibility.md&title=Kompatibilita%3A+)_
 
-### [Otestované instance iCanteen](https://github.com/App-Elevate/AUT.canteenlib/blob/main/COMPATIBILITY.md)
+### [Otestované instance iCanteen](https://github.com/Autojidelna/icanteenlib/blob/main/COMPATIBILITY.md)
 
 ## TODO
 
-```cz
-přepsat na systém parsování html
-```
+- přepsat na systém parsování html
 
 ## Licence
 

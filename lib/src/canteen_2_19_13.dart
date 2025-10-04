@@ -23,7 +23,7 @@ SOFTWARE.
 */
 
 import 'package:http/http.dart' as http;
-import 'package:canteenlib/canteenlib.dart';
+import 'package:icanteenlib/canteenlib.dart';
 
 /// Reprezentuje kantýnu verze 2.19.13
 ///

@@ -25,7 +25,7 @@ SOFTWARE.
   testováno na webu http://obedy.zs-mat5.cz/
 */
 
-import 'package:canteenlib/canteenlib.dart';
+import 'package:icanteenlib/canteenlib.dart';
 import 'package:http/http.dart' as http;
 
 /// Reprezentuje kantýnu verze 2.18.19

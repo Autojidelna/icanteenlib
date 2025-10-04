@@ -1,4 +1,4 @@
-import 'package:canteenlib/canteenlib.dart';
+import 'package:icanteenlib/canteenlib.dart';
 
 const String url = "kantyna.neco.cz";
 const String username = "uzivatel";

@@ -5,7 +5,7 @@ part 'uzivatel.g.dart';
 
 /// Reprezentuje informace o přihlášeném uživateli
 @freezed
-class Uzivatel with _$Uzivatel {
+sealed class Uzivatel with _$Uzivatel {
   const factory Uzivatel({
     /// Uživatelské jméno
     @JsonKey(name: 'uzivatelskeJmeno') String? uzivatelskeJmeno,

@@ -1,4 +1,4 @@
-import 'package:canteenlib/canteenlib.dart';
+import 'package:icanteenlib/canteenlib.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'jidlo.freezed.dart';
@@ -6,7 +6,7 @@ part 'jidlo.g.dart';
 
 /// Reprezentuje jedno jídlo z jídelníčku
 @freezed
-class Jidlo with _$Jidlo {
+sealed class Jidlo with _$Jidlo {
   const factory Jidlo({
     /// Název jídla
     @JsonKey(name: 'nazev') required String nazev,

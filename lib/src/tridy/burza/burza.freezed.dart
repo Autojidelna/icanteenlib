@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,280 +9,285 @@ part of 'burza.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Burza _$BurzaFromJson(Map<String, dynamic> json) {
-  return _Burza.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Burza {
-  /// Den, který je jídlo vydáváno
-  @JsonKey(name: 'den')
-  DateTime get den => throw _privateConstructorUsedError;
 
-  /// URL pro objednání
-  @JsonKey(name: 'url')
-  String? get url => throw _privateConstructorUsedError;
-
-  /// Název jídla
-  @JsonKey(name: 'nazev')
-  String get nazev => throw _privateConstructorUsedError;
-
-  /// Počet kusů tohoto jídla dostupného na burze
-  @JsonKey(name: 'pocet')
-  int get pocet => throw _privateConstructorUsedError;
-
-  /// Varianta
-  @JsonKey(name: 'varianta')
-  String? get varianta => throw _privateConstructorUsedError;
+/// Den, který je jídlo vydáváno
+@JsonKey(name: 'den') DateTime get den;/// URL pro objednání
+@JsonKey(name: 'url') String? get url;/// Název jídla
+@JsonKey(name: 'nazev') String get nazev;/// Počet kusů tohoto jídla dostupného na burze
+@JsonKey(name: 'pocet') int get pocet;/// Varianta
+@JsonKey(name: 'varianta') String? get varianta;
+/// Create a copy of Burza
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$BurzaCopyWith<Burza> get copyWith => _$BurzaCopyWithImpl<Burza>(this as Burza, _$identity);
 
   /// Serializes this Burza to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of Burza
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $BurzaCopyWith<Burza> get copyWith => throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Burza&&(identical(other.den, den) || other.den == den)&&(identical(other.url, url) || other.url == url)&&(identical(other.nazev, nazev) || other.nazev == nazev)&&(identical(other.pocet, pocet) || other.pocet == pocet)&&(identical(other.varianta, varianta) || other.varianta == varianta));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,den,url,nazev,pocet,varianta);
+
+@override
+String toString() {
+  return 'Burza(den: $den, url: $url, nazev: $nazev, pocet: $pocet, varianta: $varianta)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $BurzaCopyWith<$Res> {
-  factory $BurzaCopyWith(Burza value, $Res Function(Burza) then) =
-      _$BurzaCopyWithImpl<$Res, Burza>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'den') DateTime den,
-      @JsonKey(name: 'url') String? url,
-      @JsonKey(name: 'nazev') String nazev,
-      @JsonKey(name: 'pocet') int pocet,
-      @JsonKey(name: 'varianta') String? varianta});
-}
+abstract mixin class $BurzaCopyWith<$Res>  {
+  factory $BurzaCopyWith(Burza value, $Res Function(Burza) _then) = _$BurzaCopyWithImpl;
+@useResult
+$Res call({
+@JsonKey(name: 'den') DateTime den,@JsonKey(name: 'url') String? url,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'pocet') int pocet,@JsonKey(name: 'varianta') String? varianta
+});
 
+
+
+
+}
 /// @nodoc
-class _$BurzaCopyWithImpl<$Res, $Val extends Burza>
+class _$BurzaCopyWithImpl<$Res>
     implements $BurzaCopyWith<$Res> {
-  _$BurzaCopyWithImpl(this._value, this._then);
+  _$BurzaCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final Burza _self;
+  final $Res Function(Burza) _then;
 
-  /// Create a copy of Burza
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? den = null,
-    Object? url = freezed,
-    Object? nazev = null,
-    Object? pocet = null,
-    Object? varianta = freezed,
-  }) {
-    return _then(_value.copyWith(
-      den: null == den
-          ? _value.den
-          : den // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      url: freezed == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nazev: null == nazev
-          ? _value.nazev
-          : nazev // ignore: cast_nullable_to_non_nullable
-              as String,
-      pocet: null == pocet
-          ? _value.pocet
-          : pocet // ignore: cast_nullable_to_non_nullable
-              as int,
-      varianta: freezed == varianta
-          ? _value.varianta
-          : varianta // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
+/// Create a copy of Burza
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? den = null,Object? url = freezed,Object? nazev = null,Object? pocet = null,Object? varianta = freezed,}) {
+  return _then(_self.copyWith(
+den: null == den ? _self.den : den // ignore: cast_nullable_to_non_nullable
+as DateTime,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String?,nazev: null == nazev ? _self.nazev : nazev // ignore: cast_nullable_to_non_nullable
+as String,pocet: null == pocet ? _self.pocet : pocet // ignore: cast_nullable_to_non_nullable
+as int,varianta: freezed == varianta ? _self.varianta : varianta // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
 }
 
-/// @nodoc
-abstract class _$$BurzaImplCopyWith<$Res> implements $BurzaCopyWith<$Res> {
-  factory _$$BurzaImplCopyWith(
-          _$BurzaImpl value, $Res Function(_$BurzaImpl) then) =
-      __$$BurzaImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'den') DateTime den,
-      @JsonKey(name: 'url') String? url,
-      @JsonKey(name: 'nazev') String nazev,
-      @JsonKey(name: 'pocet') int pocet,
-      @JsonKey(name: 'varianta') String? varianta});
 }
 
-/// @nodoc
-class __$$BurzaImplCopyWithImpl<$Res>
-    extends _$BurzaCopyWithImpl<$Res, _$BurzaImpl>
-    implements _$$BurzaImplCopyWith<$Res> {
-  __$$BurzaImplCopyWithImpl(
-      _$BurzaImpl _value, $Res Function(_$BurzaImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of Burza
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? den = null,
-    Object? url = freezed,
-    Object? nazev = null,
-    Object? pocet = null,
-    Object? varianta = freezed,
-  }) {
-    return _then(_$BurzaImpl(
-      den: null == den
-          ? _value.den
-          : den // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      url: freezed == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nazev: null == nazev
-          ? _value.nazev
-          : nazev // ignore: cast_nullable_to_non_nullable
-              as String,
-      pocet: null == pocet
-          ? _value.pocet
-          : pocet // ignore: cast_nullable_to_non_nullable
-              as int,
-      varianta: freezed == varianta
-          ? _value.varianta
-          : varianta // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
+/// Adds pattern-matching-related methods to [Burza].
+extension BurzaPatterns on Burza {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Burza value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Burza() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Burza value)  $default,){
+final _that = this;
+switch (_that) {
+case _Burza():
+return $default(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Burza value)?  $default,){
+final _that = this;
+switch (_that) {
+case _Burza() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'den')  DateTime den, @JsonKey(name: 'url')  String? url, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'pocet')  int pocet, @JsonKey(name: 'varianta')  String? varianta)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Burza() when $default != null:
+return $default(_that.den,_that.url,_that.nazev,_that.pocet,_that.varianta);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'den')  DateTime den, @JsonKey(name: 'url')  String? url, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'pocet')  int pocet, @JsonKey(name: 'varianta')  String? varianta)  $default,) {final _that = this;
+switch (_that) {
+case _Burza():
+return $default(_that.den,_that.url,_that.nazev,_that.pocet,_that.varianta);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'den')  DateTime den, @JsonKey(name: 'url')  String? url, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'pocet')  int pocet, @JsonKey(name: 'varianta')  String? varianta)?  $default,) {final _that = this;
+switch (_that) {
+case _Burza() when $default != null:
+return $default(_that.den,_that.url,_that.nazev,_that.pocet,_that.varianta);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$BurzaImpl implements _Burza {
-  const _$BurzaImpl(
-      {@JsonKey(name: 'den') required this.den,
-      @JsonKey(name: 'url') required this.url,
-      @JsonKey(name: 'nazev') required this.nazev,
-      @JsonKey(name: 'pocet') required this.pocet,
-      @JsonKey(name: 'varianta') this.varianta});
 
-  factory _$BurzaImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BurzaImplFromJson(json);
+class _Burza implements Burza {
+  const _Burza({@JsonKey(name: 'den') required this.den, @JsonKey(name: 'url') required this.url, @JsonKey(name: 'nazev') required this.nazev, @JsonKey(name: 'pocet') required this.pocet, @JsonKey(name: 'varianta') this.varianta});
+  factory _Burza.fromJson(Map<String, dynamic> json) => _$BurzaFromJson(json);
 
-  /// Den, který je jídlo vydáváno
-  @override
-  @JsonKey(name: 'den')
-  final DateTime den;
+/// Den, který je jídlo vydáváno
+@override@JsonKey(name: 'den') final  DateTime den;
+/// URL pro objednání
+@override@JsonKey(name: 'url') final  String? url;
+/// Název jídla
+@override@JsonKey(name: 'nazev') final  String nazev;
+/// Počet kusů tohoto jídla dostupného na burze
+@override@JsonKey(name: 'pocet') final  int pocet;
+/// Varianta
+@override@JsonKey(name: 'varianta') final  String? varianta;
 
-  /// URL pro objednání
-  @override
-  @JsonKey(name: 'url')
-  final String? url;
+/// Create a copy of Burza
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$BurzaCopyWith<_Burza> get copyWith => __$BurzaCopyWithImpl<_Burza>(this, _$identity);
 
-  /// Název jídla
-  @override
-  @JsonKey(name: 'nazev')
-  final String nazev;
-
-  /// Počet kusů tohoto jídla dostupného na burze
-  @override
-  @JsonKey(name: 'pocet')
-  final int pocet;
-
-  /// Varianta
-  @override
-  @JsonKey(name: 'varianta')
-  final String? varianta;
-
-  @override
-  String toString() {
-    return 'Burza(den: $den, url: $url, nazev: $nazev, pocet: $pocet, varianta: $varianta)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$BurzaImpl &&
-            (identical(other.den, den) || other.den == den) &&
-            (identical(other.url, url) || other.url == url) &&
-            (identical(other.nazev, nazev) || other.nazev == nazev) &&
-            (identical(other.pocet, pocet) || other.pocet == pocet) &&
-            (identical(other.varianta, varianta) ||
-                other.varianta == varianta));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, den, url, nazev, pocet, varianta);
-
-  /// Create a copy of Burza
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$BurzaImplCopyWith<_$BurzaImpl> get copyWith =>
-      __$$BurzaImplCopyWithImpl<_$BurzaImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$BurzaImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$BurzaToJson(this, );
 }
 
-abstract class _Burza implements Burza {
-  const factory _Burza(
-      {@JsonKey(name: 'den') required final DateTime den,
-      @JsonKey(name: 'url') required final String? url,
-      @JsonKey(name: 'nazev') required final String nazev,
-      @JsonKey(name: 'pocet') required final int pocet,
-      @JsonKey(name: 'varianta') final String? varianta}) = _$BurzaImpl;
-
-  factory _Burza.fromJson(Map<String, dynamic> json) = _$BurzaImpl.fromJson;
-
-  /// Den, který je jídlo vydáváno
-  @override
-  @JsonKey(name: 'den')
-  DateTime get den;
-
-  /// URL pro objednání
-  @override
-  @JsonKey(name: 'url')
-  String? get url;
-
-  /// Název jídla
-  @override
-  @JsonKey(name: 'nazev')
-  String get nazev;
-
-  /// Počet kusů tohoto jídla dostupného na burze
-  @override
-  @JsonKey(name: 'pocet')
-  int get pocet;
-
-  /// Varianta
-  @override
-  @JsonKey(name: 'varianta')
-  String? get varianta;
-
-  /// Create a copy of Burza
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BurzaImplCopyWith<_$BurzaImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Burza&&(identical(other.den, den) || other.den == den)&&(identical(other.url, url) || other.url == url)&&(identical(other.nazev, nazev) || other.nazev == nazev)&&(identical(other.pocet, pocet) || other.pocet == pocet)&&(identical(other.varianta, varianta) || other.varianta == varianta));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,den,url,nazev,pocet,varianta);
+
+@override
+String toString() {
+  return 'Burza(den: $den, url: $url, nazev: $nazev, pocet: $pocet, varianta: $varianta)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$BurzaCopyWith<$Res> implements $BurzaCopyWith<$Res> {
+  factory _$BurzaCopyWith(_Burza value, $Res Function(_Burza) _then) = __$BurzaCopyWithImpl;
+@override @useResult
+$Res call({
+@JsonKey(name: 'den') DateTime den,@JsonKey(name: 'url') String? url,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'pocet') int pocet,@JsonKey(name: 'varianta') String? varianta
+});
+
+
+
+
+}
+/// @nodoc
+class __$BurzaCopyWithImpl<$Res>
+    implements _$BurzaCopyWith<$Res> {
+  __$BurzaCopyWithImpl(this._self, this._then);
+
+  final _Burza _self;
+  final $Res Function(_Burza) _then;
+
+/// Create a copy of Burza
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? den = null,Object? url = freezed,Object? nazev = null,Object? pocet = null,Object? varianta = freezed,}) {
+  return _then(_Burza(
+den: null == den ? _self.den : den // ignore: cast_nullable_to_non_nullable
+as DateTime,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String?,nazev: null == nazev ? _self.nazev : nazev // ignore: cast_nullable_to_non_nullable
+as String,pocet: null == pocet ? _self.pocet : pocet // ignore: cast_nullable_to_non_nullable
+as int,varianta: freezed == varianta ? _self.varianta : varianta // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
+
+// dart format on

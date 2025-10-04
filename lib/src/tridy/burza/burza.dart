@@ -5,7 +5,7 @@ part 'burza.g.dart';
 
 /// Reprezentuje cizí jídlo na burze
 @freezed
-class Burza with _$Burza {
+sealed class Burza with _$Burza {
   const factory Burza({
     /// Den, který je jídlo vydáváno
     @JsonKey(name: 'den') required DateTime den,

@@ -1,4 +1,4 @@
-import 'package:canteenlib/canteenlib.dart';
+import 'package:icanteenlib/canteenlib.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'jidelnicek.freezed.dart';
@@ -6,7 +6,7 @@ part 'jidelnicek.g.dart';
 
 /// Reprezentuje jídelníček pro jeden den
 @freezed
-class Jidelnicek with _$Jidelnicek {
+sealed class Jidelnicek with _$Jidelnicek {
   const factory Jidelnicek(
     /// Den, pro který je jídelníček zveřejněn
     @JsonKey(name: 'den') DateTime den,

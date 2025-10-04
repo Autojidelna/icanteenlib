@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,205 +9,269 @@ part of 'alergen.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Alergen _$AlergenFromJson(Map<String, dynamic> json) {
-  return _Alergen.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Alergen {
-  @JsonKey(name: 'kod')
-  int? get kod => throw _privateConstructorUsedError;
-  @JsonKey(name: 'nazev')
-  String get nazev => throw _privateConstructorUsedError;
-  @JsonKey(name: 'popis')
-  String? get popis => throw _privateConstructorUsedError;
+
+@JsonKey(name: 'kod') int? get kod;@JsonKey(name: 'nazev') String get nazev;@JsonKey(name: 'popis') String? get popis;
+/// Create a copy of Alergen
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AlergenCopyWith<Alergen> get copyWith => _$AlergenCopyWithImpl<Alergen>(this as Alergen, _$identity);
 
   /// Serializes this Alergen to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of Alergen
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $AlergenCopyWith<Alergen> get copyWith => throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Alergen&&(identical(other.kod, kod) || other.kod == kod)&&(identical(other.nazev, nazev) || other.nazev == nazev)&&(identical(other.popis, popis) || other.popis == popis));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,kod,nazev,popis);
+
+@override
+String toString() {
+  return 'Alergen(kod: $kod, nazev: $nazev, popis: $popis)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $AlergenCopyWith<$Res> {
-  factory $AlergenCopyWith(Alergen value, $Res Function(Alergen) then) =
-      _$AlergenCopyWithImpl<$Res, Alergen>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'kod') int? kod,
-      @JsonKey(name: 'nazev') String nazev,
-      @JsonKey(name: 'popis') String? popis});
-}
+abstract mixin class $AlergenCopyWith<$Res>  {
+  factory $AlergenCopyWith(Alergen value, $Res Function(Alergen) _then) = _$AlergenCopyWithImpl;
+@useResult
+$Res call({
+@JsonKey(name: 'kod') int? kod,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'popis') String? popis
+});
 
+
+
+
+}
 /// @nodoc
-class _$AlergenCopyWithImpl<$Res, $Val extends Alergen>
+class _$AlergenCopyWithImpl<$Res>
     implements $AlergenCopyWith<$Res> {
-  _$AlergenCopyWithImpl(this._value, this._then);
+  _$AlergenCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final Alergen _self;
+  final $Res Function(Alergen) _then;
 
-  /// Create a copy of Alergen
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? kod = freezed,
-    Object? nazev = null,
-    Object? popis = freezed,
-  }) {
-    return _then(_value.copyWith(
-      kod: freezed == kod
-          ? _value.kod
-          : kod // ignore: cast_nullable_to_non_nullable
-              as int?,
-      nazev: null == nazev
-          ? _value.nazev
-          : nazev // ignore: cast_nullable_to_non_nullable
-              as String,
-      popis: freezed == popis
-          ? _value.popis
-          : popis // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
+/// Create a copy of Alergen
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? kod = freezed,Object? nazev = null,Object? popis = freezed,}) {
+  return _then(_self.copyWith(
+kod: freezed == kod ? _self.kod : kod // ignore: cast_nullable_to_non_nullable
+as int?,nazev: null == nazev ? _self.nazev : nazev // ignore: cast_nullable_to_non_nullable
+as String,popis: freezed == popis ? _self.popis : popis // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
 }
 
-/// @nodoc
-abstract class _$$AlergenImplCopyWith<$Res> implements $AlergenCopyWith<$Res> {
-  factory _$$AlergenImplCopyWith(
-          _$AlergenImpl value, $Res Function(_$AlergenImpl) then) =
-      __$$AlergenImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'kod') int? kod,
-      @JsonKey(name: 'nazev') String nazev,
-      @JsonKey(name: 'popis') String? popis});
 }
 
-/// @nodoc
-class __$$AlergenImplCopyWithImpl<$Res>
-    extends _$AlergenCopyWithImpl<$Res, _$AlergenImpl>
-    implements _$$AlergenImplCopyWith<$Res> {
-  __$$AlergenImplCopyWithImpl(
-      _$AlergenImpl _value, $Res Function(_$AlergenImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of Alergen
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? kod = freezed,
-    Object? nazev = null,
-    Object? popis = freezed,
-  }) {
-    return _then(_$AlergenImpl(
-      kod: freezed == kod
-          ? _value.kod
-          : kod // ignore: cast_nullable_to_non_nullable
-              as int?,
-      nazev: null == nazev
-          ? _value.nazev
-          : nazev // ignore: cast_nullable_to_non_nullable
-              as String,
-      popis: freezed == popis
-          ? _value.popis
-          : popis // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
+/// Adds pattern-matching-related methods to [Alergen].
+extension AlergenPatterns on Alergen {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Alergen value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Alergen() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Alergen value)  $default,){
+final _that = this;
+switch (_that) {
+case _Alergen():
+return $default(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Alergen value)?  $default,){
+final _that = this;
+switch (_that) {
+case _Alergen() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'kod')  int? kod, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'popis')  String? popis)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Alergen() when $default != null:
+return $default(_that.kod,_that.nazev,_that.popis);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'kod')  int? kod, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'popis')  String? popis)  $default,) {final _that = this;
+switch (_that) {
+case _Alergen():
+return $default(_that.kod,_that.nazev,_that.popis);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'kod')  int? kod, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'popis')  String? popis)?  $default,) {final _that = this;
+switch (_that) {
+case _Alergen() when $default != null:
+return $default(_that.kod,_that.nazev,_that.popis);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$AlergenImpl implements _Alergen {
-  const _$AlergenImpl(
-      {@JsonKey(name: 'kod') this.kod,
-      @JsonKey(name: 'nazev') required this.nazev,
-      @JsonKey(name: 'popis') this.popis});
 
-  factory _$AlergenImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AlergenImplFromJson(json);
+class _Alergen implements Alergen {
+  const _Alergen({@JsonKey(name: 'kod') this.kod, @JsonKey(name: 'nazev') required this.nazev, @JsonKey(name: 'popis') this.popis});
+  factory _Alergen.fromJson(Map<String, dynamic> json) => _$AlergenFromJson(json);
 
-  @override
-  @JsonKey(name: 'kod')
-  final int? kod;
-  @override
-  @JsonKey(name: 'nazev')
-  final String nazev;
-  @override
-  @JsonKey(name: 'popis')
-  final String? popis;
+@override@JsonKey(name: 'kod') final  int? kod;
+@override@JsonKey(name: 'nazev') final  String nazev;
+@override@JsonKey(name: 'popis') final  String? popis;
 
-  @override
-  String toString() {
-    return 'Alergen(kod: $kod, nazev: $nazev, popis: $popis)';
-  }
+/// Create a copy of Alergen
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$AlergenCopyWith<_Alergen> get copyWith => __$AlergenCopyWithImpl<_Alergen>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$AlergenImpl &&
-            (identical(other.kod, kod) || other.kod == kod) &&
-            (identical(other.nazev, nazev) || other.nazev == nazev) &&
-            (identical(other.popis, popis) || other.popis == popis));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, kod, nazev, popis);
-
-  /// Create a copy of Alergen
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$AlergenImplCopyWith<_$AlergenImpl> get copyWith =>
-      __$$AlergenImplCopyWithImpl<_$AlergenImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$AlergenImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$AlergenToJson(this, );
 }
 
-abstract class _Alergen implements Alergen {
-  const factory _Alergen(
-      {@JsonKey(name: 'kod') final int? kod,
-      @JsonKey(name: 'nazev') required final String nazev,
-      @JsonKey(name: 'popis') final String? popis}) = _$AlergenImpl;
-
-  factory _Alergen.fromJson(Map<String, dynamic> json) = _$AlergenImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'kod')
-  int? get kod;
-  @override
-  @JsonKey(name: 'nazev')
-  String get nazev;
-  @override
-  @JsonKey(name: 'popis')
-  String? get popis;
-
-  /// Create a copy of Alergen
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AlergenImplCopyWith<_$AlergenImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Alergen&&(identical(other.kod, kod) || other.kod == kod)&&(identical(other.nazev, nazev) || other.nazev == nazev)&&(identical(other.popis, popis) || other.popis == popis));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,kod,nazev,popis);
+
+@override
+String toString() {
+  return 'Alergen(kod: $kod, nazev: $nazev, popis: $popis)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$AlergenCopyWith<$Res> implements $AlergenCopyWith<$Res> {
+  factory _$AlergenCopyWith(_Alergen value, $Res Function(_Alergen) _then) = __$AlergenCopyWithImpl;
+@override @useResult
+$Res call({
+@JsonKey(name: 'kod') int? kod,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'popis') String? popis
+});
+
+
+
+
+}
+/// @nodoc
+class __$AlergenCopyWithImpl<$Res>
+    implements _$AlergenCopyWith<$Res> {
+  __$AlergenCopyWithImpl(this._self, this._then);
+
+  final _Alergen _self;
+  final $Res Function(_Alergen) _then;
+
+/// Create a copy of Alergen
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? kod = freezed,Object? nazev = null,Object? popis = freezed,}) {
+  return _then(_Alergen(
+kod: freezed == kod ? _self.kod : kod // ignore: cast_nullable_to_non_nullable
+as int?,nazev: null == nazev ? _self.nazev : nazev // ignore: cast_nullable_to_non_nullable
+as String,popis: freezed == popis ? _self.popis : popis // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
+
+// dart format on

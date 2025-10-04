@@ -26,7 +26,7 @@ import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart' as dom;
 
 import 'package:http/http.dart' as http;
-import 'package:canteenlib/canteenlib.dart';
+import 'package:icanteenlib/canteenlib.dart';
 
 /// Reprezentuje kantýnu verze 2.10.27
 ///

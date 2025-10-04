@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:canteenlib/canteenlib.dart';
+import 'package:icanteenlib/canteenlib.dart';
 import 'package:test/test.dart';
 import 'package:dotenv/dotenv.dart';
 
