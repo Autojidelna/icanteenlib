@@ -46,7 +46,7 @@ class Canteen2v16v15 extends Canteen {
   /// Je uživatel přihlášen?
   @override
   bool prihlasen = false;
-  Canteen2v16v15(String url) : super(url);
+  Canteen2v16v15(super.url);
 
   /// Vrátí informace o uživateli ve formě instance [Uzivatel]
   @override
@@ -64,14 +64,14 @@ class Canteen2v16v15 extends Canteen {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
     var kreditMatch = double.tryParse(
-        RegExp(r' +<span id="Kredit" .+?>(.+?)(?=&)').firstMatch(r)?.group(1)?.replaceAll(",", ".").replaceAll(RegExp(r"[^\w.-]"), "") ?? '0');
+      RegExp(r' +<span id="Kredit" .+?>(.+?)(?=&)').firstMatch(r)?.group(1)?.replaceAll(",", ".").replaceAll(RegExp(r"[^\w.-]"), "") ?? '0',
+    );
     var jmenoMatch = RegExp(r'(?<=jméno: <b>).+?(?=<\/b)').firstMatch(r);
     var prijmeniMatch = RegExp(r'(?<=příjmení: <b>).+?(?=<\/b)').firstMatch(r);
     var kategorieMatch = RegExp(r'(?<=kategorie: <b>).+?(?=<\/b)').firstMatch(r);
-    var ucetMatch = RegExp(r'účet pro patby do jídelny:\s*<b>(\d+-\d+\/\d+)<\/b>')
-        .firstMatch(r)
-        ?.group(1)
-        ?.replaceAll(RegExp(r'<\/?b>'), ''); //odstranit html tag <b>
+    var ucetMatch = RegExp(
+      r'účet pro patby do jídelny:\s*<b>(\d+-\d+\/\d+)<\/b>',
+    ).firstMatch(r)?.group(1)?.replaceAll(RegExp(r'<\/?b>'), ''); //odstranit html tag <b>
     var varMatch = RegExp(r'(?<=variabilní symbol: <b>).+?(?=<\/b)').firstMatch(r);
     var specMatch = RegExp(r'(?<=specifický symbol: <b>).+?(?=<\/b)').firstMatch(r);
 
@@ -84,14 +84,15 @@ class Canteen2v16v15 extends Canteen {
     var kredit = kreditMatch ?? 0.0;
 
     return Uzivatel(
-        jmeno: jmeno,
-        prijmeni: prijmeni,
-        kategorie: kategorie,
-        ucetProPlatby: ucet,
-        varSymbol: varSymbol,
-        specSymbol: specSymbol,
-        kredit: kredit,
-        uzivatelskeJmeno: username);
+      jmeno: jmeno,
+      prijmeni: prijmeni,
+      kategorie: kategorie,
+      ucetProPlatby: ucet,
+      varSymbol: varSymbol,
+      specSymbol: specSymbol,
+      kredit: kredit,
+      uzivatelskeJmeno: username,
+    );
   }
 
   Future<void> _getFirstSession() async {
@@ -138,17 +139,21 @@ class Canteen2v16v15 extends Canteen {
     }
     http.Response res;
     try {
-      res = await http.post(Uri.parse("$url/j_spring_security_check"), headers: {
-        "Cookie": "JSESSIONID=${cookies["JSESSIONID"]!}; XSRF-TOKEN=${cookies["XSRF-TOKEN"]!};",
-        "Content-Type": "application/x-www-form-urlencoded",
-      }, body: {
-        "j_username": user,
-        "j_password": password,
-        "terminal": "false",
-        "_csrf": cookies["XSRF-TOKEN"],
-        "_spring_security_remember_me": "on",
-        "targetUrl": "/faces/secured/main.jsp?terminal=false&status=true&printer=&keyboard="
-      });
+      res = await http.post(
+        Uri.parse("$url/j_spring_security_check"),
+        headers: {
+          "Cookie": "JSESSIONID=${cookies["JSESSIONID"]!}; XSRF-TOKEN=${cookies["XSRF-TOKEN"]!};",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: {
+          "j_username": user,
+          "j_password": password,
+          "terminal": "false",
+          "_csrf": cookies["XSRF-TOKEN"],
+          "_spring_security_remember_me": "on",
+          "targetUrl": "/faces/secured/main.jsp?terminal=false&status=true&printer=&keyboard=",
+        },
+      );
     } catch (e) {
       return Future.error(CanteenLibExceptions.chybaSite);
     }
@@ -170,10 +175,13 @@ class Canteen2v16v15 extends Canteen {
   Future<String> _getRequest(String path) async {
     http.Response r;
     try {
-      r = await http.get(Uri.parse(url + path), headers: {
-        "Cookie":
-            "JSESSIONID=${cookies["JSESSIONID"]!}; XSRF-TOKEN=${cookies["XSRF-TOKEN"]!}${cookies.containsKey("remember-me") ? "; ${cookies["remember-me"]!}" : ""}",
-      });
+      r = await http.get(
+        Uri.parse(url + path),
+        headers: {
+          "Cookie":
+              "JSESSIONID=${cookies["JSESSIONID"]!}; XSRF-TOKEN=${cookies["XSRF-TOKEN"]!}${cookies.containsKey("remember-me") ? "; ${cookies["remember-me"]!}" : ""}",
+        },
+      );
     } catch (e) {
       return Future.error(CanteenLibExceptions.chybaSite);
     }
@@ -208,9 +216,10 @@ class Canteen2v16v15 extends Canteen {
     } catch (e) {
       return Future.error(e);
     }
-    var reg = RegExp(r'((?=<div class="jidelnicekDen">).+?(?=<div class="jidelnicekDen">))|((?=<div class="jidelnicekDen">).*<\/span>)', dotAll: true)
-        .allMatches(res)
-        .toList();
+    var reg = RegExp(
+      r'((?=<div class="jidelnicekDen">).+?(?=<div class="jidelnicekDen">))|((?=<div class="jidelnicekDen">).*<\/span>)',
+      dotAll: true,
+    ).allMatches(res).toList();
 
     List<Jidelnicek> jidelnicek = [];
 
@@ -218,13 +227,15 @@ class Canteen2v16v15 extends Canteen {
       // projedeme každý den individuálně
       var j = t.group(0).toString(); // převedeme text na něco přehlednějšího
       var den = DateTime.parse(RegExp(r'(?<=day-).+?(?=")', dotAll: true).firstMatch(j)!.group(0).toString());
-      var jidlaDenne = RegExp(r'(?=<div class="container">).+?<\/div>.+?(?=<\/div>)', dotAll: true)
-          .allMatches(j)
-          .toList(); // získáme jednotlivá jídla pro den / VERZE 2.18
+      var jidlaDenne = RegExp(
+        r'(?=<div class="container">).+?<\/div>.+?(?=<\/div>)',
+        dotAll: true,
+      ).allMatches(j).toList(); // získáme jednotlivá jídla pro den / VERZE 2.18
       if (jidlaDenne.isEmpty) {
-        jidlaDenne = RegExp(r'(?=<div style="padding: 2 0 2 20">).+?(?=<\/div>)', dotAll: true)
-            .allMatches(j)
-            .toList(); // získáme jednotlivá jídla pro den / VERZE 2.10
+        jidlaDenne = RegExp(
+          r'(?=<div style="padding: 2 0 2 20">).+?(?=<\/div>)',
+          dotAll: true,
+        ).allMatches(j).toList(); // získáme jednotlivá jídla pro den / VERZE 2.10
       }
 
       List<Jidlo> jidla = [];
@@ -238,10 +249,10 @@ class Canteen2v16v15 extends Canteen {
         var vydejna = RegExp(r'(?<=<span style="color: #1b75bb;">).+?(?=<)').firstMatch(s); // název výdejny / verze 2.18
         vydejna ??= RegExp(r'(?<=<span class="smallBoldTitle" style="color: #1b75bb;">).+?(?=<)').firstMatch(s); // název výdejny / verze 2.10
 
-        var hlavni = RegExp(r' {20}(([a-zA-ZěščřžýáíéÉÍÁÝŽŘČŠĚŤŇťň.,:\/]+ )+[a-zA-ZěščřžýáíéÉÍÁÝŽŘČŠĚŤŇťň.,:\/]+)', dotAll: true)
-            .firstMatch(s)!
-            .group(1)
-            .toString(); // Jídlo
+        var hlavni = RegExp(
+          r' {20}(([a-zA-ZěščřžýáíéÉÍÁÝŽŘČŠĚŤŇťň.,:\/]+ )+[a-zA-ZěščřžýáíéÉÍÁÝŽŘČŠĚŤŇťň.,:\/]+)',
+          dotAll: true,
+        ).firstMatch(s)!.group(1).toString(); // Jídlo
 
         jidla.add(Jidlo(nazev: hlavni, objednano: false, varianta: vydejna!.group(0).toString(), lzeObjednat: false, den: den, naBurze: false));
       }
@@ -262,13 +273,10 @@ class Canteen2v16v15 extends Canteen {
     cenaMatch ??= RegExp(r'(?<=Cena při objednání jídla">).+?(?=&)').firstMatch(o);
 
     var cena = double.parse(cenaMatch!.group(0).toString().replaceAll(",", "."));
-    var jidlaProDen = RegExp(r'<div class="jidWrapCenter.+?>(.+?)(?=<\/div>)', dotAll: true)
-        .firstMatch(o)!
-        .group(1)
-        .toString()
-        .replaceAll(' ,', ",")
-        .replaceAll(" <br>", "")
-        .replaceAll("\n", "");
+    var jidlaProDen = RegExp(
+      r'<div class="jidWrapCenter.+?>(.+?)(?=<\/div>)',
+      dotAll: true,
+    ).firstMatch(o)!.group(1).toString().replaceAll(' ,', ",").replaceAll(" <br>", "").replaceAll("\n", "");
     var vydejna = RegExp(r'(?<=<span class="smallBoldTitle button-link-align">).+?(?=<)').firstMatch(o)!.group(0).toString();
 
     String? orderUrl;
@@ -305,17 +313,18 @@ class Canteen2v16v15 extends Canteen {
     }
 
     return Jidlo(
-        nazev: nazevjidla,
-        objednano: objednano,
-        varianta: vydejna,
-        lzeObjednat: lzeObjednat,
-        cena: cena,
-        orderUrl: orderUrl,
-        den: obedDen,
-        burzaUrl: burzaUrl,
-        naBurze: (burzaUrl == null) ? false : !burzaUrl.contains("plusburza"),
-        alergeny: alergenyList,
-        kategorizovano: parseJidlo(nazevjidla));
+      nazev: nazevjidla,
+      objednano: objednano,
+      varianta: vydejna,
+      lzeObjednat: lzeObjednat,
+      cena: cena,
+      orderUrl: orderUrl,
+      den: obedDen,
+      burzaUrl: burzaUrl,
+      naBurze: (burzaUrl == null) ? false : !burzaUrl.contains("plusburza"),
+      alergeny: alergenyList,
+      kategorizovano: parseJidlo(nazevjidla),
+    );
   }
 
   /// Získá jídlo pro daný den
@@ -338,7 +347,8 @@ class Canteen2v16v15 extends Canteen {
     String res;
     try {
       res = await _getRequest(
-          "/faces/secured/main.jsp?day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false");
+        "/faces/secured/main.jsp?day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false",
+      );
     } catch (e) {
       return Future.error(e);
     }
@@ -368,7 +378,8 @@ class Canteen2v16v15 extends Canteen {
       DateTime den = DateTime.now();
       // replikování komunikace s prohlížečem, v opačném případě nefunguje
       await _getRequest(
-          "/faces/secured/main.jsp?day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false");
+        "/faces/secured/main.jsp?day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false",
+      );
       res = await _getRequest("/faces/secured/month.jsp");
     } catch (e) {
       return Future.error(e);
@@ -467,8 +478,10 @@ class Canteen2v16v15 extends Canteen {
     if (dostupnaJidla.isNotEmpty) {
       for (var burzaMatch in dostupnaJidla) {
         var bu = burzaMatch.group(0)!;
-        var data =
-            RegExp(r'((?<=<td>).+?(?=<))|(?<=<td align="left">).+?(?=<)|((?<=<td align="right">).+?(?=<))', dotAll: true).allMatches(bu).toList();
+        var data = RegExp(
+          r'((?<=<td>).+?(?=<))|(?<=<td align="left">).+?(?=<)|((?<=<td align="right">).+?(?=<))',
+          dotAll: true,
+        ).allMatches(bu).toList();
 
         // Získat datum
         var datumRaw = RegExp(r'\d\d\.\d\d\.\d{4}').firstMatch(data[1].group(0)!)!.group(0)!.split(".");
