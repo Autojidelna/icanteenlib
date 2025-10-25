@@ -4,21 +4,29 @@ about: Pokud něco nefunguje, použijte tuto předlohu
 title: ''
 labels: bug
 assignees: ''
-
 ---
 
-**Popište chybu**
+### Popište chybu
+
 Váš popis, co se stalo
 
-**Kód + chybová hláška**
+## Kód + chybová hláška
+
 Váš kód, který jste použil/a.
 
-**Očekávané chování**
+```bash
+<Sem vložte>
+```
+
+### Očekávané chování
+
 Co se mělo stát
 
-**Detaily**
- - OS: [např. Windows]
+### Detaily
+
+- OS: [např. Windows]
 - URL na iCanteen instanci (nebo alespoň verzi):
 
-**Dodatečné informace**
+### Dodatečné informace
+
 Jiné věci, které bychom měli vědět
