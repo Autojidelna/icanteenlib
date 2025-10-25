@@ -1,9 +1,9 @@
 ---
 name: Hlášení kompatibility
 about: Pokud chcete nahlásit výsledky vašeho testu kompatibility, použijte tuto předlohu
-title: "Kompatibilita: "
+title: 'Kompatibilita: '
 labels: kompatibilita
-assignees: tpkowastaken
+assignees: mattheroit
 ---
 
 - Název instituce vlastnící instanci / URL:
@@ -20,10 +20,15 @@ assignees: tpkowastaken
 - [ ] ziskatBurzu
 - [ ] ziskejUzivatele
 
-**V případě nefunkčnosti některé z metod vkládejte sem chybové hlášky a váš kód nebo zašlete citlivější údaje na tom@tomprotiva.com**
+**V případě nefunkčnosti některé z metod vkládejte sem chybové hlášky a váš kód nebo zašlete citlivější údaje na <autojidelna@pm.me>**
 
 _Příklad:_
 
 - _chybová hláška pro `login`_
+
+```bash
+<Chyba>
+```
+
 - _chybová hláška pro `jidelnicekDen`_
 - _chybová hláška pro `objednat`_
