@@ -41,13 +41,13 @@ class Canteen2v10v27 extends Canteen {
 
   @override
   get missingFeatures => <Features>[
-        Features.alergeny,
-        Features.burza,
-        Features.jidelnicekBezCen,
-        Features.burzaAmount,
-        Features.jidelnicekMesic,
-        Features.variabilniSymbol
-      ];
+    Features.alergeny,
+    Features.burza,
+    Features.jidelnicekBezCen,
+    Features.burzaAmount,
+    Features.jidelnicekMesic,
+    Features.variabilniSymbol,
+  ];
 
   /// Sušenky potřebné pro komunikaci
   Map<String, String> cookies = {"JSESSIONID": ""};
@@ -56,7 +56,7 @@ class Canteen2v10v27 extends Canteen {
   @override
   bool prihlasen = false;
 
-  Canteen2v10v27(String url) : super(url);
+  Canteen2v10v27(super.url);
 
   /// Vrátí informace o uživateli ve formě instance [Uzivatel]
   @override
@@ -183,16 +183,17 @@ class Canteen2v10v27 extends Canteen {
     }
     http.Response res;
     try {
-      res = await http.post(Uri.parse("$url/j_spring_security_check"), headers: {
-        "Cookie": "JSESSIONID=${cookies["JSESSIONID"]!};",
-        "Content-Type": "application/x-www-form-urlencoded",
-      }, body: {
-        "j_username": user,
-        "j_password": password,
-        "terminal": "false",
-        "_spring_security_remember_me": "on",
-        "targetUrl": "/faces/secured/main.jsp?terminal=false&status=true&printer=&keyboard="
-      });
+      res = await http.post(
+        Uri.parse("$url/j_spring_security_check"),
+        headers: {"Cookie": "JSESSIONID=${cookies["JSESSIONID"]!};", "Content-Type": "application/x-www-form-urlencoded"},
+        body: {
+          "j_username": user,
+          "j_password": password,
+          "terminal": "false",
+          "_spring_security_remember_me": "on",
+          "targetUrl": "/faces/secured/main.jsp?terminal=false&status=true&printer=&keyboard=",
+        },
+      );
     } catch (e) {
       return Future.error(CanteenLibExceptions.chybaSite);
     }
@@ -215,10 +216,13 @@ class Canteen2v10v27 extends Canteen {
   Future<String> _getRequest(String path) async {
     http.Response r;
     try {
-      r = await http.get(Uri.parse(url + path), headers: {
-        "Cookie":
-            "JSESSIONID=${cookies["JSESSIONID"]!}; ${cookies.containsKey("COOKIE") ? "SPRING_SECURITY_REMEMBER_ME_COOKIE=${cookies["COOKIE"]!};" : ""}",
-      });
+      r = await http.get(
+        Uri.parse(url + path),
+        headers: {
+          "Cookie":
+              "JSESSIONID=${cookies["JSESSIONID"]!}; ${cookies.containsKey("COOKIE") ? "SPRING_SECURITY_REMEMBER_ME_COOKIE=${cookies["COOKIE"]!};" : ""}",
+        },
+      );
     } catch (e) {
       return Future.error(CanteenLibExceptions.chybaSite);
     }
@@ -257,7 +261,8 @@ class Canteen2v10v27 extends Canteen {
       DateTime den = DateTime.now();
       try {
         await _getRequest(
-            "/faces/secured/main.jsp?day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false");
+          "/faces/secured/main.jsp?day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false",
+        );
       } catch (e) {
         return Future.error(e);
       }
@@ -268,7 +273,8 @@ class Canteen2v10v27 extends Canteen {
     String res;
     try {
       res = await _getRequest(
-          "/faces/secured/main.jsp?vydejna=$vydejna&day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false");
+        "/faces/secured/main.jsp?vydejna=$vydejna&day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false",
+      );
     } catch (e) {
       return Future.error(e);
     }
@@ -276,7 +282,8 @@ class Canteen2v10v27 extends Canteen {
     dom.Document document = parser.parse(res);
 
     RegExp regex = RegExp(
-        r'''onclick="javascript:location\.replace\('main\.jsp\?vydejna=(\d*)&amp;terminal=false&amp;keyboard=false&amp;printer=false'\);\"\/>\s*(.*)\<\/a\>''');
+      r'''onclick="javascript:location\.replace\('main\.jsp\?vydejna=(\d*)&amp;terminal=false&amp;keyboard=false&amp;printer=false'\);\"\/>\s*(.*)\<\/a\>''',
+    );
 
     Map<int, String> vydejny = {};
     Iterable<RegExpMatch> regExpMatch = regex.allMatches(res);
