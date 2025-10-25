@@ -293,7 +293,7 @@ class Canteen2v18v19 extends Canteen {
     return jidelnicekList;
   }
 
-  Jidlo _parsePrihlasenyJidlo(obed) {
+  Jidlo _parsePrihlasenyJidlo(RegExpMatch obed) {
     // formátování do třídy
     var o = obed.group(0).toString().replaceAll(RegExp(r'(   )+|([^>a-z]\n)'), '');
     var objednano = o.contains("Máte objednáno");
