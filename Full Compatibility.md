@@ -49,154 +49,43 @@
   - počet
 - Výdejny (jiné lokace)
 
-## Spš a G Na Třebešíně - verze 2.18.03
+## Instituce
 
-- Login ✅
-- Získej uživatele ✅
-  - kredit ✅
-  - jméno ✅
-  - Příjmení ✅
-  - Kategorie ✅
-  - Účet pro platby ✅
-  - Variabilní symbol ✅
-  - specifický symbol ❓
-  - Uživatelské jméno ✅
-- Jídelníček pro den ✅
-  - správný počet jídel ✅
-  - jídlo ✅
-    - název ✅
-    - cena ✅
-    - varianta ✅
-    - objednáno ✅
-    - lze objednat ✅
-    - na burze ✅
-    - alergeny ✅
-      - kódy ➖ - není dostupné na této verzi icanteen
-      - podrobnosti ✅
-      - název ✅
-    - rozdělení na kategorie ✅
-- Jídelníček pro měsíc ✅
-- Objednávání
-  - funguje objednávání ✅
-  - funguje zrušení ✅
-- Burza
-  - získání burzy ✅
-  - Objednávání z burzy ✅
-  - vložení jídla na burzu ✅
-  - zrušit vložení jídla na burzu ✅
-  - počet ➖
-- Výdejny (jiné lokace) ➖
-
-## Základní škola Ostrava, Matiční 5
-
-- Login ✅
-- Získej uživatele ✅
-  - kredit ✅
-  - jméno ✅
-  - Příjmení ✅
-  - Kategorie ✅
-  - Účet pro platby ✅
-  - Variabilní symbol ✅
-  - specifický symbol ❓
-  - Uživatelské jméno ✅
-- Jídelníček pro den ✅
-  - správný počet jídel ✅
-  - jídlo ✅
-    - název ✅ má dvě mezery
-    - cena ✅
-    - varianta ✅
-    - objednáno ✅
-    - lze objednat ✅
-    - na burze ✅
-    - alergeny ✅
-      - kódy ✅
-      - podrobnosti ✅
-      - název ✅
-    - rozdělení na kategorie ✅
-- Jídelníček pro měsíc ✅
-- Objednávání
-  - funguje objednávání ✅
-  - funguje zrušení ✅
-- Burza
-  - získání burzy ✅
-  - Objednávání z burzy ✅
-  - vložení jídla na burzu ✅
-  - zrušit vložení jídla na burzu ✅
-  - počet ➖
-- Výdejny (jiné lokace) ➖
-
-## SOŠ stavební a SOU stavební Kolín
-
-- Login ❌
-- Získej uživatele ❌
-  - kredit ❌
-  - jméno ❌
-  - Příjmení ❌
-  - Kategorie ❌
-  - Účet pro platby ❌
-  - Variabilní symbol ❌
-  - specifický symbol ❌
-  - Uživatelské jméno ❌
-- Jídelníček pro den ❌
-  - správný počet jídel ❌
-  - jídlo ❌
-    - název ❌
-    - cena ❌
-    - varianta ❌
-    - objednáno ❌
-    - lze objednat ❌
-    - na burze ❌
-    - alergeny ❌
-      - kódy❌
-      - podrobnosti❌
-      - název❌
-    - rozdělení na kategorie ❌
-    - blokováno (vypršela platnost) ❌
-- Jídelníček pro měsíc ❌
-- Objednávání ❌
-  - funguje objednávání❌
-  - funguje zrušení❌
-- Burza❌
-  - získání burzy❌
-  - Objednávání z burzy❌
-  - vložení jídla na burzu❌
-  - zrušit vložení jídla na burzu❌
-- Výdejny (jiné lokace) ❌
-
-## Česká zemědělská akademie v Humpolci
-
-- Login ✅
-- Získej uživatele ✅
-  - kredit ✅
-  - jméno ✅
-  - Příjmení ✅
-  - Kategorie ✅
-  - Účet pro platby ✅
-  - Variabilní symbol ✅
-  - specifický symbol ➖
-  - Uživatelské jméno ✅
-- Jídelníček pro den ✅
-  - správný počet jídel ✅
-  - jídlo ✅
-    - název ✅
-    - cena ✅
-    - varianta ✅
-    - objednáno ✅
-    - lze objednat ✅
-    - na burze ➖
-    - alergeny ➖
-      - kódy ➖ - není dostupné na této verzi icanteen
-      - podrobnosti ➖
-      - název ➖
-    - rozdělení na kategorie ✅
-- Jídelníček pro měsíc ✅
-- Objednávání
-  - funguje objednávání ✅
-  - funguje zrušení ✅
-- Burza ➖
-  - získání burzy ➖
-  - Objednávání z burzy ➖
-  - vložení jídla na burzu ➖
-  - zrušit vložení jídla na burzu ➖
-  - počet ➖
-- Výdejny (jiné lokace) ➖
+| Funkce                             | SPŠaG Na Třebešíně (2.18.03) | ZŠ Ostrava, Matiční 5 | SOŠ a SOU stavební Kolín | ČZA Humpolec |
+| :--------------------------------- | :--------------------------: | :-------------------: | :----------------------: | :----------: |
+| **Login**                          |              ✅              |          ✅           |            ❌            |      ✅      |
+| **Získej uživatele**               |              ✅              |          ✅           |            ❌            |      ✅      |
+| ├─ Kredit                          |              ✅              |          ✅           |            ❌            |      ✅      |
+| ├─ Jméno                           |              ✅              |          ✅           |            ❌            |      ✅      |
+| ├─ Příjmení                        |              ✅              |          ✅           |            ❌            |      ✅      |
+| ├─ Kategorie                       |              ✅              |          ✅           |            ❌            |      ✅      |
+| ├─ Účet pro platby                 |              ✅              |          ✅           |            ❌            |      ✅      |
+| ├─ Variabilní symbol               |              ✅              |          ✅           |            ❌            |      ✅      |
+| ├─ Specifický symbol               |              ❓              |          ❓           |            ❌            |      ➖      |
+| └─ Uživatelské jméno               |              ✅              |          ✅           |            ❌            |      ✅      |
+| **Jídelníček pro den**             |              ✅              |          ✅           |            ❌            |      ✅      |
+| ├─ Správný počet jídel             |              ✅              |          ✅           |            ❌            |      ✅      |
+| ├─ Jídlo                           |              ✅              |          ✅           |            ❌            |      ✅      |
+| │ ├─ Název                         |              ✅              |   ✅ _(dvě mezery)_   |            ❌            |      ✅      |
+| │ ├─ Cena                          |              ✅              |          ✅           |            ❌            |      ✅      |
+| │ ├─ Varianta                      |              ✅              |          ✅           |            ❌            |      ✅      |
+| │ ├─ Objednáno                     |              ✅              |          ✅           |            ❌            |      ✅      |
+| │ ├─ Lze objednat                  |              ✅              |          ✅           |            ❌            |      ✅      |
+| │ ├─ Na burze                      |              ✅              |          ✅           |            ❌            |      ➖      |
+| │ ├─ Alergeny                      |              ✅              |          ✅           |            ❌            |      ➖      |
+| │ │ ├─ Kódy                        |      ➖ _(nedostupné)_       |          ✅           |            ❌            |      ➖      |
+| │ │ ├─ Podrobnosti                 |              ✅              |          ✅           |            ❌            |      ➖      |
+| │ │ └─ Název                       |              ✅              |          ✅           |            ❌            |      ➖      |
+| │ ├─ Rozdělení na kategorie        |              ✅              |          ✅           |            ❌            |      ✅      |
+| │ └─ Blokováno (vypršela platnost) |              ➖              |          ➖           |            ❌            |      ➖      |
+| **Jídelníček pro měsíc**           |              ✅              |          ✅           |            ❌            |      ✅      |
+| **Objednávání**                    |              ✅              |          ✅           |            ❌            |      ✅      |
+| ├─ Funguje objednávání             |              ✅              |          ✅           |            ❌            |      ✅      |
+| └─ Funguje zrušení                 |              ✅              |          ✅           |            ❌            |      ✅      |
+| **Burza**                          |              ✅              |          ✅           |            ❌            |      ➖      |
+| ├─ Získání burzy                   |              ✅              |          ✅           |            ❌            |      ➖      |
+| ├─ Objednávání z burzy             |              ✅              |          ✅           |            ❌            |      ➖      |
+| ├─ Vložení jídla na burzu          |              ✅              |          ✅           |            ❌            |      ➖      |
+| ├─ Zrušit vložení jídla            |              ✅              |          ✅           |            ❌            |      ➖      |
+| └─ Počet                           |              ➖              |          ➖           |            ❌            |      ➖      |
+| **Výdejny (jiné lokace)**          |              ➖              |          ➖           |            ❌            |      ➖      |
