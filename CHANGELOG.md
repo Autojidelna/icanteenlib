@@ -1,10 +1,17 @@
+# Changelog
+
+## 4.2.1
+
+- Přidána (opět) podpora pro `obedy.ss-stavebnikolin.cz`
+- Přidána částečná podpora pro verzi 2.20.13
+
 ## 4.2.0
 
 - Knihovna nyní používá [freezed](https://pub.dev/packages/freezed) pro generování `toJson` a `fromJson` metod
 
 ## 4.1.1
 
-- Opravena chyba, kdy např. adresa https://testing.autojidelna.cz/testing se automaticky přepsala na https://testing.autojidelna.cz.
+- Opravena chyba, kdy např. adresa <https://testing.autojidelna.cz/testing> se automaticky přepsala na <https://testing.autojidelna.cz>.
 - Tato aktualizace tedy povoluje používat jakoukoliv adresu i s cestou.
 
 ## 4.1.0
