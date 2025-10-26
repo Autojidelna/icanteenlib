@@ -1,6 +1,6 @@
 # O knihovně
 
-Experimentální **neoficiální** webscrape knihovna pro komunikaci se systémem [iCanteen](https://www.z-ware.cz/internetove-objednavky). Tento repozitář je fork [App-Elevate/canteenlib](hhttps://github.com/App-Elevate/canteenlib).
+Experimentální **neoficiální** webscrape knihovna pro komunikaci se systémem [iCanteen](https://www.z-ware.cz/internetove-objednavky). Tento repozitář je fork [App-Elevate/canteenlib](https://github.com/App-Elevate/canteenlib).
 
 ## Funkční funkce(\*)
 
