@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write # required to push the tag
-
+    outputs:
+      tag: ${{ steps.create-and-push-tag.outputs.tag }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,6 +32,7 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Create and push tag
+        id: create-and-push-tag
         run: |
           TAG="v${{ steps.get_version.outputs.version }}"
           if git rev-parse "$TAG" >/dev/null 2>&1; then
@@ -61,7 +63,7 @@ jobs:
           FILE_CONTENTS="${FILE_CONTENTS//$'\n'/'%0A'}"
           FILE_CONTENTS="${FILE_CONTENTS//$'\r'/'%0D'}"
 
-          echo "::set-output name=contents::${FILE_CONTENTS}"
+          echo "contents=$FILE_CONTENTS" >> GITHUB_OUTPUT
 
       - name: Update Release Description
         uses: softprops/action-gh-release@v1
