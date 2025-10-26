@@ -24,7 +24,7 @@ _\* Knihovna nemusí fungovat na všech instancích systému iCanteen, proto ž�
 ```en
 MIT License
 
-Copyright (c) 2022-2023 Matyáš Caras, Tomáš Protiva and contributors
+Copyright (c) 2022-2025 Matyáš Caras, Tomáš Protiva, Matěj Verhaegen and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
