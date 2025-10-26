@@ -35,10 +35,11 @@ jobs:
           TAG="v${{ steps.get_version.outputs.version }}"
           if git rev-parse "$TAG" >/dev/null 2>&1; then
             echo "Tag $TAG already exists. Skipping."
-            exit 0
+          else
+            git tag "$TAG"
+            git push origin "$TAG"
           fi
-          git tag "$TAG"
-          git push origin "$TAG"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
 
   publish:
     needs: create-tag
@@ -68,6 +69,7 @@ jobs:
           files: ''
           token: ${{ secrets.GITHUB_TOKEN }}
           body: ${{ steps.extract-release-notes.outputs.contents }}
+          tag_name: ${{ needs.create-tag.outputs.tag }}
 
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
