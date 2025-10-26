@@ -2,24 +2,58 @@
 name: Publish to pub.dev
 
 on:
-  push:
-    tags:
-      - "v[0-9]+.[0-9]+.[0-9]+*" # tag pattern on pub.dev: 'v'
+  pull_request:
+    types: [closed]
+    branches:
+      - main
 
 # Publish using custom workflow
 jobs:
+  create-tag:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # required to push the tag
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # fetch full history so we can tag
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Get version from pubspec.yaml
+        id: get_version
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create and push tag
+        run: |
+          TAG="v${{ steps.get_version.outputs.version }}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists. Skipping."
+            exit 0
+          fi
+          git tag "$TAG"
+          git push origin "$TAG"
+
   publish:
+    needs: create-tag
+    if: github.event.pull_request.merged == true
     permissions:
       id-token: write # Required for authentication using OIDC
       contents: write # Required for writing to the release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Extract release notes
         id: extract-release-notes
         run: |
           # Use awk to extract lines until the second header
-          FILE_CONTENTS=$(awk '/^## /{if(++n==2)exit} {print}' CHANGELOG.md)
+          FILE_CONTENTS=$(awk '/^## /{if(++n==2)exit} n>=1 {print}' CHANGELOG.md)
 
           # Escape newlines and set the output
           FILE_CONTENTS="${FILE_CONTENTS//'%'/'%25'}"
@@ -31,7 +65,7 @@ jobs:
       - name: Update Release Description
         uses: softprops/action-gh-release@v1
         with:
-          files: ""
+          files: ''
           token: ${{ secrets.GITHUB_TOKEN }}
           body: ${{ steps.extract-release-notes.outputs.contents }}
 
@@ -46,48 +80,6 @@ jobs:
       # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
         run: dart analyze --fatal-infos
-
-      # Testing pro jidelna.trebesin.cz
-      #- name: Credentials pro jidelna.trebesin.cz
-      #  run: |
-      #    echo "URL= 'jidelna.trebesin.cz'" > .env
-      #    echo "USER= '${{ secrets.USER1 }}'" >> .env
-      #    echo "PASS= '${{ secrets.PASS1 }}'" >> .env
-      #
-      #- name: test pro jidelna.trebesin.cz
-      #  run: dart test
-
-      # Testing pro obedy.zs-mat5.cz
-      - name: Credentials pro obedy.zs-mat5.cz
-        run: |
-          echo "URL= 'obedy.zs-mat5.cz'" > .env
-          echo "USER= '${{ secrets.USER2 }}'" >> .env
-          echo "PASS= '${{ secrets.PASS2 }}'" >> .env
-
-      - name: Test pro obedy.zs-mat5.cz
-        run: dart test
-
-      # Testing pro obedy.ss-stavebnikolin.cz
-      # REASON: updated to a newer version (iCanteen 2.20.13)
-      # - name: Credentials pro obedy.ss-stavebnikolin.cz
-      #   run: |
-      #     echo "URL= 'obedy.ss-stavebnikolin.cz'" > .env
-      #     echo "USER= '${{ secrets.USER3 }}'" >> .env
-      #     echo "PASS= '${{ secrets.PASS3 }}'" >> .env
-
-      # - name: Test pro obedy.ss-stavebnikolin.cz
-      #   run: dart test
-
-      # Testing pro jidelna.cza-hu.cz
-      # REASON: Presumed to be wrong credentials on our side
-      #- name: Credentials pro jidelna.cza-hu.cz
-      #  run: |
-      #    echo "URL= 'jidelna.cza-hu.cz'" > .env
-      #    echo "USER= '${{ secrets.USER4 }}'" >> .env
-      #    echo "PASS= '${{ secrets.PASS4 }}'" >> .env
-
-      #- name: Test pro jidelna.cza-hu.cz
-      #  run: dart test
 
       - name: Removing credentials
         run: rm -rf .env
