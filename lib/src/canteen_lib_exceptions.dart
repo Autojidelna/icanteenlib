@@ -1,4 +1,4 @@
-bool isEnumItem(e, List enumValues) {
+bool isEnumItem(Object e, List enumValues) {
   return enumValues.contains(e);
 }
 
@@ -25,5 +25,5 @@ enum CanteenLibExceptions {
   chybaObjednani,
 
   /// Nelze do burzy vložit méně než jeden kus jídla
-  meneNezJedenKus
+  meneNezJedenKus,
 }
