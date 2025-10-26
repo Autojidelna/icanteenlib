@@ -16,6 +16,6 @@ Kantýny, které v adrese obsahují i číslo portu, dokážou být často probl
 | SPŠ a G Na Třebešíně              | iCanteen 2.18.03 |   ✅    | <https://jidelna.trebesin.cz>         |
 | ZŠ Ostrava, Matiční 5             | iCanteen 2.18.19 |   ✅    | <http://obedy.zs-mat5.cz>             |
 | SŠTE Brno                         | iCanteen 2.19.13 |   ✅    | <https://stravovani.sstebrno.cz>      |
-| SOŠ stavební a SOU stavební Kolín | iCanteen 2.20.13 |   ❌    | <http://obedy.ss-stavebnikolin.cz/>   |
+| SOŠ stavební a SOU stavební Kolín | iCanteen 2.20.13 |   ✅    | <http://obedy.ss-stavebnikolin.cz/>   |
 
 Pokud chcete přispět s testem, otestujte tuto knihovnu na instanci iCanteen, kde, nejlépe legálně, máte přístup, a nahlašte své poznatky do [github issues](https://github.com/Autojidelna/icanteenlib/issues/new?assignees=mattheroit&labels=kompatibilita&projects=&template=hl--en--kompatibility.md&title=Kompatibilita%3A+) (i pokud fungují prosím)
