@@ -1,0 +1,180 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Dart test
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  pr-check:
+    name: PR Validation
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      REPO_OWNER: ${{ github.repository_owner }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      valid: ${{ steps.final-check.outputs.valid }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract repo name
+        id: extract-repo
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
+
+      - name: Check branch name format
+        id: branch-check
+        run: |
+          if [[ ! ${{ github.event.pull_request.head.ref }} =~ ^([0-9]+\.[0-9]+\.[0-9]+|.*patch.*)$ ]]; then
+            echo "Branch name does not match pattern."
+            echo "valid=false" >> $GITHUB_OUTPUT
+          else
+            echo "Branch name is valid."
+            echo "valid=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Extract pubspec version
+        id: pubspec
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check pubspec version vs branch
+        id: version-check
+        run: |
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          VERSION="${{ steps.pubspec.outputs.version }}"
+
+          if [[ "$BRANCH" == "$VERSION" ]]; then
+            echo "Pubspec version matches branch."
+            echo "valid=true" >> $GITHUB_OUTPUT
+          else
+            echo "Pubspec version ($VERSION) does not match branch ($BRANCH)."
+            echo "valid=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Combine checks
+        id: final-check
+        run: |
+          if [[ "${{ steps.branch-check.outputs.valid }}" == "true" && "${{ steps.version-check.outputs.valid }}" == "true" ]]; then
+            echo "valid=true" >> $GITHUB_OUTPUT
+          else
+            echo "valid=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set comment body
+        id: comment-body
+        run: |
+          if [ "${{ steps.final-check.outputs.valid }}" == "false" ]; then
+            echo "body=${{ vars.COMMENT_CLOSED }}" >> $GITHUB_OUTPUT
+          else
+            echo "body=${{ vars.COMMENT_NICE }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check if comment exists
+        id: comment-check
+        run: |
+          COMMENT_BODY="${{ steps.comment-body.outputs.body }}"
+
+          COMMENTS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/issues/$PR_NUMBER/comments")
+
+          if echo "$COMMENTS" | grep -q "$COMMENT_BODY"; then
+            echo "Comment already exists."
+            echo "comment_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Comment does not exist."
+            echo "comment_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment on PR
+        if: steps.comment-check.outputs.comment_exists == 'false'
+        run: |
+          COMMENT_BODY="${{ steps.comment-body.outputs.body }}"
+
+          curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            -X POST \
+            -d "{\"body\":\"$COMMENT_BODY\"}" \
+            "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/issues/$PR_NUMBER/comments"
+
+      - name: Close PR
+        if: steps.final-check.outputs.valid == 'false' && steps.comment-check.outputs.comment_exists == 'false'
+        run: |
+          curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            -X PATCH \
+            -d "{\"state\":\"closed\"}" \
+            "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/pulls/$PR_NUMBER"
+          exit 1
+
+  package-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Note: This workflow uses the latest stable version of the Dart SDK.
+      # You can specify other versions if desired, see documentation here:
+      # https://github.com/dart-lang/setup-dart/blob/main/README.md
+      - uses: dart-lang/setup-dart@v1
+
+      - name: Install dependencies
+        run: dart pub get
+
+      # Consider passing '--fatal-infos' for slightly stricter analysis.
+      - name: Analyze project source
+        run: dart analyze --fatal-infos
+
+      # Testing pro jidelna.trebesin.cz
+      #- name: Credentials pro jidelna.trebesin.cz
+      #  run: |
+      #    echo "URL= 'jidelna.trebesin.cz'" > .env
+      #    echo "USER= '${{ secrets.TREBESIN_USER }}'" >> .env
+      #    echo "PASS= '${{ secrets.TREBESIN_PASS }}'" >> .env
+
+      #- name: test pro jidelna.trebesin.cz
+      #  run: dart test
+
+      # Testing pro obedy.zs-mat5.cz
+      #- name: Credentials pro obedy.zs-mat5.cz
+      #  run: |
+      #    echo "URL= 'obedy.zs-mat5.cz'" > .env
+      #    echo "USER= '${{ secrets.ZS_MAT_USER }}'" >> .env
+      #    echo "PASS= '${{ secrets.ZS_MAT_PASS }}'" >> .env
+
+      #- name: Test pro obedy.zs-mat5.cz
+      #  run: dart test
+
+      # Testing pro obedy.stavebkakolin.cz
+      - name: Credentials pro obedy.stavebkakolin.cz
+        run: |
+          echo "URL= 'obedy.stavebkakolin.cz'" > .env
+          echo "USER= '${{ secrets.STAV_KOLIN_USER }}'" >> .env
+          echo "PASS= '${{ secrets.STAV_KOLIN_PASS }}'" >> .env
+
+      - name: Test pro obedy.stavebkakolin.cz
+        run: dart test
+
+      # REASON: Presumed to be wrong credentials on our side
+      # Testing pro jidelna.cza-hu.cz
+      #- name: Credentials pro jidelna.cza-hu.cz
+      #  run: |
+      #    echo "URL= 'jidelna.cza-hu.cz'" > .env
+      #    echo "USER= '${{ secrets.CZA_HU_USER }}'" >> .env
+      #    echo "PASS= '${{ secrets.CZA_HU_PASS }}'" >> .env
+
+      #- name: Test pro jidelna.cza-hu.cz
+      #  run: dart test
