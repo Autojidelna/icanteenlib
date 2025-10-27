@@ -3,6 +3,9 @@
 ## 4.2.2
 
 - Odstranění whitespace z názvů výdejen ve verzi 2.20.13
+- Používání mobilního rozhraní pro získání všech obědů najednou
+- Přejmenování metody `ziskejJidelnicek()` na `verejnyJidelnicek()`
+- Nyní nejde změnit url bez vytvoření nové instance
 
 ## 4.2.1
 
