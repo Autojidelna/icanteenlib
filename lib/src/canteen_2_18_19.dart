@@ -25,8 +25,12 @@ SOFTWARE.
   testováno na webu http://obedy.zs-mat5.cz/
 */
 
+import 'package:html/dom.dart' as dom;
+import 'package:html/parser.dart' as parser;
 import 'package:icanteenlib/canteenlib.dart';
 import 'package:http/http.dart' as http;
+import 'package:icanteenlib/src/tridy/uzivatelske_udaje.dart';
+import 'package:icanteenlib/src/utils/string_utils.dart';
 
 /// Reprezentuje kantýnu verze 2.18.19
 ///
@@ -34,6 +38,8 @@ import 'package:http/http.dart' as http;
 class Canteen2v18v19 extends Canteen {
   /// Sušenky potřebné pro komunikaci
   Map<String, String> cookies = {"JSESSIONID": "", "XSRF-TOKEN": ""};
+
+  String? _username;
 
   @override
   get missingFeatures => <Features>[Features.burzaAmount, Features.viceVydejen];
@@ -43,47 +49,64 @@ class Canteen2v18v19 extends Canteen {
   bool prihlasen = false;
   Canteen2v18v19(super.url);
 
+  Map<UzivatelskeUdaje, String?> _parseUserFields(dom.Document document) {
+    final map = <UzivatelskeUdaje, String?>{};
+
+    for (final dom.Element td in document.querySelectorAll('td')) {
+      if (td.querySelector('table') != null) continue;
+
+      final dom.Element? bold = td.querySelector('b');
+      if (bold != null) {
+        // Get only the text node directly inside <td>, excluding text from nested elements
+        final String directTextNodes = td.nodes.whereType<dom.Text>().map((t) => t.text).join();
+        if (directTextNodes.contains(':')) {
+          final String label = directTextNodes.split(':').first.trim();
+          final String normalized = label.normalize();
+
+          UzivatelskeUdaje? field;
+          try {
+            field = UzivatelskeUdaje.values.firstWhere((f) => f.toString() == normalized);
+          } catch (e) {
+            field = null; // unknown label, skip
+          }
+
+          if (field != null) {
+            map[field] = bold.text.trim().isEmpty ? null : bold.text.trim();
+          }
+        }
+      }
+    }
+
+    return map;
+  }
+
   /// Vrátí informace o uživateli ve formě instance [Uzivatel]
   @override
   Future<Uzivatel> ziskejUzivatele() async {
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
-    String r;
+    String rawHtml;
     try {
-      r = await _getRequest("/web/setting");
+      rawHtml = await _getRequest("/web/setting");
     } catch (e) {
       return Future.error(e);
     }
-    var kreditMatch = double.tryParse(
-      RegExp(r' +<span id="Kredit" .+?>(.+?)(?=&)').firstMatch(r)!.group(1)!.replaceAll(",", ".").replaceAll(RegExp(r"[^\w.-]"), ""),
-    );
-    var uzivatelskeJmenoMatch = RegExp(r'title="Přihlašovací jméno:\s*(.*?)">').firstMatch(r);
-    var jmenoMatch = RegExp(r'(?<=jméno: <b>).+?(?=<\/b)').firstMatch(r);
-    var prijmeniMatch = RegExp(r'(?<=příjmení: <b>).+?(?=<\/b)').firstMatch(r);
-    var kategorieMatch = RegExp(r'(?<=kategorie: <b>).+?(?=<\/b)').firstMatch(r);
-    var ucetMatch = RegExp(
-      r'účet pro platby do jídelny:\s*<b>(\d*-*\d+\/?\d*)<\/b>',
-    ).firstMatch(r)?.group(1)?.replaceAll(RegExp(r'<\/?b>'), ''); //odstranit html tag <b>
-    var varMatch = RegExp(r'(?<=variabilní symbol: <b>).+?(?=<\/b)').firstMatch(r);
-    var specMatch = RegExp(r'(?<=specifický symbol: <b>).+?(?=<\/b)').firstMatch(r);
 
-    var uzivatelskeJmeno = uzivatelskeJmenoMatch?.group(1)?.substring(0, uzivatelskeJmenoMatch.group(1)?.indexOf('"')) ?? "";
-    var jmeno = jmenoMatch?.group(0) ?? "";
-    var prijmeni = prijmeniMatch?.group(0) ?? "";
-    var kategorie = kategorieMatch?.group(0) ?? "";
-    var ucet = ucetMatch ?? "";
-    var varSymbol = varMatch?.group(0) ?? "";
-    var specSymbol = specMatch?.group(0) ?? "";
-    var kredit = kreditMatch ?? 0.0;
+    final dom.Document document = parser.parse(rawHtml);
+    final Map<UzivatelskeUdaje, String?> userData = _parseUserFields(document);
+
+    dom.Element? kreditElement = document.getElementById('Kredit');
+    String kredit = kreditElement?.text ?? '0.0';
+    kredit = kredit.replaceAll(RegExp(r'[^0-9,.-]'), '').replaceAll(',', '.');
 
     return Uzivatel(
-      jmeno: jmeno,
-      prijmeni: prijmeni,
-      kategorie: kategorie,
-      ucetProPlatby: ucet,
-      varSymbol: varSymbol,
-      specSymbol: specSymbol,
-      kredit: kredit,
-      uzivatelskeJmeno: uzivatelskeJmeno,
+      uzivatelskeJmeno: _username,
+      jmeno: userData[UzivatelskeUdaje.jmeno],
+      prijmeni: userData[UzivatelskeUdaje.prijmeni],
+      kategorie: userData[UzivatelskeUdaje.kategorie],
+      ucetProPlatby: userData[UzivatelskeUdaje.ucetProPlatbyDoJidelny],
+      varSymbol: userData[UzivatelskeUdaje.variabilniSymbol],
+      specSymbol: userData[UzivatelskeUdaje.specifickySymbol],
+      kredit: double.parse(kredit),
     );
   }
 
@@ -157,6 +180,7 @@ class Canteen2v18v19 extends Canteen {
     }
     _parseCookies(res.headers['set-cookie']!);
 
+    _username = user;
     prihlasen = true;
     return true;
   }
