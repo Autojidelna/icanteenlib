@@ -52,13 +52,11 @@ class Canteen2v10v27 extends Canteen {
   /// Sušenky potřebné pro komunikaci
   Map<String, String> cookies = {"JSESSIONID": ""};
 
-  /// Je uživatel přihlášen?
   @override
   bool prihlasen = false;
 
   Canteen2v10v27(super.url);
 
-  /// Vrátí informace o uživateli ve formě instance [Uzivatel]
   @override
   Future<Uzivatel> ziskejUzivatele() async {
     firstRequest = false;
@@ -163,15 +161,6 @@ class Canteen2v10v27 extends Canteen {
     }
   }
 
-  /// Přihlášení do iCanteen
-  ///
-  /// Vstup:
-  ///
-  /// - `user` - uživatelské jméno | [String]
-  /// - `password` - heslo | [String]
-  ///
-  /// Výstup:
-  /// - [bool] ve [Future], v případě přihlášení `true`, v případě špatného hesla `false`
   @override
   Future<bool> login(String user, String password) async {
     if (cookies["JSESSIONID"] == "") {
@@ -243,15 +232,6 @@ class Canteen2v10v27 extends Canteen {
     return res.body;
   }
 
-  /// Získá jídlo pro daný den
-  ///
-  /// __Vyžaduje přihlášení pomocí [login]__
-  ///
-  /// Vstup:
-  /// - `den` - *volitelné*, určuje pro jaký den chceme získat jídelníček | [DateTime]
-  ///
-  /// Výstup:
-  /// - [Jidelnicek] obsahující detaily, které vidí přihlášený uživatel
   @override
   Future<Jidelnicek> jidelnicekDen({DateTime? den}) async {
     if (!prihlasen) {
@@ -335,13 +315,6 @@ class Canteen2v10v27 extends Canteen {
     return Jidelnicek(den, jidla, vydejny: vydejny);
   }
 
-  /// Objedná vybrané jídlo
-  ///
-  /// Vstup:
-  /// - `jidlo` - Jídlo, které chceme objednat | [Jidlo]
-  ///
-  /// Výstup:
-  /// - Aktualizovaná instance [Jidlo] tohoto jídla
   @override
   Future<Jidelnicek> objednat(Jidlo jidlo) async {
     if (!prihlasen) {

@@ -43,7 +43,7 @@ class Canteen {
 
   Canteen(this.url);
 
-  // Je uživatel přihlášen?
+  /// Je uživatel přihlášen?
   bool get prihlasen => _canteenInstance?.prihlasen ?? false;
 
   int get vydejna => _canteenInstance?.vydejna ?? 1;
@@ -331,9 +331,9 @@ class Canteen {
   /// - [List] s [Jidelnicek], který neobsahuje ceny
   ///
   /// __Lze použít bez přihlášení__
-  Future<List<Jidelnicek>> ziskejJidelnicek() async {
+  Future<List<Jidelnicek>> verejnyJidelnicek() async {
     if (_canteenInstance != null) {
-      return _canteenInstance!.ziskejJidelnicek();
+      return _canteenInstance!.verejnyJidelnicek();
     }
     if (_canteenInstance!.missingFeatures.contains(Features.jidelnicekBezCen)) {
       return Future.error(CanteenLibExceptions.featureNepodporovana);
@@ -343,7 +343,7 @@ class Canteen {
     } catch (e) {
       return Future.error(e);
     }
-    return _canteenInstance!.ziskejJidelnicek();
+    return _canteenInstance!.verejnyJidelnicek();
   }
 
   /// Získá jídlo pro daný den

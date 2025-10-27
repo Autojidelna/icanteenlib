@@ -132,15 +132,6 @@ class Canteen2v18v19 extends Canteen {
     }
   }
 
-  /// Přihlášení do iCanteen
-  ///
-  /// Vstup:
-  ///
-  /// - `user` - uživatelské jméno | [String]
-  /// - `password` - heslo | [String]
-  ///
-  /// Výstup:
-  /// - [bool] ve [Future], v případě přihlášení `true`, v případě špatného hesla `false`
   @override
   Future<bool> login(String user, String password) async {
     if (cookies["JSESSIONID"] == "" || cookies["XSRF-TOKEN"] == "") {
@@ -216,14 +207,8 @@ class Canteen2v18v19 extends Canteen {
     return res.body;
   }
 
-  /// Získá jídelníček bez cen
-  ///
-  /// Výstup:
-  /// - [List] s [Jidelnicek], který neobsahuje ceny
-  ///
-  /// __Lze použít bez přihlášení__
   @override
-  Future<List<Jidelnicek>> ziskejJidelnicek() async {
+  Future<List<Jidelnicek>> verejnyJidelnicek() async {
     String res;
     try {
       res = await _getRequest("/");
@@ -275,12 +260,6 @@ class Canteen2v18v19 extends Canteen {
     return jidelnicek;
   }
 
-  /// Získá jídlo do konce měsíce od aktuálního dne
-  ///
-  /// __Vyžaduje přihlášení pomocí [login]__
-  ///
-  /// Výstup:
-  /// - list instancí [Jidelnicek] obsahující detaily, které vidí přihlášený uživatel
   @override
   Future<List<Jidelnicek>> jidelnicekMesic() async {
     if (!prihlasen) {
@@ -372,15 +351,6 @@ class Canteen2v18v19 extends Canteen {
     // KONEC formátování do třídy
   }
 
-  /// Získá jídlo pro daný den
-  ///
-  /// __Vyžaduje přihlášení pomocí [login]__
-  ///
-  /// Vstup:
-  /// - `den` - *volitelné*, určuje pro jaký den chceme získat jídelníček | [DateTime]
-  ///
-  /// Výstup:
-  /// - [Jidelnicek] obsahující detaily, které vidí přihlášený uživatel
   @override
   Future<Jidelnicek> jidelnicekDen({DateTime? den}) async {
     if (!prihlasen) {
@@ -407,13 +377,6 @@ class Canteen2v18v19 extends Canteen {
     return Jidelnicek(den, jidla);
   }
 
-  /// Objedná vybrané jídlo
-  ///
-  /// Vstup:
-  /// - `jidlo` - Jídlo, které chceme objednat | [Jidlo]
-  ///
-  /// Výstup:
-  /// - Aktualizovaná instance [Jidlo] tohoto jídla
   @override
   Future<Jidelnicek> objednat(Jidlo jidlo) async {
     if (!prihlasen) {
@@ -434,13 +397,6 @@ class Canteen2v18v19 extends Canteen {
     return jidelnicekDen(den: jidlo.den);
   }
 
-  /// Uloží vaše jídlo z/do burzy
-  ///
-  /// Vstup:
-  /// - `jidlo` - Jídlo, které chceme dát/vzít do/z burzy | [Jidlo]
-  ///
-  /// Výstup:
-  /// - Aktualizovaná instance [Jidlo] tohoto jídla NEBO [Future] jako chyba
   @override
   Future<Jidelnicek> doBurzy(Jidlo jidlo, {int amount = 1}) async {
     if (!prihlasen) {
@@ -464,10 +420,6 @@ class Canteen2v18v19 extends Canteen {
     return jidelnicekDen(den: jidlo.den);
   }
 
-  /// Získá aktuální jídla v burze
-  ///
-  /// Výstup:
-  /// - List instancí [Burza], každá obsahuje informace o jídle v burze
   @override
   Future<List<Burza>> ziskatBurzu() async {
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
@@ -507,13 +459,6 @@ class Canteen2v18v19 extends Canteen {
     return burza;
   }
 
-  /// Objedná jídlo z burzy pomocí URL z instance třídy Burza
-  ///
-  /// Vstup:
-  /// - `b` - Jídlo __z burzy__, které chceme objednat | [Burza]
-  ///
-  /// Výstup:
-  /// - [bool], `true`, pokud bylo jídlo úspěšně objednáno z burzy, jinak `Exception`
   @override
   Future<Jidelnicek> objednatZBurzy(Burza b) async {
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
