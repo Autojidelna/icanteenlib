@@ -433,18 +433,13 @@ class Canteen2v20v13 extends Canteen {
     }
     String res;
     try {
-      DateTime den = DateTime.now();
-      // replikování komunikace s prohlížečem, v opačném případě nefunguje
-      await _getRequest(
-        "/faces/secured/main.jsp?day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false",
-      );
-      res = await _getRequest("/faces/secured/month.jsp");
+      res = await _getRequest("/faces/secured/mobile.jsp");
     } catch (e) {
       return Future.error(e);
     }
 
     final vydejnyRegExp = RegExp(
-      r'''onclick\s*=\s*"javascript:location\.replace\('(main|month)\.jsp\?vydejna=(\d+)&amp;terminal=false&amp;keyboard=false&amp;printer=false'\);"\s*[^>]*>\s*([\s\S]*?)<\/a>''',
+      r'''onclick\s*=\s*"javascript:location\.replace\('(main|month|mobile)\.jsp\?vydejna=(\d+)&amp;terminal=false&amp;keyboard=false&amp;printer=false'\);"\s*[^>]*>\s*([\s\S]*?)<\/a>''',
     );
     Map<int, String> vydejny = {};
     Iterable<RegExpMatch> regExpMatch = vydejnyRegExp.allMatches(res);
@@ -453,7 +448,7 @@ class Canteen2v20v13 extends Canteen {
     }
 
     var jidla = <Jidlo>[];
-    var jidelnicek = RegExp(r'(?<=<div class="jidWrapLeft">).+?((fa-clock)|(fa-ban))', dotAll: true).allMatches(res).toList();
+    var jidelnicek = RegExp(r'<div class="jidelnicekItemWrapper">([\s\S]+?)</div>\s*</div>', dotAll: true).allMatches(res).toList();
     for (var obed in jidelnicek) {
       jidla.add(_parsePrihlasenyJidlo(obed));
     }
