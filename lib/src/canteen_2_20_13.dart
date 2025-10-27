@@ -36,6 +36,7 @@ class Canteen2v20v13 extends Canteen {
   Map<String, String> cookies = {"JSESSIONID": "", "XSRF-TOKEN": ""};
 
   String? _username;
+  late String _url;
 
   @override
   int vydejna = 1;
@@ -109,9 +110,10 @@ class Canteen2v20v13 extends Canteen {
   }
 
   Future<void> _getFirstSession() async {
-    if (url.endsWith("/")) url = url.substring(0, url.length - 1); // odstranit lomítko
+    _url = url;
+    if (url.endsWith("/")) _url = url.substring(0, url.length - 1); // odstranit lomítko
     try {
-      http.Response res = await http.get(Uri.parse(url));
+      http.Response res = await http.get(Uri.parse(_url));
       _parseCookies(res.headers['set-cookie']!);
     } catch (e) {
       return Future.error(CanteenLibExceptions.chybaSite);
@@ -140,7 +142,7 @@ class Canteen2v20v13 extends Canteen {
     http.Response res;
     try {
       res = await http.post(
-        Uri.parse("$url/j_spring_security_check"),
+        Uri.parse("$_url/j_spring_security_check"),
         headers: {
           "Cookie": "JSESSIONID=${cookies["JSESSIONID"]!}; XSRF-TOKEN=${cookies["XSRF-TOKEN"]!};",
           "Content-Type": "application/x-www-form-urlencoded",
@@ -177,7 +179,7 @@ class Canteen2v20v13 extends Canteen {
     http.Response res;
     try {
       res = await http.get(
-        Uri.parse(url + path),
+        Uri.parse(_url + path),
         headers: {
           "Cookie":
               "JSESSIONID=${cookies["JSESSIONID"]!}; XSRF-TOKEN=${cookies["XSRF-TOKEN"]!}${cookies.containsKey("remember-me") ? "; ${cookies["remember-me"]!};" : ";"}",
