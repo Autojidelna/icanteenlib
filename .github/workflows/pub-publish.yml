@@ -43,9 +43,41 @@ jobs:
           fi
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
+  check-publishable:
+    name: Check if should publish to pub.dev
+    runs-on: ubuntu-latest
+    outputs:
+      should_publish: ${{ steps.check.outputs.should_publish }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check publish_to field
+        id: check
+        run: |
+          # Extract publish_to field
+          PUBLISH_TO=$(grep '^publish_to:' pubspec.yaml | awk '{print $2}' | tr -d "'\"")
+
+          echo "Found publish_to: '$PUBLISH_TO'"
+
+          if [ -z "$PUBLISH_TO" ]; then
+            echo "No publish_to field found — default is pub.dev"
+            echo "should_publish=true" >> $GITHUB_OUTPUT
+          elif [ "$PUBLISH_TO" = "none" ]; then
+            echo "publish_to is 'none' — skipping publish"
+            echo "should_publish=false" >> $GITHUB_OUTPUT
+          else
+            echo "publish_to is not 'none' — will publish"
+            echo "should_publish=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Print result
+        run: echo "should_publish=${{ steps.check.outputs.should_publish }}"
+
   publish:
-    needs: create-tag
-    if: github.event.pull_request.merged == true
+    needs:
+      - create-tag
+      - check-publishable
+    if: ${{ github.event.pull_request.merged == true && needs.check-publishable.outputs.should_publish == 'true' }}
     permissions:
       id-token: write # Required for authentication using OIDC
       contents: write # Required for writing to the release
