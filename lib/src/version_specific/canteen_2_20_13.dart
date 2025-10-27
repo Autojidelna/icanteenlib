@@ -49,8 +49,8 @@ class Canteen2v20v13 extends Canteen {
 
   Canteen2v20v13(super.url);
 
-  Map<UzivatelskeUdaje, String?> _parseUserFields(dom.Document document) {
-    final map = <UzivatelskeUdaje, String?>{};
+  Map<UzivatelskeUdajeKeys, String?> _parseUserFields(dom.Document document) {
+    final map = <UzivatelskeUdajeKeys, String?>{};
 
     for (final dom.Element td in document.querySelectorAll('td')) {
       if (td.querySelector('table') != null) continue;
@@ -63,9 +63,9 @@ class Canteen2v20v13 extends Canteen {
           final String label = directTextNodes.split(':').first.trim();
           final String normalized = label.normalize();
 
-          UzivatelskeUdaje? field;
+          UzivatelskeUdajeKeys? field;
           try {
-            field = UzivatelskeUdaje.values.firstWhere((f) => f.toString() == normalized);
+            field = UzivatelskeUdajeKeys.values.firstWhere((f) => f.toString() == normalized);
           } catch (e) {
             field = null; // unknown label, skip
           }
@@ -91,7 +91,7 @@ class Canteen2v20v13 extends Canteen {
     }
 
     final dom.Document document = parser.parse(res);
-    final Map<UzivatelskeUdaje, String?> userData = _parseUserFields(document);
+    final Map<UzivatelskeUdajeKeys, String?> userData = _parseUserFields(document);
 
     dom.Element? kreditElement = document.getElementById('Kredit');
     String kredit = kreditElement?.text ?? '0.0';
@@ -99,12 +99,12 @@ class Canteen2v20v13 extends Canteen {
 
     return Uzivatel(
       uzivatelskeJmeno: _username,
-      jmeno: userData[UzivatelskeUdaje.jmeno],
-      prijmeni: userData[UzivatelskeUdaje.prijmeni],
-      kategorie: userData[UzivatelskeUdaje.kategorie],
-      ucetProPlatby: userData[UzivatelskeUdaje.ucetProPlatbyDoJidelny],
-      varSymbol: userData[UzivatelskeUdaje.variabilniSymbol],
-      specSymbol: userData[UzivatelskeUdaje.specifickySymbol],
+      jmeno: userData[UzivatelskeUdajeKeys.jmeno],
+      prijmeni: userData[UzivatelskeUdajeKeys.prijmeni],
+      kategorie: userData[UzivatelskeUdajeKeys.kategorie],
+      ucetProPlatby: userData[UzivatelskeUdajeKeys.ucetProPlatbyDoJidelny],
+      varSymbol: userData[UzivatelskeUdajeKeys.variabilniSymbol],
+      specSymbol: userData[UzivatelskeUdajeKeys.specifickySymbol],
       kredit: double.parse(kredit),
     );
   }
