@@ -28,6 +28,7 @@ import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 import 'package:icanteenlib/canteenlib.dart';
 import 'package:icanteenlib/src/tridy/uzivatelske_udaje.dart';
+import 'package:icanteenlib/src/utils/string_utils.dart';
 
 /// Reprezentuje kantýnu verze 2.20.13
 ///
@@ -50,48 +51,19 @@ class Canteen2v20v13 extends Canteen {
 
   Canteen2v20v13(super.url);
 
-  String removeDiacritics(String s) {
-    const map = {
-      'á': 'a',
-      'č': 'c',
-      'ě': 'e',
-      'é': 'e',
-      'í': 'i',
-      'ň': 'n',
-      'ó': 'o',
-      'ř': 'r',
-      'š': 's',
-      'ť': 't',
-      'ú': 'u',
-      'ů': 'u',
-      'ý': 'y',
-      'ž': 'z',
-    };
-
-    return s.toLowerCase().split('').map((c) => map[c] ?? c).join();
-  }
-
-  String normalize(String s) {
-    final noDiacritics = removeDiacritics(s);
-    // Replace spaces with underscores
-    final withUnderscores = noDiacritics.replaceAll(RegExp(r'\s+'), '_');
-    // Remove everything else except letters, numbers, and underscores
-    return withUnderscores.replaceAll(RegExp(r'[^a-z0-9_]'), '');
-  }
-
-  Map<UzivatelskeUdaje, String?> parseFields(dom.Document document) {
+  Map<UzivatelskeUdaje, String?> _parseUserFields(dom.Document document) {
     final map = <UzivatelskeUdaje, String?>{};
 
-    for (final td in document.querySelectorAll('td')) {
+    for (final dom.Element td in document.querySelectorAll('td')) {
       if (td.querySelector('table') != null) continue;
 
-      final bold = td.querySelector('b');
+      final dom.Element? bold = td.querySelector('b');
       if (bold != null) {
         // Get only the text node directly inside <td>, excluding text from nested elements
-        final directTextNodes = td.nodes.whereType<dom.Text>().map((t) => t.text).join();
+        final String directTextNodes = td.nodes.whereType<dom.Text>().map((t) => t.text).join();
         if (directTextNodes.contains(':')) {
-          final label = directTextNodes.split(':').first.trim();
-          final normalized = normalize(label); // your normalize method
+          final String label = directTextNodes.split(':').first.trim();
+          final String normalized = label.normalize();
 
           UzivatelskeUdaje? field;
           try {
@@ -120,8 +92,9 @@ class Canteen2v20v13 extends Canteen {
     } catch (e) {
       return Future.error(e);
     }
-    dom.Document document = parser.parse(rawHtml);
-    final userData = parseFields(document);
+
+    final dom.Document document = parser.parse(rawHtml);
+    final Map<UzivatelskeUdaje, String?> userData = _parseUserFields(document);
 
     dom.Element? kreditElement = document.getElementById('Kredit');
     String kredit = kreditElement?.text ?? '0.0';
