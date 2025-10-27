@@ -408,7 +408,7 @@ class Canteen2v20v13 extends Canteen {
     Map<int, String> vydejny = {};
     Iterable<RegExpMatch> regExpMatch = vydejnyRegExp.allMatches(res);
     for (RegExpMatch match in regExpMatch) {
-      vydejny[int.parse(match.group(1)!)] = match.group(2)!;
+      vydejny[int.parse(match.group(1)!)] = match.group(2)!.trim();
     }
 
     var jidla = <Jidlo>[];

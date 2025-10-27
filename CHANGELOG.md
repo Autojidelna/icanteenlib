@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.2.2
+
+- Odstranění whitespace z názvů výdejen ve verzi 2.20.13
+
 ## 4.2.1
 
 - Přidána (opět) podpora pro [stavebkakolin.cz](https://obedy.stavebkakolin.cz) _(původně [ss-stavebnikolin.cz](https://obedy.ss-stavebnikolin.cz))_
