@@ -395,32 +395,32 @@ class Canteen {
   /// Objedná vybrané jídlo
   ///
   /// Vstup:
-  /// - `j` - Jídlo, které chceme objednat | [Jidlo]
+  /// - `jidlo` - Jídlo, které chceme objednat | [Jidlo]
   ///
   /// Výstup:
   /// - Aktualizovaná instance [Jidlo] tohoto jídla
-  Future<Jidelnicek> objednat(Jidlo j) async {
+  Future<Jidelnicek> objednat(Jidlo jidlo) async {
     if (_canteenInstance == null) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
-    return _canteenInstance!.objednat(j);
+    return _canteenInstance!.objednat(jidlo);
   }
 
   /// Uloží vaše jídlo z/do burzy
   ///
   /// Vstup:
-  /// - `j` - Jídlo, které chceme dát/vzít do/z burzy | [Jidlo]
+  /// - `jidlo` - Jídlo, které chceme dát/vzít do/z burzy | [Jidlo]
   ///
   /// Výstup:
   /// - Aktualizovaná instance [Jidlo] tohoto jídla NEBO [Future] jako chyba
-  Future<Jidelnicek> doBurzy(Jidlo j, {int amount = 1}) async {
+  Future<Jidelnicek> doBurzy(Jidlo jidlo, {int amount = 1}) async {
     if (_canteenInstance == null) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
     if (_canteenInstance!.missingFeatures.contains(Features.burza)) {
       return Future.error(CanteenLibExceptions.featureNepodporovana);
     }
-    return _canteenInstance!.doBurzy(j, amount: amount);
+    return _canteenInstance!.doBurzy(jidlo, amount: amount);
   }
 
   /// Získá aktuální jídla v burze
