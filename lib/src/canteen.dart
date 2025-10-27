@@ -33,15 +33,19 @@ class Canteen {
   List<Features> missingFeatures = [];
 
   /// URL iCanteenu
-  String url;
+  String _url;
+  String get url => _url;
 
   /// verze iCanteenu
-  String? verze;
+  String? _verze;
+
+  /// verze iCanteenu
+  String? get verze => _verze;
 
   /// Instance třídy pro správnou verzi iCanteenu
   Canteen? _canteenInstance;
 
-  Canteen(this.url);
+  Canteen(this._url);
 
   /// Je uživatel přihlášen?
   bool get prihlasen => _canteenInstance?.prihlasen ?? false;
@@ -238,14 +242,14 @@ class Canteen {
 
   /// Získá verzi třídy pro verzi icanteenu
   Future<bool> _spravovatelVerzi({LoginData? loginData}) async {
-    _canteenInstance = _getClosestCanteenVersion(verze!)(url);
+    _canteenInstance = _getClosestCanteenVersion(_verze!)(_url);
     if (loginData != null) {
       try {
         await _canteenInstance!.login(loginData.username, loginData.password);
       } catch (e) {
         Object? error;
         for (final canteenVersion in canteenVersions.values) {
-          _canteenInstance = canteenVersion(url);
+          _canteenInstance = canteenVersion(_url);
           try {
             await _canteenInstance!.login(loginData.username, loginData.password);
             error = null;
@@ -269,26 +273,26 @@ class Canteen {
     //získání verze
     String webHtml = '';
     RegExp versionPattern = RegExp(r'>iCanteen\s\d+\.\d+\.\d+\s\|');
-    if (url.contains('https://')) {
-      url = url.replaceAll('https://', '');
+    if (_url.contains('https://')) {
+      _url = _url.replaceAll('https://', '');
     }
-    if (url.contains('http://')) {
-      url = url.replaceAll('http://', '');
+    if (_url.contains('http://')) {
+      _url = _url.replaceAll('http://', '');
     }
-    if (url.endsWith('/')) {
-      url = url.substring(0, url.length - 1);
+    if (_url.endsWith('/')) {
+      _url = _url.substring(0, _url.length - 1);
     }
-    if (url.contains('@')) {
-      url = url.substring(url.indexOf('@') + 1);
+    if (_url.contains('@')) {
+      _url = _url.substring(_url.indexOf('@') + 1);
     }
-    url = 'https://$url';
+    _url = 'https://$_url';
     try {
-      var res = await http.get(Uri.parse(url));
+      var res = await http.get(Uri.parse(_url));
       webHtml = res.body;
     } catch (e) {
       try {
-        url = url.replaceAll('https://', 'http://');
-        var res = await http.get(Uri.parse(url));
+        _url = _url.replaceAll('https://', 'http://');
+        var res = await http.get(Uri.parse(_url));
         webHtml = res.body;
       } catch (e) {
         return Future.error(CanteenLibExceptions.neplatneUrl);
@@ -299,10 +303,10 @@ class Canteen {
       String version = matches.first.group(0)!;
       version = version.replaceAll('>iCanteen ', '');
       version = version.replaceAll(' |', '');
-      verze = version;
+      _verze = version;
     } catch (e) {
       //pokud se nepodaří získat verzi, tak se nastaví na 0.0.0, abychom aspoň zkusili náhodné verze
-      verze = '0.0.0';
+      _verze = '0.0.0';
     }
     //vracení správné verze classy:
     return _spravovatelVerzi(loginData: loginData);
