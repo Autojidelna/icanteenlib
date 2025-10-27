@@ -1,9 +1,9 @@
-import 'package:icanteenlib/src/canteen_2_10_27.dart';
-import 'package:icanteenlib/src/canteen_2_16_15.dart';
-import 'package:icanteenlib/src/canteen_2_18_03.dart';
-import 'package:icanteenlib/src/canteen_2_18_19.dart';
-import 'package:icanteenlib/src/canteen_2_19_13.dart';
-import 'package:icanteenlib/src/canteen_2_20_13.dart';
+import 'package:icanteenlib/src/version_specific/canteen_2_10_27.dart';
+import 'package:icanteenlib/src/version_specific/canteen_2_16_15.dart';
+import 'package:icanteenlib/src/version_specific/canteen_2_18_03.dart';
+import 'package:icanteenlib/src/version_specific/canteen_2_18_19.dart';
+import 'package:icanteenlib/src/version_specific/canteen_2_19_13.dart';
+import 'package:icanteenlib/src/version_specific/canteen_2_20_13.dart';
 
 final Map<String, Function(String)> canteenVersions = {
   '2.10.27': (url) => Canteen2v10v27(url),
