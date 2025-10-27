@@ -24,10 +24,8 @@ SOFTWARE.
 
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart' as dom;
-
 import 'package:http/http.dart' as http;
 import 'package:icanteenlib/canteenlib.dart';
-import 'package:icanteenlib/src/tridy/uzivatelske_udaje.dart';
 import 'package:icanteenlib/src/utils/string_utils.dart';
 
 /// Reprezentuje kantýnu verze 2.20.13
