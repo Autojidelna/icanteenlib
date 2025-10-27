@@ -45,7 +45,6 @@ class Canteen2v20v13 extends Canteen {
   @override
   get missingFeatures => <Features>[Features.alergeny, Features.burza];
 
-  /// Je uživatel přihlášen?
   @override
   bool prihlasen = false;
 
@@ -82,7 +81,6 @@ class Canteen2v20v13 extends Canteen {
     return map;
   }
 
-  /// Vrátí informace o uživateli ve formě instance [Uzivatel]
   @override
   Future<Uzivatel> ziskejUzivatele() async {
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
@@ -113,11 +111,9 @@ class Canteen2v20v13 extends Canteen {
   }
 
   Future<void> _getFirstSession() async {
-    if (url.endsWith("/")) {
-      url = url.substring(0, url.length - 1);
-    } // odstranit lomítko
+    if (url.endsWith("/")) url = url.substring(0, url.length - 1); // odstranit lomítko
     try {
-      var res = await http.get(Uri.parse(url));
+      http.Response res = await http.get(Uri.parse(url));
       _parseCookies(res.headers['set-cookie']!);
     } catch (e) {
       return Future.error(CanteenLibExceptions.chybaSite);
@@ -134,15 +130,6 @@ class Canteen2v20v13 extends Canteen {
     }
   }
 
-  /// Přihlášení do iCanteen
-  ///
-  /// Vstup:
-  ///
-  /// - `user` - uživatelské jméno | [String]
-  /// - `password` - heslo | [String]
-  ///
-  /// Výstup:
-  /// - [bool] ve [Future], v případě přihlášení `true`, v případě špatného hesla `false`
   @override
   Future<bool> login(String user, String password) async {
     if (cookies["JSESSIONID"] == "") {
@@ -218,14 +205,8 @@ class Canteen2v20v13 extends Canteen {
     return res.body;
   }
 
-  /// Získá jídelníček bez cen
-  ///
-  /// Výstup:
-  /// - [List] s [Jidelnicek], který neobsahuje ceny
-  ///
-  /// __Lze použít bez přihlášení__
   @override
-  Future<List<Jidelnicek>> ziskejJidelnicek() async {
+  Future<List<Jidelnicek>> verejnyJidelnicek() async {
     String res;
     try {
       res = await _getRequest("/");
@@ -353,15 +334,6 @@ class Canteen2v20v13 extends Canteen {
     );
   }
 
-  /// Získá jídlo pro daný den
-  ///
-  /// __Vyžaduje přihlášení pomocí [login]__
-  ///
-  /// Vstup:
-  /// - `den` - *volitelné*, určuje pro jaký den chceme získat jídelníček | [DateTime]
-  ///
-  /// Výstup:
-  /// - [Jidelnicek] obsahující detaily, které vidí přihlášený uživatel
   @override
   Future<Jidelnicek> jidelnicekDen({DateTime? den}) async {
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
@@ -385,7 +357,7 @@ class Canteen2v20v13 extends Canteen {
     }
 
     var jidla = <Jidlo>[];
-    var jidelnicek = RegExp(r'(?<=<div class="jidWrapLeft">).+?((fa-clock)|(fa-ban))', dotAll: true).allMatches(res).toList();
+    var jidelnicek = RegExp(r'<div class="jidelnicekItemWrapper">([\s\S]+?)</div>\s*</div>', dotAll: true).allMatches(res).toList();
     for (var obed in jidelnicek) {
       jidla.add(_parsePrihlasenyJidlo(obed));
     }
@@ -393,12 +365,6 @@ class Canteen2v20v13 extends Canteen {
     return Jidelnicek(den, jidla, vydejny: vydejny);
   }
 
-  /// Získá jídlo do konce měsíce od aktuálního dne
-  ///
-  /// __Vyžaduje přihlášení pomocí [login]__
-  ///
-  /// Výstup:
-  /// - list instancí [Jidelnicek] obsahující detaily, které vidí přihlášený uživatel
   @override
   Future<List<Jidelnicek>> jidelnicekMesic() async {
     if (!prihlasen) {
@@ -440,13 +406,6 @@ class Canteen2v20v13 extends Canteen {
     return jidelnicekList;
   }
 
-  /// Objedná vybrané jídlo
-  ///
-  /// Vstup:
-  /// - `jidlo` - Jídlo, které chceme objednat | [Jidlo]
-  ///
-  /// Výstup:
-  /// - Aktualizovaná instance [Jidlo] tohoto jídla
   @override
   Future<Jidelnicek> objednat(Jidlo jidlo) async {
     if (!prihlasen) {
