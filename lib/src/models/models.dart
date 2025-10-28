@@ -1,4 +1,4 @@
-export 'features.dart';
+export 'feature_support.dart';
 export 'uzivatelske_udaje.dart';
 
 export 'old/alergen/alergen.dart';
