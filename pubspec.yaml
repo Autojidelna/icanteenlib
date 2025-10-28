@@ -1,6 +1,6 @@
 name: icanteenlib
 description: Experimentální **neoficiální** webscrape knihovna pro komunikaci se systémem [iCanteen](https://www.z-ware.cz/internetove-objednavky)
-version: 4.2.2
+version: 5.0.0
 repository: 'https://github.com/Autojidelna/icanteenlib'
 issue_tracker: 'https://github.com/Autojidelna/icanteenlib/issues'
 publish_to: none

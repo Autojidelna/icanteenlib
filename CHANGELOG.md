@@ -1,5 +1,24 @@
 # Changelog
 
+## 5.0.0
+
+- Generované soubory se nyní pokaždé generují do `generated` složky
+- Úprava všech tříd
+  - `Uzivatel` přejmenován na `UzivatelskeUdaje`
+    - Nově podpora pro všechy údaje v nastavení
+  - `JidloKategorizovano` přejmenováno na `SlozeniJidla`
+  - `LoginData` přejmenováno na `PrihlasovaciUdaje`
+  - `Burza` a `Jidlo` jsou nyní jeden objekt
+    - Přidán enum `StavJidla`, který nahradí pole `objednano`, `naBurze` a `lzeObjednat`
+    - `orderUrl` a `burzaUrl` spojeno v jedno pole `url`
+  - Nová třída `StavUctu`
+    - Přebýrá `kredit` z legacy třídy `Uzivatel`
+    - Přebýrá `výdejny` z třídy `Jidelnicek`
+    - Nově se také bude starat o vybranou výdejnu
+  - Nová třída `FeatureSupport`
+    - Obsahuje seznamy `missingInCode` a `unsupportedByCanteen`
+    - Přidány pomocné metody `isAvailable()`, `isImplemented()` a `isSupported()`
+
 ## 4.2.2
 
 - Odstranění whitespace z názvů výdejen ve verzi 2.20.13
