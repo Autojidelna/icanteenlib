@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'alergen.dart';
+part of '../alergen.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Alergen {
 
-@JsonKey(name: 'kod') int? get kod;@JsonKey(name: 'nazev') String get nazev;@JsonKey(name: 'popis') String? get popis;
+@JsonKey(name: 'id') int? get id;@JsonKey(name: 'nazev') String get nazev;@JsonKey(name: 'popis') String? get popis;
 /// Create a copy of Alergen
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AlergenCopyWith<Alergen> get copyWith => _$AlergenCopyWithImpl<Alergen>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Alergen&&(identical(other.kod, kod) || other.kod == kod)&&(identical(other.nazev, nazev) || other.nazev == nazev)&&(identical(other.popis, popis) || other.popis == popis));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Alergen&&(identical(other.id, id) || other.id == id)&&(identical(other.nazev, nazev) || other.nazev == nazev)&&(identical(other.popis, popis) || other.popis == popis));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,kod,nazev,popis);
+int get hashCode => Object.hash(runtimeType,id,nazev,popis);
 
 @override
 String toString() {
-  return 'Alergen(kod: $kod, nazev: $nazev, popis: $popis)';
+  return 'Alergen(id: $id, nazev: $nazev, popis: $popis)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AlergenCopyWith<$Res>  {
   factory $AlergenCopyWith(Alergen value, $Res Function(Alergen) _then) = _$AlergenCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'kod') int? kod,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'popis') String? popis
+@JsonKey(name: 'id') int? id,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'popis') String? popis
 });
 
 
@@ -65,9 +65,9 @@ class _$AlergenCopyWithImpl<$Res>
 
 /// Create a copy of Alergen
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? kod = freezed,Object? nazev = null,Object? popis = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? nazev = null,Object? popis = freezed,}) {
   return _then(_self.copyWith(
-kod: freezed == kod ? _self.kod : kod // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,nazev: null == nazev ? _self.nazev : nazev // ignore: cast_nullable_to_non_nullable
 as String,popis: freezed == popis ? _self.popis : popis // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -152,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'kod')  int? kod, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'popis')  String? popis)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'id')  int? id, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'popis')  String? popis)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Alergen() when $default != null:
-return $default(_that.kod,_that.nazev,_that.popis);case _:
+return $default(_that.id,_that.nazev,_that.popis);case _:
   return orElse();
 
 }
@@ -173,10 +173,10 @@ return $default(_that.kod,_that.nazev,_that.popis);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'kod')  int? kod, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'popis')  String? popis)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'id')  int? id, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'popis')  String? popis)  $default,) {final _that = this;
 switch (_that) {
 case _Alergen():
-return $default(_that.kod,_that.nazev,_that.popis);}
+return $default(_that.id,_that.nazev,_that.popis);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -190,10 +190,10 @@ return $default(_that.kod,_that.nazev,_that.popis);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'kod')  int? kod, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'popis')  String? popis)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'id')  int? id, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'popis')  String? popis)?  $default,) {final _that = this;
 switch (_that) {
 case _Alergen() when $default != null:
-return $default(_that.kod,_that.nazev,_that.popis);case _:
+return $default(_that.id,_that.nazev,_that.popis);case _:
   return null;
 
 }
@@ -205,10 +205,10 @@ return $default(_that.kod,_that.nazev,_that.popis);case _:
 @JsonSerializable()
 
 class _Alergen implements Alergen {
-  const _Alergen({@JsonKey(name: 'kod') this.kod, @JsonKey(name: 'nazev') required this.nazev, @JsonKey(name: 'popis') this.popis});
+  const _Alergen({@JsonKey(name: 'id') this.id, @JsonKey(name: 'nazev') required this.nazev, @JsonKey(name: 'popis') this.popis});
   factory _Alergen.fromJson(Map<String, dynamic> json) => _$AlergenFromJson(json);
 
-@override@JsonKey(name: 'kod') final  int? kod;
+@override@JsonKey(name: 'id') final  int? id;
 @override@JsonKey(name: 'nazev') final  String nazev;
 @override@JsonKey(name: 'popis') final  String? popis;
 
@@ -225,16 +225,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Alergen&&(identical(other.kod, kod) || other.kod == kod)&&(identical(other.nazev, nazev) || other.nazev == nazev)&&(identical(other.popis, popis) || other.popis == popis));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Alergen&&(identical(other.id, id) || other.id == id)&&(identical(other.nazev, nazev) || other.nazev == nazev)&&(identical(other.popis, popis) || other.popis == popis));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,kod,nazev,popis);
+int get hashCode => Object.hash(runtimeType,id,nazev,popis);
 
 @override
 String toString() {
-  return 'Alergen(kod: $kod, nazev: $nazev, popis: $popis)';
+  return 'Alergen(id: $id, nazev: $nazev, popis: $popis)';
 }
 
 
@@ -245,7 +245,7 @@ abstract mixin class _$AlergenCopyWith<$Res> implements $AlergenCopyWith<$Res> {
   factory _$AlergenCopyWith(_Alergen value, $Res Function(_Alergen) _then) = __$AlergenCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'kod') int? kod,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'popis') String? popis
+@JsonKey(name: 'id') int? id,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'popis') String? popis
 });
 
 
@@ -262,9 +262,9 @@ class __$AlergenCopyWithImpl<$Res>
 
 /// Create a copy of Alergen
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? kod = freezed,Object? nazev = null,Object? popis = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? nazev = null,Object? popis = freezed,}) {
   return _then(_Alergen(
-kod: freezed == kod ? _self.kod : kod // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,nazev: null == nazev ? _self.nazev : nazev // ignore: cast_nullable_to_non_nullable
 as String,popis: freezed == popis ? _self.popis : popis // ignore: cast_nullable_to_non_nullable
 as String?,

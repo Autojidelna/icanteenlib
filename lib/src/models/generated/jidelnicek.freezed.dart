@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'jidelnicek.dart';
+part of '../jidelnicek.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,9 +16,8 @@ T _$identity<T>(T value) => value;
 mixin _$Jidelnicek {
 
 /// Den, pro který je jídelníček zveřejněn
-@JsonKey(name: 'den') DateTime get den;/// Seznam jídel
-@JsonKey(name: 'jidla') List<Jidlo> get jidla;// Seznam výdejen (je prázdný, pokud je pouze jedna)
-@JsonKey(name: 'vydejny') Map<int, String> get vydejny;
+@JsonKey(name: 'datum') DateTime get datum;/// Seznam jídel
+@JsonKey(name: 'nabidka') List<Jidlo> get nabidka;
 /// Create a copy of Jidelnicek
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -31,16 +30,16 @@ $JidelnicekCopyWith<Jidelnicek> get copyWith => _$JidelnicekCopyWithImpl<Jidelni
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Jidelnicek&&(identical(other.den, den) || other.den == den)&&const DeepCollectionEquality().equals(other.jidla, jidla)&&const DeepCollectionEquality().equals(other.vydejny, vydejny));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Jidelnicek&&(identical(other.datum, datum) || other.datum == datum)&&const DeepCollectionEquality().equals(other.nabidka, nabidka));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,den,const DeepCollectionEquality().hash(jidla),const DeepCollectionEquality().hash(vydejny));
+int get hashCode => Object.hash(runtimeType,datum,const DeepCollectionEquality().hash(nabidka));
 
 @override
 String toString() {
-  return 'Jidelnicek(den: $den, jidla: $jidla, vydejny: $vydejny)';
+  return 'Jidelnicek(datum: $datum, nabidka: $nabidka)';
 }
 
 
@@ -51,7 +50,7 @@ abstract mixin class $JidelnicekCopyWith<$Res>  {
   factory $JidelnicekCopyWith(Jidelnicek value, $Res Function(Jidelnicek) _then) = _$JidelnicekCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'den') DateTime den,@JsonKey(name: 'jidla') List<Jidlo> jidla,@JsonKey(name: 'vydejny') Map<int, String> vydejny
+@JsonKey(name: 'datum') DateTime datum,@JsonKey(name: 'nabidka') List<Jidlo> nabidka
 });
 
 
@@ -68,12 +67,11 @@ class _$JidelnicekCopyWithImpl<$Res>
 
 /// Create a copy of Jidelnicek
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? den = null,Object? jidla = null,Object? vydejny = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? datum = null,Object? nabidka = null,}) {
   return _then(_self.copyWith(
-den: null == den ? _self.den : den // ignore: cast_nullable_to_non_nullable
-as DateTime,jidla: null == jidla ? _self.jidla : jidla // ignore: cast_nullable_to_non_nullable
-as List<Jidlo>,vydejny: null == vydejny ? _self.vydejny : vydejny // ignore: cast_nullable_to_non_nullable
-as Map<int, String>,
+datum: null == datum ? _self.datum : datum // ignore: cast_nullable_to_non_nullable
+as DateTime,nabidka: null == nabidka ? _self.nabidka : nabidka // ignore: cast_nullable_to_non_nullable
+as List<Jidlo>,
   ));
 }
 
@@ -155,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'den')  DateTime den, @JsonKey(name: 'jidla')  List<Jidlo> jidla, @JsonKey(name: 'vydejny')  Map<int, String> vydejny)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'datum')  DateTime datum, @JsonKey(name: 'nabidka')  List<Jidlo> nabidka)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Jidelnicek() when $default != null:
-return $default(_that.den,_that.jidla,_that.vydejny);case _:
+return $default(_that.datum,_that.nabidka);case _:
   return orElse();
 
 }
@@ -176,10 +174,10 @@ return $default(_that.den,_that.jidla,_that.vydejny);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'den')  DateTime den, @JsonKey(name: 'jidla')  List<Jidlo> jidla, @JsonKey(name: 'vydejny')  Map<int, String> vydejny)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'datum')  DateTime datum, @JsonKey(name: 'nabidka')  List<Jidlo> nabidka)  $default,) {final _that = this;
 switch (_that) {
 case _Jidelnicek():
-return $default(_that.den,_that.jidla,_that.vydejny);}
+return $default(_that.datum,_that.nabidka);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -193,10 +191,10 @@ return $default(_that.den,_that.jidla,_that.vydejny);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'den')  DateTime den, @JsonKey(name: 'jidla')  List<Jidlo> jidla, @JsonKey(name: 'vydejny')  Map<int, String> vydejny)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'datum')  DateTime datum, @JsonKey(name: 'nabidka')  List<Jidlo> nabidka)?  $default,) {final _that = this;
 switch (_that) {
 case _Jidelnicek() when $default != null:
-return $default(_that.den,_that.jidla,_that.vydejny);case _:
+return $default(_that.datum,_that.nabidka);case _:
   return null;
 
 }
@@ -208,27 +206,18 @@ return $default(_that.den,_that.jidla,_that.vydejny);case _:
 @JsonSerializable()
 
 class _Jidelnicek implements Jidelnicek {
-  const _Jidelnicek(@JsonKey(name: 'den') this.den, @JsonKey(name: 'jidla') final  List<Jidlo> jidla, {@JsonKey(name: 'vydejny') final  Map<int, String> vydejny = const {}}): _jidla = jidla,_vydejny = vydejny;
+  const _Jidelnicek({@JsonKey(name: 'datum') required this.datum, @JsonKey(name: 'nabidka') final  List<Jidlo> nabidka = const <Jidlo>[]}): _nabidka = nabidka;
   factory _Jidelnicek.fromJson(Map<String, dynamic> json) => _$JidelnicekFromJson(json);
 
 /// Den, pro který je jídelníček zveřejněn
-@override@JsonKey(name: 'den') final  DateTime den;
+@override@JsonKey(name: 'datum') final  DateTime datum;
 /// Seznam jídel
- final  List<Jidlo> _jidla;
+ final  List<Jidlo> _nabidka;
 /// Seznam jídel
-@override@JsonKey(name: 'jidla') List<Jidlo> get jidla {
-  if (_jidla is EqualUnmodifiableListView) return _jidla;
+@override@JsonKey(name: 'nabidka') List<Jidlo> get nabidka {
+  if (_nabidka is EqualUnmodifiableListView) return _nabidka;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_jidla);
-}
-
-// Seznam výdejen (je prázdný, pokud je pouze jedna)
- final  Map<int, String> _vydejny;
-// Seznam výdejen (je prázdný, pokud je pouze jedna)
-@override@JsonKey(name: 'vydejny') Map<int, String> get vydejny {
-  if (_vydejny is EqualUnmodifiableMapView) return _vydejny;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_vydejny);
+  return EqualUnmodifiableListView(_nabidka);
 }
 
 
@@ -245,16 +234,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Jidelnicek&&(identical(other.den, den) || other.den == den)&&const DeepCollectionEquality().equals(other._jidla, _jidla)&&const DeepCollectionEquality().equals(other._vydejny, _vydejny));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Jidelnicek&&(identical(other.datum, datum) || other.datum == datum)&&const DeepCollectionEquality().equals(other._nabidka, _nabidka));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,den,const DeepCollectionEquality().hash(_jidla),const DeepCollectionEquality().hash(_vydejny));
+int get hashCode => Object.hash(runtimeType,datum,const DeepCollectionEquality().hash(_nabidka));
 
 @override
 String toString() {
-  return 'Jidelnicek(den: $den, jidla: $jidla, vydejny: $vydejny)';
+  return 'Jidelnicek(datum: $datum, nabidka: $nabidka)';
 }
 
 
@@ -265,7 +254,7 @@ abstract mixin class _$JidelnicekCopyWith<$Res> implements $JidelnicekCopyWith<$
   factory _$JidelnicekCopyWith(_Jidelnicek value, $Res Function(_Jidelnicek) _then) = __$JidelnicekCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'den') DateTime den,@JsonKey(name: 'jidla') List<Jidlo> jidla,@JsonKey(name: 'vydejny') Map<int, String> vydejny
+@JsonKey(name: 'datum') DateTime datum,@JsonKey(name: 'nabidka') List<Jidlo> nabidka
 });
 
 
@@ -282,12 +271,11 @@ class __$JidelnicekCopyWithImpl<$Res>
 
 /// Create a copy of Jidelnicek
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? den = null,Object? jidla = null,Object? vydejny = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? datum = null,Object? nabidka = null,}) {
   return _then(_Jidelnicek(
-null == den ? _self.den : den // ignore: cast_nullable_to_non_nullable
-as DateTime,null == jidla ? _self._jidla : jidla // ignore: cast_nullable_to_non_nullable
-as List<Jidlo>,vydejny: null == vydejny ? _self._vydejny : vydejny // ignore: cast_nullable_to_non_nullable
-as Map<int, String>,
+datum: null == datum ? _self.datum : datum // ignore: cast_nullable_to_non_nullable
+as DateTime,nabidka: null == nabidka ? _self._nabidka : nabidka // ignore: cast_nullable_to_non_nullable
+as List<Jidlo>,
   ));
 }
 
