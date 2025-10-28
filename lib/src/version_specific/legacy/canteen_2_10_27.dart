@@ -32,7 +32,7 @@ import 'package:html/parser.dart' as parser;
 /// Reprezentuje kantýnu verze 2.10.27
 ///
 /// **Všechny metody v případě chyby vrací [Future] s chybovou hláškou.**
-class Canteen2v10v27 extends Canteen {
+class Canteen2v10v27 extends legacy.Canteen {
   /// icanteen v této verzi nemá uživatelské jméno
   String username = "";
   @override

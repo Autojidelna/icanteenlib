@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 import 'package:dotenv/dotenv.dart';
 
 DotEnv? envSecrets;
-Canteen? canteenInstance;
+legacy.Canteen? canteenInstance;
 Future<bool>? prihlaseno;
 Future<legacy.Jidelnicek>? jidelnicek;
 Future<legacy.Jidelnicek>? druhaVydejnaJidelnicek;
@@ -20,7 +20,7 @@ Future<legacy.Uzivatel> ziskatUzivatele() async {
 
 Future<legacy.Uzivatel> _ziskatUzivatele() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
-  canteenInstance ??= Canteen(envSecrets!["URL"]!);
+  canteenInstance ??= legacy.Canteen(envSecrets!["URL"]!);
   return canteenInstance!.ziskejUzivatele();
 }
 
@@ -31,7 +31,7 @@ Future<legacy.Jidelnicek> ziskatJidelnicek() async {
 
 Future<legacy.Jidelnicek> _ziskatJidelnicek() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
-  canteenInstance ??= Canteen(envSecrets!["URL"]!);
+  canteenInstance ??= legacy.Canteen(envSecrets!["URL"]!);
   DateTime funkcniDatum = date;
   canteenInstance!.vydejna = 1;
   return await canteenInstance!.jidelnicekDen(den: funkcniDatum);
@@ -44,7 +44,7 @@ Future<legacy.Jidelnicek> ziskatDruhaVydejnaJidelnicek() async {
 
 Future<legacy.Jidelnicek> _ziskatDruhaVydejnaJidelnicek() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
-  canteenInstance ??= Canteen(envSecrets!["URL"]!);
+  canteenInstance ??= legacy.Canteen(envSecrets!["URL"]!);
   DateTime funkcniDatum = date;
   canteenInstance!.vydejna = 2;
   return await canteenInstance!.jidelnicekDen(den: funkcniDatum);
@@ -57,7 +57,7 @@ Future<List<legacy.Jidelnicek>> ziskatJidelnicekMesic() async {
 
 Future<List<legacy.Jidelnicek>> _ziskatJidelnicekMesic() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
-  canteenInstance ??= Canteen(envSecrets!["URL"]!);
+  canteenInstance ??= legacy.Canteen(envSecrets!["URL"]!);
   canteenInstance!.vydejna = 1;
   List<legacy.Jidelnicek> jidelnickyProMesic = await canteenInstance!.jidelnicekMesic();
   return jidelnickyProMesic;
@@ -70,7 +70,7 @@ Future<bool> prihlasitSe() async {
 
 Future<bool> _prihlasitSe() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
-  canteenInstance ??= Canteen(envSecrets!["URL"]!);
+  canteenInstance ??= legacy.Canteen(envSecrets!["URL"]!);
   if (canteenInstance!.prihlasen) return true;
   return await canteenInstance!.login(envSecrets!["USER"]!, envSecrets!["PASS"]!);
 }

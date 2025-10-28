@@ -23,7 +23,7 @@ SOFTWARE.
 */
 import 'package:icanteenlib/legacy.dart' as legacy;
 import 'package:icanteenlib/canteenlib.dart';
-import 'canteen_versions.dart';
+import 'legacy_canteen_versions.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
