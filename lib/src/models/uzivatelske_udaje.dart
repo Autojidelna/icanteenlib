@@ -11,7 +11,7 @@ sealed class UzivatelskeUdaje with _$UzivatelskeUdaje {
     @JsonKey(name: _Keys.prijmeni) String? prijmeni,
     @JsonKey(name: _Keys.datumNarozeni) String? datumNarozeni,
     @JsonKey(name: _Keys.kategorie) String? kategorie,
-    @JsonKey(name: _Keys.skupina) String? slupina,
+    @JsonKey(name: _Keys.skupina) String? skupina,
     @JsonKey(name: _Keys.trida) String? trida,
     @JsonKey(name: _Keys.osobniCislo) String? osobniCislo,
     @JsonKey(name: _Keys.evidencniCislo) String? evidencniCislo,
