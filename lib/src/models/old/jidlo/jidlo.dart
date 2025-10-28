@@ -1,4 +1,4 @@
-import 'package:icanteenlib/canteenlib.dart';
+import 'package:icanteenlib/legacy.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/jidlo.freezed.dart';

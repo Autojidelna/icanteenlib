@@ -22,11 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import 'package:html/parser.dart' as parser;
-import 'package:html/dom.dart' as dom;
+import 'package:icanteenlib/legacy.dart' as legacy;
+import 'package:icanteenlib/canteenlib.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:icanteenlib/canteenlib.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:html/parser.dart' as parser;
 
 /// Reprezentuje kantýnu verze 2.10.27
 ///
@@ -51,7 +52,7 @@ class Canteen2v10v27 extends Canteen {
   Canteen2v10v27(super.url);
 
   @override
-  Future<Uzivatel> ziskejUzivatele() async {
+  Future<legacy.Uzivatel> ziskejUzivatele() async {
     firstRequest = false;
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     String res;
@@ -123,7 +124,7 @@ class Canteen2v10v27 extends Canteen {
       prijmeni = null;
     }
 
-    return Uzivatel(
+    return legacy.Uzivatel(
       jmeno: jmeno,
       prijmeni: prijmeni,
       kategorie: kategorie,
@@ -226,7 +227,7 @@ class Canteen2v10v27 extends Canteen {
   }
 
   @override
-  Future<Jidelnicek> jidelnicekDen({DateTime? den}) async {
+  Future<legacy.Jidelnicek> jidelnicekDen({DateTime? den}) async {
     if (!prihlasen) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
@@ -271,7 +272,7 @@ class Canteen2v10v27 extends Canteen {
       return Future.error("Obědy nenalezeny - HTML PARSING ERROR");
     }
 
-    List<Jidlo> jidla = <Jidlo>[];
+    List<legacy.Jidlo> jidla = <legacy.Jidlo>[];
 
     for (dom.Element obed in jidelnicekData.children[0].children) {
       // formátování do třídy
@@ -285,7 +286,7 @@ class Canteen2v10v27 extends Canteen {
         bool objednano = textNaTlacitku.contains("zrušit");
         bool lzeObjednat = !textNaTlacitku.contains("nelze");
         jidla.add(
-          Jidlo(
+          legacy.Jidlo(
             nazev: nazev,
             objednano: objednano,
             varianta: varianta,
@@ -295,7 +296,7 @@ class Canteen2v10v27 extends Canteen {
             den: den,
             burzaUrl: null, //verze 2.10 nemá burzu
             naBurze: false, //verze 2.10 nemá burzu
-            alergeny: <Alergen>[],
+            alergeny: <legacy.Alergen>[],
             kategorizovano: parseJidlo(nazev),
           ),
           // KONEC formátování do třídy
@@ -305,11 +306,11 @@ class Canteen2v10v27 extends Canteen {
       }
     }
 
-    return Jidelnicek(den, jidla, vydejny: vydejny);
+    return legacy.Jidelnicek(den, jidla, vydejny: vydejny);
   }
 
   @override
-  Future<Jidelnicek> objednat(Jidlo jidlo) async {
+  Future<legacy.Jidelnicek> objednat(legacy.Jidlo jidlo) async {
     if (!prihlasen) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }

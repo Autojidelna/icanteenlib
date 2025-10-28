@@ -1,34 +1,35 @@
 import 'dart:async';
 
 import 'package:icanteenlib/canteenlib.dart';
+import 'package:icanteenlib/legacy.dart' as legacy;
 import 'package:test/test.dart';
 import 'package:dotenv/dotenv.dart';
 
 DotEnv? envSecrets;
 Canteen? canteenInstance;
 Future<bool>? prihlaseno;
-Future<Jidelnicek>? jidelnicek;
-Future<Jidelnicek>? druhaVydejnaJidelnicek;
-Future<List<Jidelnicek>>? jidelnicekMesic;
-Future<Uzivatel>? uzivatel;
+Future<legacy.Jidelnicek>? jidelnicek;
+Future<legacy.Jidelnicek>? druhaVydejnaJidelnicek;
+Future<List<legacy.Jidelnicek>>? jidelnicekMesic;
+Future<legacy.Uzivatel>? uzivatel;
 DateTime date = DateTime(2025, 11, 4);
-Future<Uzivatel> ziskatUzivatele() async {
+Future<legacy.Uzivatel> ziskatUzivatele() async {
   uzivatel ??= _ziskatUzivatele();
   return uzivatel!;
 }
 
-Future<Uzivatel> _ziskatUzivatele() async {
+Future<legacy.Uzivatel> _ziskatUzivatele() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
   canteenInstance ??= Canteen(envSecrets!["URL"]!);
   return canteenInstance!.ziskejUzivatele();
 }
 
-Future<Jidelnicek> ziskatJidelnicek() async {
+Future<legacy.Jidelnicek> ziskatJidelnicek() async {
   jidelnicek ??= _ziskatJidelnicek();
   return jidelnicek!;
 }
 
-Future<Jidelnicek> _ziskatJidelnicek() async {
+Future<legacy.Jidelnicek> _ziskatJidelnicek() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
   canteenInstance ??= Canteen(envSecrets!["URL"]!);
   DateTime funkcniDatum = date;
@@ -36,12 +37,12 @@ Future<Jidelnicek> _ziskatJidelnicek() async {
   return await canteenInstance!.jidelnicekDen(den: funkcniDatum);
 }
 
-Future<Jidelnicek> ziskatDruhaVydejnaJidelnicek() async {
+Future<legacy.Jidelnicek> ziskatDruhaVydejnaJidelnicek() async {
   druhaVydejnaJidelnicek ??= _ziskatDruhaVydejnaJidelnicek();
   return druhaVydejnaJidelnicek!;
 }
 
-Future<Jidelnicek> _ziskatDruhaVydejnaJidelnicek() async {
+Future<legacy.Jidelnicek> _ziskatDruhaVydejnaJidelnicek() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
   canteenInstance ??= Canteen(envSecrets!["URL"]!);
   DateTime funkcniDatum = date;
@@ -49,16 +50,16 @@ Future<Jidelnicek> _ziskatDruhaVydejnaJidelnicek() async {
   return await canteenInstance!.jidelnicekDen(den: funkcniDatum);
 }
 
-Future<List<Jidelnicek>> ziskatJidelnicekMesic() async {
+Future<List<legacy.Jidelnicek>> ziskatJidelnicekMesic() async {
   jidelnicekMesic ??= _ziskatJidelnicekMesic();
   return jidelnicekMesic!;
 }
 
-Future<List<Jidelnicek>> _ziskatJidelnicekMesic() async {
+Future<List<legacy.Jidelnicek>> _ziskatJidelnicekMesic() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
   canteenInstance ??= Canteen(envSecrets!["URL"]!);
   canteenInstance!.vydejna = 1;
-  List<Jidelnicek> jidelnickyProMesic = await canteenInstance!.jidelnicekMesic();
+  List<legacy.Jidelnicek> jidelnickyProMesic = await canteenInstance!.jidelnicekMesic();
   return jidelnickyProMesic;
 }
 
@@ -150,9 +151,9 @@ void main() {
         await prihlasitSe();
         if (canteenInstance!.missingFeatures.contains(Features.jidelnicekDen)) return;
         await ziskatJidelnicek();
-        Jidelnicek? localJidelnicek = await jidelnicek;
+        legacy.Jidelnicek? localJidelnicek = await jidelnicek;
         if (localJidelnicek == null) return;
-        expect(localJidelnicek == Jidelnicek.fromJson(localJidelnicek.toJson()), true);
+        expect(localJidelnicek == legacy.Jidelnicek.fromJson(localJidelnicek.toJson()), true);
       });
     });
     group('Jídelníček, druhá výdejna:', () {
