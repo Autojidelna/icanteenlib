@@ -35,7 +35,7 @@ class Canteen2v19v13 extends Canteen {
   Map<String, String> cookies = {"JSESSIONID": "", "XSRF-TOKEN": ""};
 
   @override
-  get missingFeatures => <Features>[Features.jidelnicekMesic, Features.burzaAmount, Features.viceVydejen];
+  get missingFeatures => <Features>[Features.vsechnyJidelnicky, Features.burzaAmount, Features.vydejny];
 
   /// Je uživatel přihlášen?
   @override
