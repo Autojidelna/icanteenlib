@@ -18,6 +18,7 @@
   - Nová třída `FeatureSupport`
     - Obsahuje seznamy `missingInCode` a `unsupportedByCanteen`
     - Přidány pomocné metody `isAvailable()`, `isImplemented()` a `isSupported()`
+  - Staré třídy dostupné na `package:icanteen/legacy.dart`
 
 ## 4.2.2
 

@@ -21,12 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+import 'package:icanteenlib/legacy.dart' as legacy;
 import 'package:icanteenlib/canteenlib.dart';
-
 import 'canteen_versions.dart';
+
 import 'package:http/http.dart' as http;
-import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart' as dom;
+import 'package:html/parser.dart' as parser;
 
 class Canteen {
   /// Seznam chybějících funkcí pro danou verzi iCanteenu - funkce, které nejsou ve vanilla webové verzi iCanteenu nebo nejsou podporovány
@@ -58,7 +59,7 @@ class Canteen {
   }
 
   ///zpracuje jídlo a rozdělí ho na kategorie (hlavní jídlo, polévka, salátový bar, pití...)
-  JidloKategorizovano parseJidlo(String jidlo) {
+  legacy.JidloKategorizovano parseJidlo(String jidlo) {
     List<String> cistyListJidel = jidlo.split(',');
     for (int i = 0; i < cistyListJidel.length; i++) {
       cistyListJidel[i] = cistyListJidel[i].trimLeft();
@@ -195,7 +196,7 @@ class Canteen {
       //make first letter of salatovyBar capital
       salatovyBar = salatovyBar.substring(0, 1).toUpperCase() + salatovyBar.substring(1);
     }
-    return JidloKategorizovano(polevka: polevka, hlavniJidlo: hlavniJidlo, salatovyBar: salatovyBar, piti: piti, ostatni: ostatni);
+    return legacy.JidloKategorizovano(polevka: polevka, hlavniJidlo: hlavniJidlo, salatovyBar: salatovyBar, piti: piti, ostatni: ostatni);
   }
 
   String cleanString(String string) {
@@ -241,7 +242,7 @@ class Canteen {
   }
 
   /// Získá verzi třídy pro verzi icanteenu
-  Future<bool> _spravovatelVerzi({LoginData? loginData}) async {
+  Future<bool> _spravovatelVerzi({legacy.LoginData? loginData}) async {
     _canteenInstance = _getClosestCanteenVersion(_verze!)(_url);
     if (loginData != null) {
       try {
@@ -269,7 +270,7 @@ class Canteen {
   }
 
   /// Získá první instanci (případně ji přihlásí) a zjistí verzi
-  Future<bool> _ziskatInstanciProVerzi({LoginData? loginData}) async {
+  Future<bool> _ziskatInstanciProVerzi({legacy.LoginData? loginData}) async {
     //získání verze
     String webHtml = '';
     RegExp versionPattern = RegExp(r'>iCanteen\s\d+\.\d+\.\d+\s\|');
@@ -323,7 +324,7 @@ class Canteen {
   /// - [bool] ve [Future], v případě přihlášení `true`, v případě špatného hesla `false`
   /// - [Future] s chybou, pokud se nepodařilo přihlásit z jiného důvodu ([CanteenLibExceptions])
   Future<bool> login(String user, String password) async {
-    return _ziskatInstanciProVerzi(loginData: LoginData(user, password));
+    return _ziskatInstanciProVerzi(loginData: legacy.LoginData(user, password));
   }
 
   /*--------funkce specifické pro verze--------*/
@@ -335,11 +336,11 @@ class Canteen {
   /// - [List] s [Jidelnicek], který neobsahuje ceny
   ///
   /// __Lze použít bez přihlášení__
-  Future<List<Jidelnicek>> verejnyJidelnicek() async {
+  Future<List<legacy.Jidelnicek>> verejnyJidelnicek() async {
     if (_canteenInstance != null) {
       return _canteenInstance!.verejnyJidelnicek();
     }
-    if (_canteenInstance!.missingFeatures.contains(Features.jidelnicekBezCen)) {
+    if (_canteenInstance!.missingFeatures.contains(Features.verejnyJidelnicek)) {
       return Future.error(CanteenLibExceptions.featureNepodporovana);
     }
     try {
@@ -359,7 +360,7 @@ class Canteen {
   ///
   /// Výstup:
   /// - [Jidelnicek] obsahující detaily, které vidí přihlášený uživatel
-  Future<Jidelnicek> jidelnicekDen({DateTime? den}) async {
+  Future<legacy.Jidelnicek> jidelnicekDen({DateTime? den}) async {
     if (_canteenInstance == null) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
@@ -375,22 +376,22 @@ class Canteen {
   ///
   /// Výstup:
   /// - list instancí [Jidelnicek] obsahující detaily, které vidí přihlášený uživatel
-  Future<List<Jidelnicek>> jidelnicekMesic() async {
+  Future<List<legacy.Jidelnicek>> jidelnicekMesic() async {
     if (_canteenInstance == null) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
-    if (_canteenInstance!.missingFeatures.contains(Features.jidelnicekMesic)) {
+    if (_canteenInstance!.missingFeatures.contains(Features.vsechnyJidelnicky)) {
       return Future.error(CanteenLibExceptions.featureNepodporovana);
     }
     return _canteenInstance!.jidelnicekMesic();
   }
 
   /// Vrátí informace o uživateli ve formě instance [Uzivatel]
-  Future<Uzivatel> ziskejUzivatele() async {
+  Future<legacy.Uzivatel> ziskejUzivatele() async {
     if (_canteenInstance == null) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
-    if (_canteenInstance!.missingFeatures.contains(Features.ziskatUzivatele)) {
+    if (_canteenInstance!.missingFeatures.contains(Features.uzivatelskeUdaje)) {
       return Future.error(CanteenLibExceptions.featureNepodporovana);
     }
     return _canteenInstance!.ziskejUzivatele();
@@ -403,7 +404,7 @@ class Canteen {
   ///
   /// Výstup:
   /// - Aktualizovaná instance [Jidlo] tohoto jídla
-  Future<Jidelnicek> objednat(Jidlo jidlo) async {
+  Future<legacy.Jidelnicek> objednat(legacy.Jidlo jidlo) async {
     if (_canteenInstance == null) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
@@ -417,7 +418,7 @@ class Canteen {
   ///
   /// Výstup:
   /// - Aktualizovaná instance [Jidlo] tohoto jídla NEBO [Future] jako chyba
-  Future<Jidelnicek> doBurzy(Jidlo jidlo, {int amount = 1}) async {
+  Future<legacy.Jidelnicek> doBurzy(legacy.Jidlo jidlo, {int amount = 1}) async {
     if (_canteenInstance == null) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
@@ -431,7 +432,7 @@ class Canteen {
   ///
   /// Výstup:
   /// - List instancí [Burza], každá obsahuje informace o jídle v burze
-  Future<List<Burza>> ziskatBurzu() async {
+  Future<List<legacy.Burza>> ziskatBurzu() async {
     if (_canteenInstance == null) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
@@ -448,7 +449,7 @@ class Canteen {
   ///
   /// Výstup:
   /// - [bool], `true`, pokud bylo jídlo úspěšně objednáno z burzy, jinak `Exception`
-  Future<Jidelnicek> objednatZBurzy(Burza b) async {
+  Future<legacy.Jidelnicek> objednatZBurzy(legacy.Burza b) async {
     if (_canteenInstance == null) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }

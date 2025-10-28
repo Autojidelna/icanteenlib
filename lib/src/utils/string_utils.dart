@@ -36,6 +36,7 @@ extension StringUtils on String {
     return split('').map((c) => map[c] ?? c).join();
   }
 
+  /// Odstraní diakritická znaménka, mezery nahradí [_] a odstraní cokoliv co není [^a-z], [0-9] nebo [_]
   String normalize() {
     return removeDiacritics()
         .replaceAll(RegExp(r'\s+'), '_') // Replace all spaces with exactly 1 underscore, even if there are multiple spaces after each other

@@ -22,8 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import 'package:http/http.dart' as http;
+import 'package:icanteenlib/legacy.dart' as legacy;
 import 'package:icanteenlib/canteenlib.dart';
+
+import 'package:http/http.dart' as http;
 
 /// Reprezentuje kantýnu verze 2.19.13
 ///
@@ -44,7 +46,7 @@ class Canteen2v19v13 extends Canteen {
   Canteen2v19v13(super.url);
 
   @override
-  Future<Uzivatel> ziskejUzivatele() async {
+  Future<legacy.Uzivatel> ziskejUzivatele() async {
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     String res;
     try {
@@ -76,7 +78,7 @@ class Canteen2v19v13 extends Canteen {
     var specSymbol = specMatch?.group(0) ?? "";
     var kredit = kreditMatch ?? 0.0;
 
-    return Uzivatel(
+    return legacy.Uzivatel(
       jmeno: jmeno,
       prijmeni: prijmeni,
       kategorie: kategorie,
@@ -184,7 +186,7 @@ class Canteen2v19v13 extends Canteen {
   }
 
   @override
-  Future<List<Jidelnicek>> verejnyJidelnicek() async {
+  Future<List<legacy.Jidelnicek>> verejnyJidelnicek() async {
     String res;
     try {
       res = await _getRequest("/");
@@ -196,7 +198,7 @@ class Canteen2v19v13 extends Canteen {
       dotAll: true,
     ).allMatches(res).toList();
 
-    List<Jidelnicek> jidelnicek = [];
+    List<legacy.Jidelnicek> jidelnicek = [];
 
     for (var t in reg) {
       // projedeme každý den individuálně
@@ -213,7 +215,7 @@ class Canteen2v19v13 extends Canteen {
         ).allMatches(jidlo).toList(); // získáme jednotlivá jídla pro den / VERZE 2.10
       }
 
-      List<Jidlo> jidla = [];
+      List<legacy.Jidlo> jidla = [];
 
       for (var jidloNaDen in jidlaDenne) {
         // projedeme vsechna jidla
@@ -230,7 +232,7 @@ class Canteen2v19v13 extends Canteen {
         ).firstMatch(s)!.group(1).toString(); // Jídlo
 
         jidla.add(
-          Jidlo(
+          legacy.Jidlo(
             nazev: hlavni,
             objednano: false,
             varianta: vydejna!.group(0).toString(),
@@ -241,13 +243,13 @@ class Canteen2v19v13 extends Canteen {
           ),
         );
       }
-      jidelnicek.add(Jidelnicek(den, jidla));
+      jidelnicek.add(legacy.Jidelnicek(den, jidla));
     }
     return jidelnicek;
   }
 
   @override
-  Future<Jidelnicek> jidelnicekDen({DateTime? den}) async {
+  Future<legacy.Jidelnicek> jidelnicekDen({DateTime? den}) async {
     if (!prihlasen) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
@@ -264,7 +266,7 @@ class Canteen2v19v13 extends Canteen {
     }
 
     var obedDen = DateTime.parse(RegExp(r'(?<=day-).+?(?=")', dotAll: true).firstMatch(res)!.group(0).toString());
-    var jidla = <Jidlo>[];
+    var jidla = <legacy.Jidlo>[];
     var jidelnicek = RegExp(r'(?<=<div class="jidWrapLeft">).+?((fa-clock)|(fa-ban))', dotAll: true).allMatches(res).toList();
     for (var obed in jidelnicek) {
       // formátování do třídy
@@ -283,11 +285,11 @@ class Canteen2v19v13 extends Canteen {
       ).firstMatch(obedFormated)!.group(1).toString().replaceAll(' ,', ",").replaceAll(" <br>", "").replaceAll("\n", "");
       var alergenyList = RegExp(r"""<span(?: |\n).+?title="(.+?)".+?>(\d{1,2})""").allMatches(jidlaProDen).toList();
 
-      var alergeny = alergenyList.map<Alergen>((e) {
+      var alergeny = alergenyList.map<legacy.Alergen>((e) {
         var jmeno = RegExp(r'<b>(.+?)<\/b>').firstMatch(e.group(1).toString())!.group(1);
         var popis = RegExp(r'<\/b> - (.+)').firstMatch(e.group(1).toString())?.group(1);
         var kod = int.parse(e.group(2).toString());
-        return Alergen(nazev: jmeno!, kod: kod, popis: popis);
+        return legacy.Alergen(nazev: jmeno!, kod: kod, popis: popis);
       }).toList();
 
       var vydejna = RegExp(r'(?<=<span class="smallBoldTitle button-link-align">).+?(?=<)').firstMatch(obedFormated)!.group(0).toString();
@@ -309,7 +311,7 @@ class Canteen2v19v13 extends Canteen {
       }
       var jidloJmeno = RegExp(r'(.+?)(?=<sub>)').firstMatch(jidlaProDen)!.group(1).toString();
       jidla.add(
-        Jidlo(
+        legacy.Jidlo(
           nazev: jidloJmeno.replaceAll(r' (?=[^a-zA-ZěščřžýáíéĚŠČŘŽÝÁÍÉŤŇťň])', ''),
           objednano: objednano,
           varianta: vydejna,
@@ -325,11 +327,11 @@ class Canteen2v19v13 extends Canteen {
       // KONEC formátování do třídy
     }
 
-    return Jidelnicek(obedDen, jidla);
+    return legacy.Jidelnicek(obedDen, jidla);
   }
 
   @override
-  Future<Jidelnicek> objednat(Jidlo jidlo) async {
+  Future<legacy.Jidelnicek> objednat(legacy.Jidlo jidlo) async {
     if (!prihlasen) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
@@ -349,7 +351,7 @@ class Canteen2v19v13 extends Canteen {
   }
 
   @override
-  Future<Jidelnicek> doBurzy(Jidlo jidlo, {int amount = 1}) async {
+  Future<legacy.Jidelnicek> doBurzy(legacy.Jidlo jidlo, {int amount = 1}) async {
     if (!prihlasen) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
@@ -373,9 +375,9 @@ class Canteen2v19v13 extends Canteen {
   }
 
   @override
-  Future<List<Burza>> ziskatBurzu() async {
+  Future<List<legacy.Burza>> ziskatBurzu() async {
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
-    List<Burza> burza = [];
+    List<legacy.Burza> burza = [];
 
     String res;
     try {
@@ -404,7 +406,7 @@ class Canteen2v19v13 extends Canteen {
         var pocet = int.parse(data[4].group(0)!.replaceAll(" ks", ""));
         var url = RegExp(r"(?<=')db.+?(?=')").firstMatch(bu)!.group(0)!.replaceAll("&amp;", "&");
 
-        var jidlo = Burza(den: datum, varianta: varianta, nazev: nazev, pocet: pocet, url: url);
+        var jidlo = legacy.Burza(den: datum, varianta: varianta, nazev: nazev, pocet: pocet, url: url);
         burza.add(jidlo);
       }
     }
@@ -412,7 +414,7 @@ class Canteen2v19v13 extends Canteen {
   }
 
   @override
-  Future<Jidelnicek> objednatZBurzy(Burza b) async {
+  Future<legacy.Jidelnicek> objednatZBurzy(legacy.Burza b) async {
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     try {
       await _getRequest("/faces/secured/${b.url!}");

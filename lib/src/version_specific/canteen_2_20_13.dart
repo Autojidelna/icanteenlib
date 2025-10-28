@@ -22,11 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import 'package:html/parser.dart' as parser;
-import 'package:html/dom.dart' as dom;
-import 'package:http/http.dart' as http;
+import 'package:icanteenlib/legacy.dart' as legacy;
 import 'package:icanteenlib/canteenlib.dart';
 import 'package:icanteenlib/src/utils/string_utils.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:html/dom.dart' as dom;
+import 'package:html/parser.dart' as parser;
 
 /// Reprezentuje kantýnu verze 2.20.13
 ///
@@ -81,7 +83,7 @@ class Canteen2v20v13 extends Canteen {
   }
 
   @override
-  Future<Uzivatel> ziskejUzivatele() async {
+  Future<legacy.Uzivatel> ziskejUzivatele() async {
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     String res;
     try {
@@ -97,7 +99,7 @@ class Canteen2v20v13 extends Canteen {
     String kredit = kreditElement?.text ?? '0.0';
     kredit = kredit.replaceAll(RegExp(r'[^0-9,.-]'), '').replaceAll(',', '.');
 
-    return Uzivatel(
+    return legacy.Uzivatel(
       uzivatelskeJmeno: _username,
       jmeno: userData[UzivatelskeUdajeKeys.jmeno],
       prijmeni: userData[UzivatelskeUdajeKeys.prijmeni],
@@ -206,7 +208,7 @@ class Canteen2v20v13 extends Canteen {
   }
 
   @override
-  Future<List<Jidelnicek>> verejnyJidelnicek() async {
+  Future<List<legacy.Jidelnicek>> verejnyJidelnicek() async {
     String res;
     try {
       res = await _getRequest("/");
@@ -218,7 +220,7 @@ class Canteen2v20v13 extends Canteen {
       dotAll: true,
     ).allMatches(res).toList();
 
-    List<Jidelnicek> jidelnicek = [];
+    List<legacy.Jidelnicek> jidelnicek = [];
 
     for (var t in reg) {
       // projedeme každý den individuálně
@@ -235,7 +237,7 @@ class Canteen2v20v13 extends Canteen {
         ).allMatches(jidlo).toList(); // získáme jednotlivá jídla pro den / VERZE 2.10
       }
 
-      List<Jidlo> jidla = [];
+      List<legacy.Jidlo> jidla = [];
 
       for (var jidloNaDen in jidlaDenne) {
         // projedeme vsechna jidla
@@ -252,7 +254,7 @@ class Canteen2v20v13 extends Canteen {
         ).firstMatch(s)!.group(1).toString(); // Jídlo
 
         jidla.add(
-          Jidlo(
+          legacy.Jidlo(
             nazev: hlavni,
             objednano: false,
             varianta: vydejna!.group(0).toString(),
@@ -263,12 +265,12 @@ class Canteen2v20v13 extends Canteen {
           ),
         );
       }
-      jidelnicek.add(Jidelnicek(den, jidla));
+      jidelnicek.add(legacy.Jidelnicek(den, jidla));
     }
     return jidelnicek;
   }
 
-  Jidlo _parsePrihlasenyJidlo(RegExpMatch obed) {
+  legacy.Jidlo _parsePrihlasenyJidlo(RegExpMatch obed) {
     // formátování do třídy
     var obedFormated = obed.group(0).toString().replaceAll(RegExp(r'(   )+|([^>a-z]\n)'), '');
     var objednano = obedFormated.contains("Máte objednáno");
@@ -306,7 +308,7 @@ class Canteen2v20v13 extends Canteen {
     jidlaProDen = parseHtmlString(jidlaProDen);
     jidlaProDen = cleanString(jidlaProDen);
     String nazevjidla = jidlaProDen;
-    List<Alergen> alergenyList = [];
+    List<legacy.Alergen> alergenyList = [];
 
     if (jidlaProDen.contains('(')) {
       nazevjidla = jidlaProDen.split('(')[0].trim();
@@ -315,11 +317,11 @@ class Canteen2v20v13 extends Canteen {
       List<String> alergenyListRaw = alergeny.split(', ');
       int mensiDelka = alergenyListRaw.length < alergenyDetailMatch.length ? alergenyListRaw.length : alergenyDetailMatch.length;
       for (int i = 0; i < mensiDelka; i++) {
-        alergenyList.add(Alergen(nazev: alergenyListRaw[i], popis: alergenyDetailMatch[i].group(1)));
+        alergenyList.add(legacy.Alergen(nazev: alergenyListRaw[i], popis: alergenyDetailMatch[i].group(1)));
       }
     }
 
-    return Jidlo(
+    return legacy.Jidlo(
       nazev: nazevjidla,
       objednano: objednano,
       varianta: vydejna,
@@ -335,7 +337,7 @@ class Canteen2v20v13 extends Canteen {
   }
 
   @override
-  Future<Jidelnicek> jidelnicekDen({DateTime? den}) async {
+  Future<legacy.Jidelnicek> jidelnicekDen({DateTime? den}) async {
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     den ??= DateTime.now();
 
@@ -356,17 +358,17 @@ class Canteen2v20v13 extends Canteen {
       vydejny[int.parse(match.group(1)!)] = match.group(2)!.trim();
     }
 
-    var jidla = <Jidlo>[];
+    var jidla = <legacy.Jidlo>[];
     var jidelnicek = RegExp(r'<div class="jidelnicekItemWrapper">([\s\S]+?)</div>\s*</div>', dotAll: true).allMatches(res).toList();
     for (var obed in jidelnicek) {
       jidla.add(_parsePrihlasenyJidlo(obed));
     }
 
-    return Jidelnicek(den, jidla, vydejny: vydejny);
+    return legacy.Jidelnicek(den, jidla, vydejny: vydejny);
   }
 
   @override
-  Future<List<Jidelnicek>> jidelnicekMesic() async {
+  Future<List<legacy.Jidelnicek>> jidelnicekMesic() async {
     if (!prihlasen) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
@@ -386,12 +388,12 @@ class Canteen2v20v13 extends Canteen {
       vydejny[int.parse(match.group(2)!)] = match.group(3)!;
     }
 
-    var jidla = <Jidlo>[];
+    var jidla = <legacy.Jidlo>[];
     var jidelnicek = RegExp(r'<div class="jidelnicekItemWrapper">([\s\S]+?)</div>\s*</div>', dotAll: true).allMatches(res).toList();
     for (var obed in jidelnicek) {
       jidla.add(_parsePrihlasenyJidlo(obed));
     }
-    Map<DateTime, List<Jidlo>> jidlaMap = {};
+    Map<DateTime, List<legacy.Jidlo>> jidlaMap = {};
     for (var jidlo in jidla) {
       if (jidlaMap.containsKey(jidlo.den)) {
         jidlaMap[jidlo.den]!.add(jidlo);
@@ -399,15 +401,15 @@ class Canteen2v20v13 extends Canteen {
         jidlaMap[jidlo.den] = [jidlo];
       }
     }
-    List<Jidelnicek> jidelnicekList = [];
+    List<legacy.Jidelnicek> jidelnicekList = [];
     for (var jidelnicek in jidlaMap.values) {
-      jidelnicekList.add(Jidelnicek(jidelnicek[0].den, jidelnicek, vydejny: vydejny));
+      jidelnicekList.add(legacy.Jidelnicek(jidelnicek[0].den, jidelnicek, vydejny: vydejny));
     }
     return jidelnicekList;
   }
 
   @override
-  Future<Jidelnicek> objednat(Jidlo jidlo) async {
+  Future<legacy.Jidelnicek> objednat(legacy.Jidlo jidlo) async {
     if (!prihlasen) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     }
