@@ -36,7 +36,7 @@ import 'package:html/parser.dart' as parser;
 /// Reprezentuje kantýnu verze 2.18.19
 ///
 /// **Všechny metody v případě chyby vrací [Future] s chybovou hláškou.**
-class Canteen2v18v19 extends Canteen {
+class Canteen2v18v19 extends legacy.Canteen {
   /// Sušenky potřebné pro komunikaci
   Map<String, String> cookies = {"JSESSIONID": "", "XSRF-TOKEN": ""};
 

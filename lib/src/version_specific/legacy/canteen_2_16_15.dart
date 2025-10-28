@@ -1,7 +1,7 @@
 /*
  MIT License
 
-Copyright (c) 2025 Matěj Verhaegen and contributors
+Copyright (c) 2022-2023 Matyáš Caras, Tomáš Protiva and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,102 +24,91 @@ SOFTWARE.
 
 import 'package:icanteenlib/legacy.dart' as legacy;
 import 'package:icanteenlib/canteenlib.dart';
-import 'package:icanteenlib/src/utils/utils.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:html/dom.dart' as dom;
-import 'package:html/parser.dart' as parser;
 
-/// Reprezentuje kantýnu verze 2.20.13
+/*  SUPPORT INFO
+
+Tato verze je testována a podporována na webu jidelna.cza-hu.cz
+není garantováno, že bude fungovat na jiných stránkách.
+
+*/
+/// Reprezentuje kantýnu verze **2.16.15**
 ///
 /// **Všechny metody v případě chyby vrací [Future] s chybovou hláškou.**
-class Canteen2v20v13 extends Canteen {
-  /// Sušenky potřebné pro komunikaci
-  Map<String, String> cookies = {"JSESSIONID": "", "XSRF-TOKEN": ""};
-
-  String? _username;
+class Canteen2v16v15 extends legacy.Canteen {
+  /// icanteen je v této verzi buglý, takže je potřeba si uživatelské jméno pamatovat
+  String username = "";
   late String _url;
 
   @override
-  int vydejna = 1;
+  get missingFeatures => <Features>[Features.burzaAmount, Features.vydejny, Features.alergeny, Features.burza];
 
-  @override
-  get missingFeatures => <Features>[Features.alergeny, Features.burza];
+  /// Sušenky potřebné pro komunikaci
+  Map<String, String> cookies = {"JSESSIONID": "", "XSRF-TOKEN": ""};
 
+  /// Je uživatel přihlášen?
   @override
   bool prihlasen = false;
+  Canteen2v16v15(super.url);
 
-  Canteen2v20v13(super.url);
-
-  Map<UzivatelskeUdajeKeys, String?> _parseUserFields(dom.Document document) {
-    final map = <UzivatelskeUdajeKeys, String?>{};
-
-    for (final dom.Element td in document.querySelectorAll('td')) {
-      if (td.querySelector('table') != null) continue;
-
-      final dom.Element? bold = td.querySelector('b');
-      if (bold != null) {
-        // Get only the text node directly inside <td>, excluding text from nested elements
-        final String directTextNodes = td.nodes.whereType<dom.Text>().map((t) => t.text).join();
-        if (directTextNodes.contains(':')) {
-          final String label = directTextNodes.split(':').first.trim();
-          final String normalized = label.normalize();
-
-          UzivatelskeUdajeKeys? field;
-          try {
-            field = UzivatelskeUdajeKeys.values.firstWhere((f) => f.toString() == normalized);
-          } catch (e) {
-            field = null; // unknown label, skip
-          }
-
-          if (field != null) {
-            map[field] = bold.text.trim().isEmpty ? null : bold.text.trim();
-          }
-        }
-      }
-    }
-
-    return map;
-  }
-
+  /// Vrátí informace o uživateli ve formě instance [Uzivatel]
   @override
   Future<legacy.Uzivatel> ziskejUzivatele() async {
     if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
     String res;
     try {
-      res = await _getRequest("/web/setting");
+      res = await _getRequest("/faces/secured/setting.jsp?terminal=false&keyboard=false&printer=false");
     } catch (e) {
-      return Future.error(e);
+      return Future.error(CanteenLibExceptions.chybaSite);
     }
+    // save r to file
+    if (res.contains("přihlášení uživatele")) {
+      prihlasen = false;
+      return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
+    }
+    var kreditMatch = double.tryParse(
+      RegExp(r' +<span id="Kredit" .+?>(.+?)(?=&)').firstMatch(res)?.group(1)?.replaceAll(",", ".").replaceAll(RegExp(r"[^\w.-]"), "") ?? '0',
+    );
+    var jmenoMatch = RegExp(r'(?<=jméno: <b>).+?(?=<\/b)').firstMatch(res);
+    var prijmeniMatch = RegExp(r'(?<=příjmení: <b>).+?(?=<\/b)').firstMatch(res);
+    var kategorieMatch = RegExp(r'(?<=kategorie: <b>).+?(?=<\/b)').firstMatch(res);
+    var ucetMatch = RegExp(
+      r'účet pro patby do jídelny:\s*<b>(\d+-\d+\/\d+)<\/b>',
+    ).firstMatch(res)?.group(1)?.replaceAll(RegExp(r'<\/?b>'), ''); //odstranit html tag <b>
+    var varMatch = RegExp(r'(?<=variabilní symbol: <b>).+?(?=<\/b)').firstMatch(res);
+    var specMatch = RegExp(r'(?<=specifický symbol: <b>).+?(?=<\/b)').firstMatch(res);
 
-    final dom.Document document = parser.parse(res);
-    final Map<UzivatelskeUdajeKeys, String?> userData = _parseUserFields(document);
-
-    dom.Element? kreditElement = document.getElementById('Kredit');
-    String kredit = kreditElement?.text ?? '0.0';
-    kredit = kredit.replaceAll(RegExp(r'[^0-9,.-]'), '').replaceAll(',', '.');
+    var jmeno = jmenoMatch?.group(0) ?? "";
+    var prijmeni = prijmeniMatch?.group(0) ?? "";
+    var kategorie = kategorieMatch?.group(0) ?? "";
+    var ucet = ucetMatch ?? "";
+    var varSymbol = varMatch?.group(0) ?? "";
+    var specSymbol = specMatch?.group(0) ?? "";
+    var kredit = kreditMatch ?? 0.0;
 
     return legacy.Uzivatel(
-      uzivatelskeJmeno: _username,
-      jmeno: userData[UzivatelskeUdajeKeys.jmeno],
-      prijmeni: userData[UzivatelskeUdajeKeys.prijmeni],
-      kategorie: userData[UzivatelskeUdajeKeys.kategorie],
-      ucetProPlatby: userData[UzivatelskeUdajeKeys.ucetProPlatbyDoJidelny],
-      varSymbol: userData[UzivatelskeUdajeKeys.variabilniSymbol],
-      specSymbol: userData[UzivatelskeUdajeKeys.specifickySymbol],
-      kredit: double.parse(kredit),
+      jmeno: jmeno,
+      prijmeni: prijmeni,
+      kategorie: kategorie,
+      ucetProPlatby: ucet,
+      varSymbol: varSymbol,
+      specSymbol: specSymbol,
+      kredit: kredit,
+      uzivatelskeJmeno: username,
     );
   }
 
   Future<void> _getFirstSession() async {
     _url = url;
     if (url.endsWith("/")) _url = url.substring(0, url.length - 1); // odstranit lomítko
+    http.Response res;
     try {
-      http.Response res = await http.get(Uri.parse(_url));
-      _parseCookies(res.headers['set-cookie']!);
+      res = await http.get(Uri.parse(_url));
     } catch (e) {
       return Future.error(CanteenLibExceptions.chybaSite);
     }
+    _parseCookies(res.headers['set-cookie']!);
   }
 
   /// Převede cookie řetězec z požadavku do mapy
@@ -134,11 +123,12 @@ class Canteen2v20v13 extends Canteen {
 
   @override
   Future<bool> login(String user, String password) async {
-    if (cookies["JSESSIONID"] == "") {
+    username = user;
+    if (cookies["JSESSIONID"] == "" || cookies["XSRF-TOKEN"] == "") {
       try {
         await _getFirstSession();
       } catch (e) {
-        return Future.error(e);
+        return Future.error(CanteenLibExceptions.chybaSite);
       }
     }
     http.Response res;
@@ -171,7 +161,6 @@ class Canteen2v20v13 extends Canteen {
     }
     _parseCookies(res.headers['set-cookie']!);
 
-    _username = user;
     prihlasen = true;
     return true;
   }
@@ -184,7 +173,7 @@ class Canteen2v20v13 extends Canteen {
         Uri.parse(_url + path),
         headers: {
           "Cookie":
-              "JSESSIONID=${cookies["JSESSIONID"]!}; XSRF-TOKEN=${cookies["XSRF-TOKEN"]!}${cookies.containsKey("remember-me") ? "; ${cookies["remember-me"]!};" : ";"}",
+              "JSESSIONID=${cookies["JSESSIONID"]!}; XSRF-TOKEN=${cookies["XSRF-TOKEN"]!}${cookies.containsKey("remember-me") ? "; ${cookies["remember-me"]!}" : ""}",
         },
       );
     } catch (e) {
@@ -222,9 +211,9 @@ class Canteen2v20v13 extends Canteen {
 
     List<legacy.Jidelnicek> jidelnicek = [];
 
-    for (var t in reg) {
+    for (var regMatch in reg) {
       // projedeme každý den individuálně
-      var jidlo = t.group(0).toString(); // převedeme text na něco přehlednějšího
+      var jidlo = regMatch.group(0).toString(); // převedeme text na něco přehlednějšího
       var den = DateTime.parse(RegExp(r'(?<=day-).+?(?=")', dotAll: true).firstMatch(jidlo)!.group(0).toString());
       var jidlaDenne = RegExp(
         r'(?=<div class="container">).+?<\/div>.+?(?=<\/div>)',
@@ -254,15 +243,7 @@ class Canteen2v20v13 extends Canteen {
         ).firstMatch(s)!.group(1).toString(); // Jídlo
 
         jidla.add(
-          legacy.Jidlo(
-            nazev: hlavni,
-            objednano: false,
-            varianta: vydejna!.group(0).toString(),
-            lzeObjednat: false,
-            den: den,
-            naBurze: false,
-            kategorizovano: parseJidlo(hlavni),
-          ),
+          legacy.Jidlo(nazev: hlavni, objednano: false, varianta: vydejna!.group(0).toString(), lzeObjednat: false, den: den, naBurze: false),
         );
       }
       jidelnicek.add(legacy.Jidelnicek(den, jidla));
@@ -275,7 +256,7 @@ class Canteen2v20v13 extends Canteen {
     var obedFormated = obed.group(0).toString().replaceAll(RegExp(r'(   )+|([^>a-z]\n)'), '');
     var objednano = obedFormated.contains("Máte objednáno");
     var lzeObjednat = !(obedFormated.contains("nelze zrušit") || obedFormated.contains("nelze objednat") || obedFormated.contains("nelze změnit"));
-    var obedDen = DateTime.parse(RegExp(r'(?<=day-).+?(?=")', dotAll: true).firstMatch(obedFormated)!.group(0).toString());
+    var obedDen = DateTime.parse(RegExp('day=([^&"]+)', dotAll: true).firstMatch(obedFormated)!.group(1).toString());
 
     var cenaMatch = RegExp(r'((?<=Cena objednaného jídla">).+?(?=&))').firstMatch(obedFormated);
     cenaMatch ??= RegExp(r'(?<=Cena při objednání jídla:&nbsp;).+?(?=&)').firstMatch(obedFormated);
@@ -338,33 +319,28 @@ class Canteen2v20v13 extends Canteen {
 
   @override
   Future<legacy.Jidelnicek> jidelnicekDen({DateTime? den}) async {
-    if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
+    if (!prihlasen) {
+      return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
+    }
+
     den ??= DateTime.now();
 
     String res;
     try {
       res = await _getRequest(
-        "/faces/secured/main.jsp?vydejna=$vydejna&day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false",
+        "/faces/secured/main.jsp?day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false",
       );
     } catch (e) {
       return Future.error(e);
     }
-    final vydejnyRegExp = RegExp(
-      r'''onclick="javascript:location\.replace\('main\.jsp\?vydejna=(\d+)&amp;terminal=false&amp;keyboard=false&amp;printer=false'\);">\s*([\s\S]*?)<\/a>''',
-    );
-    Map<int, String> vydejny = {};
-    Iterable<RegExpMatch> regExpMatch = vydejnyRegExp.allMatches(res);
-    for (RegExpMatch match in regExpMatch) {
-      vydejny[int.parse(match.group(1)!)] = match.group(2)!.trim();
-    }
 
     var jidla = <legacy.Jidlo>[];
-    var jidelnicek = RegExp(r'<div class="jidelnicekItemWrapper">([\s\S]+?)</div>\s*</div>', dotAll: true).allMatches(res).toList();
+    var jidelnicek = RegExp(r'(?<=<div class="jidWrapLeft">).+?((fa-clock)|(fa-ban))', dotAll: true).allMatches(res).toList();
     for (var obed in jidelnicek) {
       jidla.add(_parsePrihlasenyJidlo(obed));
     }
 
-    return legacy.Jidelnicek(den, jidla, vydejny: vydejny);
+    return legacy.Jidelnicek(den, jidla);
   }
 
   @override
@@ -374,22 +350,17 @@ class Canteen2v20v13 extends Canteen {
     }
     String res;
     try {
-      res = await _getRequest("/faces/secured/mobile.jsp");
+      DateTime den = DateTime.now();
+      // replikování komunikace s prohlížečem, v opačném případě nefunguje
+      await _getRequest(
+        "/faces/secured/main.jsp?day=${den.year}-${(den.month < 10) ? "0${den.month}" : den.month}-${(den.day < 10) ? "0${den.day}" : den.day}&terminal=false&printer=false&keyboard=false",
+      );
+      res = await _getRequest("/faces/secured/month.jsp");
     } catch (e) {
       return Future.error(e);
     }
-
-    final vydejnyRegExp = RegExp(
-      r'''onclick\s*=\s*"javascript:location\.replace\('(main|month|mobile)\.jsp\?vydejna=(\d+)&amp;terminal=false&amp;keyboard=false&amp;printer=false'\);"\s*[^>]*>\s*([\s\S]*?)<\/a>''',
-    );
-    Map<int, String> vydejny = {};
-    Iterable<RegExpMatch> regExpMatch = vydejnyRegExp.allMatches(res);
-    for (RegExpMatch match in regExpMatch) {
-      vydejny[int.parse(match.group(2)!)] = match.group(3)!;
-    }
-
     var jidla = <legacy.Jidlo>[];
-    var jidelnicek = RegExp(r'<div class="jidelnicekItemWrapper">([\s\S]+?)</div>\s*</div>', dotAll: true).allMatches(res).toList();
+    var jidelnicek = RegExp(r'(?<=<div class="jidWrapLeft">).+?((fa-clock)|(fa-ban))', dotAll: true).allMatches(res).toList();
     for (var obed in jidelnicek) {
       jidla.add(_parsePrihlasenyJidlo(obed));
     }
@@ -403,7 +374,7 @@ class Canteen2v20v13 extends Canteen {
     }
     List<legacy.Jidelnicek> jidelnicekList = [];
     for (var jidelnicek in jidlaMap.values) {
-      jidelnicekList.add(legacy.Jidelnicek(jidelnicek[0].den, jidelnicek, vydejny: vydejny));
+      jidelnicekList.add(legacy.Jidelnicek(jidelnicek[0].den, jidelnicek));
     }
     return jidelnicekList;
   }
@@ -424,7 +395,78 @@ class Canteen2v20v13 extends Canteen {
       if (isEnumItem(e, CanteenLibExceptions.values)) return Future.error(e);
       return Future.error(CanteenLibExceptions.chybaObjednani);
     }
+    return jidelnicekDen(den: jidlo.den);
+  }
+
+  // TODO: amount not implemented
+  @override
+  Future<legacy.Jidelnicek> doBurzy(legacy.Jidlo jidlo, {int? amount}) async {
+    if (!prihlasen) {
+      return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
+    }
+
+    if (jidlo.burzaUrl == null || jidlo.burzaUrl!.isEmpty) {
+      return Future.error(CanteenLibExceptions.jidloNelzeObjednat);
+    }
+
+    try {
+      await _getRequest("/faces/secured/${jidlo.burzaUrl!}"); // provést operaci
+    } catch (e) {
+      if (isEnumItem(e, CanteenLibExceptions.values)) return Future.error(e);
+      return Future.error(CanteenLibExceptions.chybaObjednani);
+    }
 
     return jidelnicekDen(den: jidlo.den);
+  }
+
+  @override
+  Future<List<legacy.Burza>> ziskatBurzu() async {
+    if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
+    List<legacy.Burza> burza = [];
+
+    String res;
+    try {
+      res = await _getRequest("/faces/secured/burza.jsp");
+    } catch (e) {
+      return Future.error(e);
+    }
+
+    var dostupnaJidla = RegExp(r'(?<=<tr class="mouseOutRow">).+?(?=<\/tr>)', dotAll: true).allMatches(res); // vyfiltrujeme jednotlivá jídla
+    if (dostupnaJidla.isNotEmpty) {
+      for (var burzaMatch in dostupnaJidla) {
+        var bu = burzaMatch.group(0)!;
+        var data = RegExp(
+          r'((?<=<td>).+?(?=<))|(?<=<td align="left">).+?(?=<)|((?<=<td align="right">).+?(?=<))',
+          dotAll: true,
+        ).allMatches(bu).toList();
+
+        // Získat datum
+        var datumRaw = RegExp(r'\d\d\.\d\d\.\d{4}').firstMatch(data[1].group(0)!)!.group(0)!.split(".");
+        var datum = DateTime.parse("${datumRaw[2]}-${datumRaw[1]}-${datumRaw[0]}");
+        // Získat variantu
+        var varianta = data[0].group(0)!;
+        // Získat název jídla
+        var nazev = data[2].group(0)!.replaceAll(RegExp(r'\n|  '), "");
+        // Získat počet kusů
+        var pocet = int.parse(data[4].group(0)!.replaceAll(" ks", ""));
+        var url = RegExp(r"(?<=')db.+?(?=')").firstMatch(bu)!.group(0)!.replaceAll("&amp;", "&");
+
+        var jidlo = legacy.Burza(den: datum, varianta: varianta, nazev: nazev, pocet: pocet, url: url);
+        burza.add(jidlo);
+      }
+    }
+    return burza;
+  }
+
+  @override
+  Future<legacy.Jidelnicek> objednatZBurzy(legacy.Burza b) async {
+    if (!prihlasen) return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
+    try {
+      await _getRequest("/faces/secured/${b.url!}");
+    } catch (e) {
+      if (isEnumItem(e, CanteenLibExceptions.values)) return Future.error(e);
+      return Future.error(CanteenLibExceptions.chybaObjednani);
+    }
+    return jidelnicekDen(den: b.den);
   }
 }
