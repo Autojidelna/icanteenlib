@@ -1,3 +1,4 @@
+import 'package:icanteenlib/legacy.dart' as legacy;
 import 'package:icanteenlib/canteenlib.dart';
 
 const String url = "kantyna.neco.cz";
@@ -15,7 +16,7 @@ void main(List<String> args) async {
     print('Login Failed - either bad url or no internet');
     return;
   }
-  Uzivatel? uzivatel;
+  legacy.Uzivatel? uzivatel;
   try {
     /// Získání informací o uživateli
     uzivatel = await canteenInstance.ziskejUzivatele();
@@ -24,7 +25,7 @@ void main(List<String> args) async {
     print(e);
   }
 
-  Jidelnicek? jidelnicek;
+  legacy.Jidelnicek? jidelnicek;
   try {
     /// Získání jídelníčku pro daný den
     DateTime datum = DateTime.now();
@@ -55,7 +56,7 @@ void main(List<String> args) async {
   }
 }
 
-void vytisknoutInfoOJidelnicku(Jidelnicek jidelnicek) {
+void vytisknoutInfoOJidelnicku(legacy.Jidelnicek jidelnicek) {
   print('--------------jídelníček pro den ${jidelnicek.den}--------------');
   print('počet jídel: ${jidelnicek.jidla.length}');
   print(Canteen(url).parseHtmlString(jidelnicek.jidla[0].nazev));
@@ -85,7 +86,7 @@ void vytisknoutInfoOJidelnicku(Jidelnicek jidelnicek) {
   print('--------------konec jídelníčku--------------');
 }
 
-void vytisknoutInfoOUzivateli(Uzivatel uzivatel) {
+void vytisknoutInfoOUzivateli(legacy.Uzivatel uzivatel) {
   print('Kredit: ${uzivatel.kredit}'); // získat kredit
   print('Jméno: ${uzivatel.jmeno}'); // získat jméno
   print('Příjmení: ${uzivatel.prijmeni}'); // získat příjmení

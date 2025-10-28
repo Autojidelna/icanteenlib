@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:icanteenlib/canteenlib.dart';
-import 'package:icanteenlib/src/models/slozeni_jidla.dart';
-import 'package:icanteenlib/src/models/stav_jidla.dart';
 
 part 'generated/jidlo.freezed.dart';
 part 'generated/jidlo.g.dart';
