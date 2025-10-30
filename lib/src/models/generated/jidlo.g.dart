@@ -20,6 +20,7 @@ _Jidlo _$JidloFromJson(Map<String, dynamic> json) => _Jidlo(
           .toList() ??
       const <Alergen>[],
   cena: (json['cena'] as num?)?.toDouble(),
+  pocet: (json['pocet'] as num?)?.toInt(),
   url: json['url'] as String?,
 );
 
@@ -31,6 +32,7 @@ Map<String, dynamic> _$JidloToJson(_Jidlo instance) => <String, dynamic>{
   'slozeni_jidla': instance.slozeniJidla?.toJson(),
   'alergeny': instance.alergeny.map((e) => e.toJson()).toList(),
   'cena': instance.cena,
+  'pocet': instance.pocet,
   'url': instance.url,
 };
 

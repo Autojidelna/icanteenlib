@@ -28,6 +28,9 @@ sealed class Jidlo with _$Jidlo {
 
     @JsonKey(name: 'cena') double? cena,
 
+    /// Počet zbývajících kusů na burze
+    @JsonKey(name: 'pocet') int? pocet,
+
     /// URL pro obědnání, vložení na burzu nebo na jinou akci
     @JsonKey(name: 'url') String? url,
   }) = _Jidlo;
