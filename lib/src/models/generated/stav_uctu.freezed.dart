@@ -15,8 +15,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$StavUctu {
 
-@JsonKey(name: 'kredit') double get kredit;/// Momentálně vybraná výdejna
-@JsonKey(name: 'vydejna') int? get vydejna;/// Seznam výdejen
+@JsonKey(name: 'kredit') double get kredit;/// Poslední datum, kdy je objednané jídlo
+@JsonKey(name: 'objednano_do') DateTime? get objednanoDo;/// Momentálně vybraná výdejna (id + název)
+@JsonKey(name: 'vydejna') (int, String)? get vydejna;/// Seznam výdejen
 @JsonKey(name: 'vydejny') Map<int, String> get vydejny;
 /// Create a copy of StavUctu
 /// with the given fields replaced by the non-null parameter values.
@@ -30,16 +31,16 @@ $StavUctuCopyWith<StavUctu> get copyWith => _$StavUctuCopyWithImpl<StavUctu>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StavUctu&&(identical(other.kredit, kredit) || other.kredit == kredit)&&(identical(other.vydejna, vydejna) || other.vydejna == vydejna)&&const DeepCollectionEquality().equals(other.vydejny, vydejny));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StavUctu&&(identical(other.kredit, kredit) || other.kredit == kredit)&&(identical(other.objednanoDo, objednanoDo) || other.objednanoDo == objednanoDo)&&(identical(other.vydejna, vydejna) || other.vydejna == vydejna)&&const DeepCollectionEquality().equals(other.vydejny, vydejny));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,kredit,vydejna,const DeepCollectionEquality().hash(vydejny));
+int get hashCode => Object.hash(runtimeType,kredit,objednanoDo,vydejna,const DeepCollectionEquality().hash(vydejny));
 
 @override
 String toString() {
-  return 'StavUctu(kredit: $kredit, vydejna: $vydejna, vydejny: $vydejny)';
+  return 'StavUctu(kredit: $kredit, objednanoDo: $objednanoDo, vydejna: $vydejna, vydejny: $vydejny)';
 }
 
 
@@ -50,7 +51,7 @@ abstract mixin class $StavUctuCopyWith<$Res>  {
   factory $StavUctuCopyWith(StavUctu value, $Res Function(StavUctu) _then) = _$StavUctuCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'kredit') double kredit,@JsonKey(name: 'vydejna') int? vydejna,@JsonKey(name: 'vydejny') Map<int, String> vydejny
+@JsonKey(name: 'kredit') double kredit,@JsonKey(name: 'objednano_do') DateTime? objednanoDo,@JsonKey(name: 'vydejna') (int, String)? vydejna,@JsonKey(name: 'vydejny') Map<int, String> vydejny
 });
 
 
@@ -67,11 +68,12 @@ class _$StavUctuCopyWithImpl<$Res>
 
 /// Create a copy of StavUctu
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? kredit = null,Object? vydejna = freezed,Object? vydejny = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? kredit = null,Object? objednanoDo = freezed,Object? vydejna = freezed,Object? vydejny = null,}) {
   return _then(_self.copyWith(
 kredit: null == kredit ? _self.kredit : kredit // ignore: cast_nullable_to_non_nullable
-as double,vydejna: freezed == vydejna ? _self.vydejna : vydejna // ignore: cast_nullable_to_non_nullable
-as int?,vydejny: null == vydejny ? _self.vydejny : vydejny // ignore: cast_nullable_to_non_nullable
+as double,objednanoDo: freezed == objednanoDo ? _self.objednanoDo : objednanoDo // ignore: cast_nullable_to_non_nullable
+as DateTime?,vydejna: freezed == vydejna ? _self.vydejna : vydejna // ignore: cast_nullable_to_non_nullable
+as (int, String)?,vydejny: null == vydejny ? _self.vydejny : vydejny // ignore: cast_nullable_to_non_nullable
 as Map<int, String>,
   ));
 }
@@ -154,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'kredit')  double kredit, @JsonKey(name: 'vydejna')  int? vydejna, @JsonKey(name: 'vydejny')  Map<int, String> vydejny)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'kredit')  double kredit, @JsonKey(name: 'objednano_do')  DateTime? objednanoDo, @JsonKey(name: 'vydejna')  (int, String)? vydejna, @JsonKey(name: 'vydejny')  Map<int, String> vydejny)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StavUctu() when $default != null:
-return $default(_that.kredit,_that.vydejna,_that.vydejny);case _:
+return $default(_that.kredit,_that.objednanoDo,_that.vydejna,_that.vydejny);case _:
   return orElse();
 
 }
@@ -175,10 +177,10 @@ return $default(_that.kredit,_that.vydejna,_that.vydejny);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'kredit')  double kredit, @JsonKey(name: 'vydejna')  int? vydejna, @JsonKey(name: 'vydejny')  Map<int, String> vydejny)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'kredit')  double kredit, @JsonKey(name: 'objednano_do')  DateTime? objednanoDo, @JsonKey(name: 'vydejna')  (int, String)? vydejna, @JsonKey(name: 'vydejny')  Map<int, String> vydejny)  $default,) {final _that = this;
 switch (_that) {
 case _StavUctu():
-return $default(_that.kredit,_that.vydejna,_that.vydejny);}
+return $default(_that.kredit,_that.objednanoDo,_that.vydejna,_that.vydejny);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -192,10 +194,10 @@ return $default(_that.kredit,_that.vydejna,_that.vydejny);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'kredit')  double kredit, @JsonKey(name: 'vydejna')  int? vydejna, @JsonKey(name: 'vydejny')  Map<int, String> vydejny)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'kredit')  double kredit, @JsonKey(name: 'objednano_do')  DateTime? objednanoDo, @JsonKey(name: 'vydejna')  (int, String)? vydejna, @JsonKey(name: 'vydejny')  Map<int, String> vydejny)?  $default,) {final _that = this;
 switch (_that) {
 case _StavUctu() when $default != null:
-return $default(_that.kredit,_that.vydejna,_that.vydejny);case _:
+return $default(_that.kredit,_that.objednanoDo,_that.vydejna,_that.vydejny);case _:
   return null;
 
 }
@@ -207,12 +209,14 @@ return $default(_that.kredit,_that.vydejna,_that.vydejny);case _:
 @JsonSerializable()
 
 class _StavUctu implements StavUctu {
-  const _StavUctu({@JsonKey(name: 'kredit') this.kredit = 0.0, @JsonKey(name: 'vydejna') this.vydejna, @JsonKey(name: 'vydejny') final  Map<int, String> vydejny = const <int, String>{}}): _vydejny = vydejny;
+  const _StavUctu({@JsonKey(name: 'kredit') this.kredit = 0.0, @JsonKey(name: 'objednano_do') this.objednanoDo, @JsonKey(name: 'vydejna') this.vydejna, @JsonKey(name: 'vydejny') final  Map<int, String> vydejny = const <int, String>{}}): _vydejny = vydejny;
   factory _StavUctu.fromJson(Map<String, dynamic> json) => _$StavUctuFromJson(json);
 
 @override@JsonKey(name: 'kredit') final  double kredit;
-/// Momentálně vybraná výdejna
-@override@JsonKey(name: 'vydejna') final  int? vydejna;
+/// Poslední datum, kdy je objednané jídlo
+@override@JsonKey(name: 'objednano_do') final  DateTime? objednanoDo;
+/// Momentálně vybraná výdejna (id + název)
+@override@JsonKey(name: 'vydejna') final  (int, String)? vydejna;
 /// Seznam výdejen
  final  Map<int, String> _vydejny;
 /// Seznam výdejen
@@ -236,16 +240,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StavUctu&&(identical(other.kredit, kredit) || other.kredit == kredit)&&(identical(other.vydejna, vydejna) || other.vydejna == vydejna)&&const DeepCollectionEquality().equals(other._vydejny, _vydejny));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StavUctu&&(identical(other.kredit, kredit) || other.kredit == kredit)&&(identical(other.objednanoDo, objednanoDo) || other.objednanoDo == objednanoDo)&&(identical(other.vydejna, vydejna) || other.vydejna == vydejna)&&const DeepCollectionEquality().equals(other._vydejny, _vydejny));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,kredit,vydejna,const DeepCollectionEquality().hash(_vydejny));
+int get hashCode => Object.hash(runtimeType,kredit,objednanoDo,vydejna,const DeepCollectionEquality().hash(_vydejny));
 
 @override
 String toString() {
-  return 'StavUctu(kredit: $kredit, vydejna: $vydejna, vydejny: $vydejny)';
+  return 'StavUctu(kredit: $kredit, objednanoDo: $objednanoDo, vydejna: $vydejna, vydejny: $vydejny)';
 }
 
 
@@ -256,7 +260,7 @@ abstract mixin class _$StavUctuCopyWith<$Res> implements $StavUctuCopyWith<$Res>
   factory _$StavUctuCopyWith(_StavUctu value, $Res Function(_StavUctu) _then) = __$StavUctuCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'kredit') double kredit,@JsonKey(name: 'vydejna') int? vydejna,@JsonKey(name: 'vydejny') Map<int, String> vydejny
+@JsonKey(name: 'kredit') double kredit,@JsonKey(name: 'objednano_do') DateTime? objednanoDo,@JsonKey(name: 'vydejna') (int, String)? vydejna,@JsonKey(name: 'vydejny') Map<int, String> vydejny
 });
 
 
@@ -273,11 +277,12 @@ class __$StavUctuCopyWithImpl<$Res>
 
 /// Create a copy of StavUctu
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? kredit = null,Object? vydejna = freezed,Object? vydejny = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? kredit = null,Object? objednanoDo = freezed,Object? vydejna = freezed,Object? vydejny = null,}) {
   return _then(_StavUctu(
 kredit: null == kredit ? _self.kredit : kredit // ignore: cast_nullable_to_non_nullable
-as double,vydejna: freezed == vydejna ? _self.vydejna : vydejna // ignore: cast_nullable_to_non_nullable
-as int?,vydejny: null == vydejny ? _self._vydejny : vydejny // ignore: cast_nullable_to_non_nullable
+as double,objednanoDo: freezed == objednanoDo ? _self.objednanoDo : objednanoDo // ignore: cast_nullable_to_non_nullable
+as DateTime?,vydejna: freezed == vydejna ? _self.vydejna : vydejna // ignore: cast_nullable_to_non_nullable
+as (int, String)?,vydejny: null == vydejny ? _self._vydejny : vydejny // ignore: cast_nullable_to_non_nullable
 as Map<int, String>,
   ));
 }

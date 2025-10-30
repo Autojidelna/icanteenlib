@@ -15,12 +15,13 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Jidlo {
 
-@JsonKey(name: 'datum') DateTime get datum;@JsonKey(name: 'stav') StavJidla get stav;@JsonKey(name: 'varianta') String get varianta;@JsonKey(name: 'nazev') String get nazev;/// Rozpis polévky, hlavního chodu atd.
+@JsonKey(name: 'datum') DateTime get datum;/// Objednáno, na burze atd.
+@JsonKey(name: 'stav') StavJidla get stav;/// Název varianty (např. Oběd 2)
+@JsonKey(name: 'varianta') String get varianta;@JsonKey(name: 'nazev') String get nazev;/// Rozpis polévky, hlavního chodu atd.
 @JsonKey(name: 'slozeni_jidla') SlozeniJidla? get slozeniJidla;/// Seznam alergenů
 ///
 /// Pokud se žádný nepodařilo najít, vrací prázdný seznam
-@JsonKey(name: 'alergeny') List<Alergen> get alergeny;/// Název varianty (např. Oběd 2)
-@JsonKey(name: 'cena') double? get cena;/// URL pro obědnání, vložení na burzu nebo na jinou akci
+@JsonKey(name: 'alergeny') List<Alergen> get alergeny;@JsonKey(name: 'cena') double? get cena;/// URL pro obědnání, vložení na burzu nebo na jinou akci
 @JsonKey(name: 'url') String? get url;
 /// Create a copy of Jidlo
 /// with the given fields replaced by the non-null parameter values.
@@ -232,7 +233,9 @@ class _Jidlo implements Jidlo {
   factory _Jidlo.fromJson(Map<String, dynamic> json) => _$JidloFromJson(json);
 
 @override@JsonKey(name: 'datum') final  DateTime datum;
+/// Objednáno, na burze atd.
 @override@JsonKey(name: 'stav') final  StavJidla stav;
+/// Název varianty (např. Oběd 2)
 @override@JsonKey(name: 'varianta') final  String varianta;
 @override@JsonKey(name: 'nazev') final  String nazev;
 /// Rozpis polévky, hlavního chodu atd.
@@ -250,7 +253,6 @@ class _Jidlo implements Jidlo {
   return EqualUnmodifiableListView(_alergeny);
 }
 
-/// Název varianty (např. Oběd 2)
 @override@JsonKey(name: 'cena') final  double? cena;
 /// URL pro obědnání, vložení na burzu nebo na jinou akci
 @override@JsonKey(name: 'url') final  String? url;
