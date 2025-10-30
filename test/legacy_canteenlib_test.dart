@@ -76,6 +76,10 @@ Future<bool> _prihlasitSe() async {
 }
 
 void main() {
+  test('Veřejný jídelníček', () async {
+    print(await canteenInstance!.verejnyJidelnicek());
+  });
+
   group('Test přihlášený Uživatel:', () {
     test('Přihlášení', () async {
       expect(await prihlasitSe(), true);
