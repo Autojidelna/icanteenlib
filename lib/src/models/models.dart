@@ -1,4 +1,5 @@
 export 'alergen.dart';
+export 'burza.dart';
 export 'feature_support.dart';
 export 'jidelnicek.dart';
 export 'jidlo.dart';
