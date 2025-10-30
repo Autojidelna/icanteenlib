@@ -8,10 +8,8 @@ part 'generated/jidelnicek.g.dart';
 @freezed
 sealed class Jidelnicek with _$Jidelnicek {
   const factory Jidelnicek({
-    /// Den, pro který je jídelníček zveřejněn
     @JsonKey(name: 'datum') required DateTime datum,
-
-    /// Seznam jídel
+    @JsonKey(name: 'vydejna') String? vydejna,
     @JsonKey(name: 'nabidka') @Default(<Jidlo>[]) List<Jidlo> nabidka,
   }) = _Jidelnicek;
 

@@ -20,4 +20,7 @@ enum StavJidla {
 
   /// Jídlo nemáme objednané a není dostupné na burze, vypršela platnost nebo nemá uživatel dostatečný kredit
   nedostupne,
+
+  /// Jídlo je na veřejném jídelníčku
+  verejne,
 }

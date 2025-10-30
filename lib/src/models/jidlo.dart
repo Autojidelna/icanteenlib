@@ -10,8 +10,10 @@ sealed class Jidlo with _$Jidlo {
   const factory Jidlo({
     @JsonKey(name: 'datum') required DateTime datum,
 
+    /// Objednáno, na burze atd.
     @JsonKey(name: 'stav') required StavJidla stav,
 
+    /// Název varianty (např. Oběd 2)
     @JsonKey(name: 'varianta') required String varianta,
 
     @JsonKey(name: 'nazev') required String nazev,
@@ -24,7 +26,6 @@ sealed class Jidlo with _$Jidlo {
     /// Pokud se žádný nepodařilo najít, vrací prázdný seznam
     @JsonKey(name: 'alergeny') @Default(<Alergen>[]) List<Alergen> alergeny,
 
-    /// Název varianty (např. Oběd 2)
     @JsonKey(name: 'cena') double? cena,
 
     /// URL pro obědnání, vložení na burzu nebo na jinou akci

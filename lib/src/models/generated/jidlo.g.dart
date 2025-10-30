@@ -42,4 +42,5 @@ const _$StavJidlaEnumMap = {
   StavJidla.dostupneNaBurze: 'dostupneNaBurze',
   StavJidla.neobjednano: 'neobjednano',
   StavJidla.nedostupne: 'nedostupne',
+  StavJidla.verejne: 'verejne',
 };

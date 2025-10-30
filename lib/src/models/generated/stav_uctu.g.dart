@@ -8,7 +8,14 @@ part of '../stav_uctu.dart';
 
 _StavUctu _$StavUctuFromJson(Map<String, dynamic> json) => _StavUctu(
   kredit: (json['kredit'] as num?)?.toDouble() ?? 0.0,
-  vydejna: (json['vydejna'] as num?)?.toInt(),
+  objednanoDo: json['objednano_do'] == null
+      ? null
+      : DateTime.parse(json['objednano_do'] as String),
+  vydejna: _$recordConvertNullable(
+    json['vydejna'],
+    ($jsonValue) =>
+        (($jsonValue[r'$1'] as num).toInt(), $jsonValue[r'$2'] as String),
+  ),
   vydejny:
       (json['vydejny'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(int.parse(k), e as String),
@@ -18,6 +25,17 @@ _StavUctu _$StavUctuFromJson(Map<String, dynamic> json) => _StavUctu(
 
 Map<String, dynamic> _$StavUctuToJson(_StavUctu instance) => <String, dynamic>{
   'kredit': instance.kredit,
-  'vydejna': instance.vydejna,
+  'objednano_do': instance.objednanoDo?.toIso8601String(),
+  'vydejna': instance.vydejna == null
+      ? null
+      : <String, dynamic>{
+          r'$1': instance.vydejna!.$1,
+          r'$2': instance.vydejna!.$2,
+        },
   'vydejny': instance.vydejny.map((k, e) => MapEntry(k.toString(), e)),
 };
+
+$Rec? _$recordConvertNullable<$Rec>(
+  Object? value,
+  $Rec Function(Map) convert,
+) => value == null ? null : convert(value as Map<String, dynamic>);
