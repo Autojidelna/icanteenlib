@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:icanteenlib/canteenlib.dart';
 import 'package:icanteenlib/src/models/legacy/jidlo/jidlo.dart' as legacy;
-import 'package:icanteenlib/src/models/legacy/jidlo_kategorizovano/jidlo_kategorizovano.dart' as legacy;
 import 'package:icanteenlib/src/utils/utils.dart';
 
 import 'package:html/dom.dart' as dom;
@@ -234,9 +233,9 @@ mixin ParsingMixin {
   @protected
   Jidlo $parsePrihlasenyJidlo(dom.Element obed, List<Burza> burza) {
     // TODO: nahradit
-    Burza? ziskejJidloZBurzy(legacy.Jidlo jidlo) {
+    Burza? ziskejJidloZBurzy(DateTime datum, String varianta) {
       for (Burza burzaJidlo in burza) {
-        if (burzaJidlo.datum == jidlo.den && burzaJidlo.varianta == jidlo.varianta) return burzaJidlo;
+        if (burzaJidlo.datum == datum && burzaJidlo.varianta == varianta) return burzaJidlo;
       }
       return null;
     }
@@ -279,28 +278,18 @@ mixin ParsingMixin {
     jidloJmeno = cleanString(jidloJmeno);
 
     SlozeniJidla sj = $parseSlozeniJidla(jidloJmeno);
-    final kategorizovano = legacy.JidloKategorizovano(
-      polevka: sj.polevka,
-      hlavniJidlo: sj.hlavniChod,
-      salatovyBar: sj.salatovyBar,
-      piti: sj.piti,
-      ostatni: sj.ostatni,
-    );
 
     final legacy.Jidlo legacyJidlo = legacy.Jidlo(
-      nazev: jidloJmeno.replaceAll(r' (?=[^a-zA-ZěščřžýáíéĚŠČŘŽÝÁÍÉŤŇťň])', ''),
       objednano: objednano,
       varianta: vydejna,
       lzeObjednat: lzeObjednat,
-      cena: cena,
       orderUrl: orderUrl,
       den: obedDen,
       burzaUrl: burzaUrl,
       naBurze: (burzaUrl == null) ? false : burzaUrl.contains("minusburza"),
-      kategorizovano: kategorizovano,
     );
 
-    Burza? jidloZBurzy = ziskejJidloZBurzy(legacyJidlo);
+    Burza? jidloZBurzy = ziskejJidloZBurzy(obedDen, vydejna);
 
     return Jidlo(
       datum: obedDen,
