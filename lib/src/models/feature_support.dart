@@ -22,8 +22,8 @@ enum Features {
   /// burza
   burza,
 
-  // dát počet jídel na burzu
-  burzaAmount,
+  // Možnost objednat více kusů jídla
+  objednavatViceJidel,
 
   /// alergeny
   alergeny,

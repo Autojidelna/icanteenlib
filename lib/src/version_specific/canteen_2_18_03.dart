@@ -10,7 +10,7 @@ class Canteen2v18v03 extends BaseCanteen {
 
   @override
   // TODO: implement featureSupport
-  FeatureSupport get featureSupport => FeatureSupport(unsupportedByCanteen: [Features.burzaAmount, Features.vydejny]);
+  FeatureSupport get featureSupport => FeatureSupport(unsupportedByCanteen: [Features.objednavatViceJidel, Features.vydejny]);
 
   @override
   Future<http.Response> _loginPostRequest(PrihlasovaciUdaje udaje) async {

@@ -42,7 +42,7 @@ class Canteen2v18v03 extends legacy.Canteen {
   late String _url;
 
   @override
-  get missingFeatures => <Features>[Features.burzaAmount, Features.vydejny];
+  get missingFeatures => <Features>[Features.objednavatViceJidel, Features.vydejny];
 
   /// Sušenky potřebné pro komunikaci
   Map<String, String> cookies = {"JSESSIONID": "", "XSRF-TOKEN": ""};
