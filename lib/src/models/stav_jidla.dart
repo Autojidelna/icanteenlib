@@ -22,5 +22,20 @@ enum StavJidla {
   nedostupne,
 
   /// Jídlo je na veřejném jídelníčku
-  verejne,
+  verejne;
+
+  bool muzesObjednat() {
+    switch (this) {
+      case StavJidla.nedostupne:
+      case StavJidla.objednanoVyprsenaPlatnost:
+      case StavJidla.verejne:
+        return false;
+      case StavJidla.objednano:
+      case StavJidla.objednanoPouzeNaBurzu:
+      case StavJidla.vlozenoNaBurze:
+      case StavJidla.dostupneNaBurze:
+      case StavJidla.neobjednano:
+        return true;
+    }
+  }
 }
