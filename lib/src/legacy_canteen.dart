@@ -21,8 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+import 'package:icanteenlib/canteenlib.dart' show Features;
 import 'package:icanteenlib/legacy.dart' as legacy;
-import 'package:icanteenlib/canteenlib.dart';
+import 'package:icanteenlib/src/canteen_lib_exceptions.dart';
 import 'legacy_canteen_versions.dart';
 
 import 'package:http/http.dart' as http;
