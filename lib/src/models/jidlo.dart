@@ -24,7 +24,7 @@ sealed class Jidlo with _$Jidlo {
     /// Seznam alergenů
     ///
     /// Pokud se žádný nepodařilo najít, vrací prázdný seznam
-    @JsonKey(name: 'alergeny') @Default(<Alergen>[]) List<Alergen> alergeny,
+    @JsonKey(name: 'alergeny') @Default(<Alergen>{}) Set<Alergen> alergeny,
 
     @JsonKey(name: 'cena') double? cena,
 

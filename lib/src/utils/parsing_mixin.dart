@@ -174,12 +174,13 @@ mixin ParsingMixin {
   }
 
   @protected
-  List<Alergen> $parseAlergeny(dom.Element? rawAlergeny) {
-    if (rawAlergeny == null) return [];
+  Set<Alergen> $parseAlergeny(dom.Element? rawAlergeny) {
+    if (rawAlergeny == null) return {};
 
-    List<Alergen> alergeny = [];
+    Set<Alergen> alergeny = {};
     for (dom.Element rawAlergen in rawAlergeny.children) {
-      List<String> alergenInfo = rawAlergen.attributes['title']!.split('-');
+      List<String> alergenInfo = rawAlergen.attributes['title']?.split('-') ?? [];
+      if (alergenInfo.isEmpty) continue;
       alergeny.add(
         Alergen(
           id: int.tryParse(rawAlergen.text),
@@ -245,7 +246,7 @@ mixin ParsingMixin {
       r'<div class="jidWrapCenter.+?>(.+?)(?=<\/div>)',
       dotAll: true,
     ).firstMatch(obedFormated)!.group(1).toString().replaceAll(' ,', ",").replaceAll(" <br>", "").replaceAll("\n", "");
-    List<Alergen> alergeny = $parseAlergeny(obed.querySelector('.textGrey'));
+    Set<Alergen> alergeny = $parseAlergeny(obed.querySelectorAll('.textGrey').last);
 
     String vydejna = RegExp(r'(?<=<span class="smallBoldTitle button-link-align">).+?(?=<)').firstMatch(obedFormated)!.group(0).toString();
 
@@ -324,13 +325,13 @@ mixin ParsingMixin {
         }
 
         //String? vydejna = day.querySelector('[style*="color: green"]')?.text.trim();
-        List<Alergen> alergeny = $parseAlergeny(day.querySelector('.textGrey'));
+        Set<Alergen> alergeny = $parseAlergeny(day.querySelectorAll('.textGrey').last);
 
         // Známe ostatní pole, můžeme vzít celý text a odstanit je pro získání jídla
         String jidloTextRaw = jidloRaw.text
             .replaceFirst(varianta, '')
             .replaceFirst(vydejna ?? '', '')
-            .replaceFirst(RegExp(r'[\(\[]\s*\d+(?:\s*,\s*\d+)*\s*[\)\]]'), '') // Odstraní seznam alergenů
+            .replaceAll(RegExp(r'[\(\[]\s*\d+(?:\s*,\s*\d+)*\s*[\)\]]'), '') // Odstraní seznam alergenů
             .replaceAll('--', '')
             .intrusiveTrim();
 
