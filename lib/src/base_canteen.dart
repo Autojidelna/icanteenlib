@@ -4,8 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
-part 'version_specific/canteen_2_18_3.dart';
+part 'version_specific/canteen_2_18_03.dart';
 part 'version_specific/canteen_2_18_19.dart';
+part 'version_specific/canteen_2_19_13.dart';
 part 'version_specific/canteen_2_20_13.dart';
 
 abstract class BaseCanteen extends Canteen {
