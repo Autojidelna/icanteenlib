@@ -34,11 +34,11 @@ abstract class BaseCanteen extends Canteen {
 
   // Tyto funkce jsou pouze definované, je potřeba [override] z tříd pro dané verze
   Future<http.Response> _loginPostRequest(PrihlasovaciUdaje udaje) => throw UnimplementedError();
-  Future<String> _strankaNastaveniRequest() => throw UnimplementedError();
-  Future<String> _strankaBurzyRequest() => throw UnimplementedError();
-  Future<String> _strankaVsechJidelnickuRequest() => throw UnimplementedError();
-  Future<String> _strankaSpecifickyJidelnicekRequest(DateTime datum) => throw UnimplementedError();
-  Future<String> _objednejJidloRequest(Jidlo jidlo, int pocetDoBurzy) => throw UnimplementedError();
+  String _strankaNastaveniPath() => throw UnimplementedError();
+  String _strankaBurzyPath() => throw UnimplementedError();
+  String _strankaVsechJidelnickuPath() => throw UnimplementedError();
+  String _strankaSpecifickyJidelnicekPath(DateTime datum) => throw UnimplementedError();
+  String _objednejJidloPath(Jidlo jidlo, int pocetDoBurzy) => throw UnimplementedError();
 
   Future<void> _firstSessionCheck() async {
     if (_cookies["JSESSIONID"] == "" || _cookies["XSRF-TOKEN"] == "") {
@@ -51,6 +51,7 @@ abstract class BaseCanteen extends Canteen {
   }
 
   String _buildCookieHeader() => _cookies.entries.map((e) => '${e.key}=${e.value}').join('; ');
+  Future<String> _getRequest(String path) async => await $getRequest(url, path, _buildCookieHeader(), _cookies);
 
   @override
   Future<bool> login(String username, String password) async {
@@ -64,7 +65,6 @@ abstract class BaseCanteen extends Canteen {
     }
 
     if (res.headers['set-cookie']!.contains("remember-me=;")) return false; // špatné heslo
-
     if (res.statusCode != 302) throw Exception("Chyba: ${res.body}");
 
     $parseCookies(res.headers['set-cookie']!, _cookies);
@@ -78,7 +78,7 @@ abstract class BaseCanteen extends Canteen {
     if (!_uzivatelPrihlasen) throw Exception(CanteenLibExceptions.jePotrebaSePrihlasit);
     String res;
     try {
-      res = await _strankaNastaveniRequest();
+      res = await _getRequest(_strankaNastaveniPath());
     } catch (e) {
       rethrow;
     }
@@ -112,7 +112,7 @@ abstract class BaseCanteen extends Canteen {
     if (!_uzivatelPrihlasen) throw Exception(CanteenLibExceptions.jePotrebaSePrihlasit);
     if (res == null) {
       try {
-        res = await _strankaNastaveniRequest();
+        res = await _getRequest(_strankaNastaveniPath());
       } catch (e) {
         rethrow;
       }
@@ -129,7 +129,7 @@ abstract class BaseCanteen extends Canteen {
     if (!_uzivatelPrihlasen) throw Exception(CanteenLibExceptions.jePotrebaSePrihlasit);
     String res;
     try {
-      res = await _strankaBurzyRequest();
+      res = await _getRequest(_strankaBurzyPath());
     } catch (e) {
       rethrow;
     }
@@ -144,7 +144,7 @@ abstract class BaseCanteen extends Canteen {
   Future<List<Jidelnicek>> verejneJidelnicky() async {
     String res;
     try {
-      res = await $getRequest(url, '/', '', _cookies);
+      res = await _getRequest('/');
     } catch (e) {
       throw Exception(e);
     }
@@ -159,7 +159,7 @@ abstract class BaseCanteen extends Canteen {
 
     String res;
     try {
-      res = await _strankaVsechJidelnickuRequest();
+      res = await _getRequest(_strankaVsechJidelnickuPath());
     } catch (e) {
       rethrow;
     }
@@ -195,7 +195,7 @@ abstract class BaseCanteen extends Canteen {
 
     String res;
     try {
-      res = await _strankaSpecifickyJidelnicekRequest(datum);
+      res = await _getRequest(_strankaSpecifickyJidelnicekPath(datum));
     } catch (e) {
       rethrow;
     }
@@ -220,7 +220,7 @@ abstract class BaseCanteen extends Canteen {
 
     String res;
     try {
-      res = await _objednejJidloRequest(jidlo, pocetDoBurzy);
+      res = await _getRequest(_objednejJidloPath(jidlo, pocetDoBurzy));
     } catch (e) {
       if (isEnumItem(e, CanteenLibExceptions.values)) rethrow;
       throw Exception(CanteenLibExceptions.chybaObjednani);
