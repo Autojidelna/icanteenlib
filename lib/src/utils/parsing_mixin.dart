@@ -174,11 +174,13 @@ mixin ParsingMixin {
   }
 
   @protected
-  Set<Alergen> $parseAlergeny(dom.Element? rawAlergeny) {
-    if (rawAlergeny == null) return {};
+  Set<Alergen> $parseAlergeny(List<dom.Element> rawAlergenyList) {
+    if (rawAlergenyList.isEmpty) return {};
+    dom.Element rawAlergeny = rawAlergenyList.last;
 
     Set<Alergen> alergeny = {};
     for (dom.Element rawAlergen in rawAlergeny.children) {
+      print(rawAlergen.attributes);
       List<String> alergenInfo = rawAlergen.attributes['title']?.split('-') ?? [];
       if (alergenInfo.isEmpty) continue;
       alergeny.add(
@@ -246,7 +248,7 @@ mixin ParsingMixin {
       r'<div class="jidWrapCenter.+?>(.+?)(?=<\/div>)',
       dotAll: true,
     ).firstMatch(obedFormated)!.group(1).toString().replaceAll(' ,', ",").replaceAll(" <br>", "").replaceAll("\n", "");
-    Set<Alergen> alergeny = $parseAlergeny(obed.querySelectorAll('.textGrey').last);
+    Set<Alergen> alergeny = $parseAlergeny(obed.querySelectorAll('.textGrey'));
 
     String vydejna = RegExp(r'(?<=<span class="smallBoldTitle button-link-align">).+?(?=<)').firstMatch(obedFormated)!.group(0).toString();
 
@@ -324,8 +326,7 @@ mixin ParsingMixin {
           }
         }
 
-        //String? vydejna = day.querySelector('[style*="color: green"]')?.text.trim();
-        Set<Alergen> alergeny = $parseAlergeny(day.querySelectorAll('.textGrey').last);
+        Set<Alergen> alergeny = $parseAlergeny(day.querySelectorAll('.textGrey'));
 
         // Známe ostatní pole, můžeme vzít celý text a odstanit je pro získání jídla
         String jidloTextRaw = jidloRaw.text
