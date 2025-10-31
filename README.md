@@ -1,6 +1,6 @@
 # O knihovně
 
-Experimentální **neoficiální** webscrape knihovna pro komunikaci se systémem [iCanteen](https://www.z-ware.cz/internetove-objednavky). Tento repozitář je fork [App-Elevate/canteenlib](https://github.com/App-Elevate/canteenlib).
+Experimentální **neoficiální** webscrape knihovna pro komunikaci se systémem [iCanteen][iCanteen-about]. Tento repozitář je fork [App-Elevate/canteenlib][forked-repo].
 
 ## Funkční funkce(\*)
 
@@ -9,15 +9,11 @@ Experimentální **neoficiální** webscrape knihovna pro komunikaci se systéme
 - Nabídnutí jídla do burzy / zrušení
 - Získání a objednání cizího jídla z burzy
 
-[Příklad používání](https://github.com/Autojidelna/icanteenlib/blob/main/example/test_everything_example.dart)
+[Příklad používání][usage-example]
 
-_\* Knihovna nemusí fungovat na všech instancích systému iCanteen, proto žádám každého, kdo může a je uživatelem iCanteen, aby otestoval funkčnost této knihovny a případné problémy [nahlásil na github issues](https://github.com/Autojidelna/icanteenlib/issues/new?assignees=tpkowastaken&labels=kompatibilita&projects=&template=hl--en--kompatibility.md&title=Kompatibilita%3A+)_
+_\* Knihovna nemusí fungovat na všech instancích systému iCanteen, proto žádám každého, kdo může a je uživatelem iCanteen, aby otestoval funkčnost této knihovny a případné problémy [nahlásil na github issues][report-issue]_
 
-### [Otestované instance iCanteen](https://github.com/Autojidelna/icanteenlib/blob/main/COMPATIBILITY.md)
-
-## TODO
-
-- přepsat na systém parsování html
+### [Otestované instance iCanteen][tested-instances]
 
 ## Licence
 
@@ -44,3 +40,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+[iCanteen-about]: https://www.z-ware.cz/internetove-objednavky
+[forked-repo]: https://github.com/App-Elevate/canteenlib
+[usage-example]: https://github.com/Autojidelna/icanteenlib/blob/main/example/test_everything_example.dart
+[report-issue]: https://github.com/Autojidelna/icanteenlib/issues/new?assignees=tpkowastaken&labels=kompatibilita&projects=&template=hl--en--kompatibility.md&title=Kompatibilita%3A+
+[tested-instances]: https://github.com/Autojidelna/icanteenlib/blob/main/COMPATIBILITY.md
