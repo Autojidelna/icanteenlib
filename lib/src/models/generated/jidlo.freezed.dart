@@ -21,7 +21,7 @@ mixin _$Jidlo {
 @JsonKey(name: 'slozeni_jidla') SlozeniJidla? get slozeniJidla;/// Seznam alergenů
 ///
 /// Pokud se žádný nepodařilo najít, vrací prázdný seznam
-@JsonKey(name: 'alergeny') List<Alergen> get alergeny;@JsonKey(name: 'cena') double? get cena;/// Počet zbývajících kusů na burze
+@JsonKey(name: 'alergeny') Set<Alergen> get alergeny;@JsonKey(name: 'cena') double? get cena;/// Počet zbývajících kusů na burze
 @JsonKey(name: 'pocet') int? get pocet;/// URL pro obědnání, vložení na burzu nebo na jinou akci
 @JsonKey(name: 'url') String? get url;
 /// Create a copy of Jidlo
@@ -56,7 +56,7 @@ abstract mixin class $JidloCopyWith<$Res>  {
   factory $JidloCopyWith(Jidlo value, $Res Function(Jidlo) _then) = _$JidloCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'datum') DateTime datum,@JsonKey(name: 'stav') StavJidla stav,@JsonKey(name: 'varianta') String varianta,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'slozeni_jidla') SlozeniJidla? slozeniJidla,@JsonKey(name: 'alergeny') List<Alergen> alergeny,@JsonKey(name: 'cena') double? cena,@JsonKey(name: 'pocet') int? pocet,@JsonKey(name: 'url') String? url
+@JsonKey(name: 'datum') DateTime datum,@JsonKey(name: 'stav') StavJidla stav,@JsonKey(name: 'varianta') String varianta,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'slozeni_jidla') SlozeniJidla? slozeniJidla,@JsonKey(name: 'alergeny') Set<Alergen> alergeny,@JsonKey(name: 'cena') double? cena,@JsonKey(name: 'pocet') int? pocet,@JsonKey(name: 'url') String? url
 });
 
 
@@ -81,7 +81,7 @@ as StavJidla,varianta: null == varianta ? _self.varianta : varianta // ignore: c
 as String,nazev: null == nazev ? _self.nazev : nazev // ignore: cast_nullable_to_non_nullable
 as String,slozeniJidla: freezed == slozeniJidla ? _self.slozeniJidla : slozeniJidla // ignore: cast_nullable_to_non_nullable
 as SlozeniJidla?,alergeny: null == alergeny ? _self.alergeny : alergeny // ignore: cast_nullable_to_non_nullable
-as List<Alergen>,cena: freezed == cena ? _self.cena : cena // ignore: cast_nullable_to_non_nullable
+as Set<Alergen>,cena: freezed == cena ? _self.cena : cena // ignore: cast_nullable_to_non_nullable
 as double?,pocet: freezed == pocet ? _self.pocet : pocet // ignore: cast_nullable_to_non_nullable
 as int?,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -178,7 +178,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'datum')  DateTime datum, @JsonKey(name: 'stav')  StavJidla stav, @JsonKey(name: 'varianta')  String varianta, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'slozeni_jidla')  SlozeniJidla? slozeniJidla, @JsonKey(name: 'alergeny')  List<Alergen> alergeny, @JsonKey(name: 'cena')  double? cena, @JsonKey(name: 'pocet')  int? pocet, @JsonKey(name: 'url')  String? url)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'datum')  DateTime datum, @JsonKey(name: 'stav')  StavJidla stav, @JsonKey(name: 'varianta')  String varianta, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'slozeni_jidla')  SlozeniJidla? slozeniJidla, @JsonKey(name: 'alergeny')  Set<Alergen> alergeny, @JsonKey(name: 'cena')  double? cena, @JsonKey(name: 'pocet')  int? pocet, @JsonKey(name: 'url')  String? url)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Jidlo() when $default != null:
 return $default(_that.datum,_that.stav,_that.varianta,_that.nazev,_that.slozeniJidla,_that.alergeny,_that.cena,_that.pocet,_that.url);case _:
@@ -199,7 +199,7 @@ return $default(_that.datum,_that.stav,_that.varianta,_that.nazev,_that.slozeniJ
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'datum')  DateTime datum, @JsonKey(name: 'stav')  StavJidla stav, @JsonKey(name: 'varianta')  String varianta, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'slozeni_jidla')  SlozeniJidla? slozeniJidla, @JsonKey(name: 'alergeny')  List<Alergen> alergeny, @JsonKey(name: 'cena')  double? cena, @JsonKey(name: 'pocet')  int? pocet, @JsonKey(name: 'url')  String? url)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'datum')  DateTime datum, @JsonKey(name: 'stav')  StavJidla stav, @JsonKey(name: 'varianta')  String varianta, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'slozeni_jidla')  SlozeniJidla? slozeniJidla, @JsonKey(name: 'alergeny')  Set<Alergen> alergeny, @JsonKey(name: 'cena')  double? cena, @JsonKey(name: 'pocet')  int? pocet, @JsonKey(name: 'url')  String? url)  $default,) {final _that = this;
 switch (_that) {
 case _Jidlo():
 return $default(_that.datum,_that.stav,_that.varianta,_that.nazev,_that.slozeniJidla,_that.alergeny,_that.cena,_that.pocet,_that.url);}
@@ -216,7 +216,7 @@ return $default(_that.datum,_that.stav,_that.varianta,_that.nazev,_that.slozeniJ
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'datum')  DateTime datum, @JsonKey(name: 'stav')  StavJidla stav, @JsonKey(name: 'varianta')  String varianta, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'slozeni_jidla')  SlozeniJidla? slozeniJidla, @JsonKey(name: 'alergeny')  List<Alergen> alergeny, @JsonKey(name: 'cena')  double? cena, @JsonKey(name: 'pocet')  int? pocet, @JsonKey(name: 'url')  String? url)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'datum')  DateTime datum, @JsonKey(name: 'stav')  StavJidla stav, @JsonKey(name: 'varianta')  String varianta, @JsonKey(name: 'nazev')  String nazev, @JsonKey(name: 'slozeni_jidla')  SlozeniJidla? slozeniJidla, @JsonKey(name: 'alergeny')  Set<Alergen> alergeny, @JsonKey(name: 'cena')  double? cena, @JsonKey(name: 'pocet')  int? pocet, @JsonKey(name: 'url')  String? url)?  $default,) {final _that = this;
 switch (_that) {
 case _Jidlo() when $default != null:
 return $default(_that.datum,_that.stav,_that.varianta,_that.nazev,_that.slozeniJidla,_that.alergeny,_that.cena,_that.pocet,_that.url);case _:
@@ -231,7 +231,7 @@ return $default(_that.datum,_that.stav,_that.varianta,_that.nazev,_that.slozeniJ
 @JsonSerializable()
 
 class _Jidlo implements Jidlo {
-  const _Jidlo({@JsonKey(name: 'datum') required this.datum, @JsonKey(name: 'stav') required this.stav, @JsonKey(name: 'varianta') required this.varianta, @JsonKey(name: 'nazev') required this.nazev, @JsonKey(name: 'slozeni_jidla') this.slozeniJidla, @JsonKey(name: 'alergeny') final  List<Alergen> alergeny = const <Alergen>[], @JsonKey(name: 'cena') this.cena, @JsonKey(name: 'pocet') this.pocet, @JsonKey(name: 'url') this.url}): _alergeny = alergeny;
+  const _Jidlo({@JsonKey(name: 'datum') required this.datum, @JsonKey(name: 'stav') required this.stav, @JsonKey(name: 'varianta') required this.varianta, @JsonKey(name: 'nazev') required this.nazev, @JsonKey(name: 'slozeni_jidla') this.slozeniJidla, @JsonKey(name: 'alergeny') final  Set<Alergen> alergeny = const <Alergen>{}, @JsonKey(name: 'cena') this.cena, @JsonKey(name: 'pocet') this.pocet, @JsonKey(name: 'url') this.url}): _alergeny = alergeny;
   factory _Jidlo.fromJson(Map<String, dynamic> json) => _$JidloFromJson(json);
 
 @override@JsonKey(name: 'datum') final  DateTime datum;
@@ -245,14 +245,14 @@ class _Jidlo implements Jidlo {
 /// Seznam alergenů
 ///
 /// Pokud se žádný nepodařilo najít, vrací prázdný seznam
- final  List<Alergen> _alergeny;
+ final  Set<Alergen> _alergeny;
 /// Seznam alergenů
 ///
 /// Pokud se žádný nepodařilo najít, vrací prázdný seznam
-@override@JsonKey(name: 'alergeny') List<Alergen> get alergeny {
-  if (_alergeny is EqualUnmodifiableListView) return _alergeny;
+@override@JsonKey(name: 'alergeny') Set<Alergen> get alergeny {
+  if (_alergeny is EqualUnmodifiableSetView) return _alergeny;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_alergeny);
+  return EqualUnmodifiableSetView(_alergeny);
 }
 
 @override@JsonKey(name: 'cena') final  double? cena;
@@ -294,7 +294,7 @@ abstract mixin class _$JidloCopyWith<$Res> implements $JidloCopyWith<$Res> {
   factory _$JidloCopyWith(_Jidlo value, $Res Function(_Jidlo) _then) = __$JidloCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'datum') DateTime datum,@JsonKey(name: 'stav') StavJidla stav,@JsonKey(name: 'varianta') String varianta,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'slozeni_jidla') SlozeniJidla? slozeniJidla,@JsonKey(name: 'alergeny') List<Alergen> alergeny,@JsonKey(name: 'cena') double? cena,@JsonKey(name: 'pocet') int? pocet,@JsonKey(name: 'url') String? url
+@JsonKey(name: 'datum') DateTime datum,@JsonKey(name: 'stav') StavJidla stav,@JsonKey(name: 'varianta') String varianta,@JsonKey(name: 'nazev') String nazev,@JsonKey(name: 'slozeni_jidla') SlozeniJidla? slozeniJidla,@JsonKey(name: 'alergeny') Set<Alergen> alergeny,@JsonKey(name: 'cena') double? cena,@JsonKey(name: 'pocet') int? pocet,@JsonKey(name: 'url') String? url
 });
 
 
@@ -319,7 +319,7 @@ as StavJidla,varianta: null == varianta ? _self.varianta : varianta // ignore: c
 as String,nazev: null == nazev ? _self.nazev : nazev // ignore: cast_nullable_to_non_nullable
 as String,slozeniJidla: freezed == slozeniJidla ? _self.slozeniJidla : slozeniJidla // ignore: cast_nullable_to_non_nullable
 as SlozeniJidla?,alergeny: null == alergeny ? _self._alergeny : alergeny // ignore: cast_nullable_to_non_nullable
-as List<Alergen>,cena: freezed == cena ? _self.cena : cena // ignore: cast_nullable_to_non_nullable
+as Set<Alergen>,cena: freezed == cena ? _self.cena : cena // ignore: cast_nullable_to_non_nullable
 as double?,pocet: freezed == pocet ? _self.pocet : pocet // ignore: cast_nullable_to_non_nullable
 as int?,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String?,

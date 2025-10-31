@@ -57,7 +57,7 @@ void vytisknoutInfoOJidelnicku(Jidelnicek jidelnicek) {
     print('varianta: ${jidelnicek.nabidka[i].varianta}');
     print('datum: ${jidelnicek.nabidka[i].datum}');
     for (int k = 0; k < jidelnicek.nabidka[i].alergeny.length; k++) {
-      print('alergen: ${jidelnicek.nabidka[i].alergeny[k].nazev} - ${jidelnicek.nabidka[i].alergeny[k].popis}');
+      print('alergen: ${jidelnicek.nabidka[i].alergeny.elementAt(k).nazev} - ${jidelnicek.nabidka[i].alergeny.elementAt(k).popis}');
     }
     print('url: ${jidelnicek.nabidka[i].url}');
     if (jidelnicek.nabidka[i].slozeniJidla != null) {

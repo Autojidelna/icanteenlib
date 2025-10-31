@@ -17,8 +17,8 @@ _Jidlo _$JidloFromJson(Map<String, dynamic> json) => _Jidlo(
   alergeny:
       (json['alergeny'] as List<dynamic>?)
           ?.map((e) => Alergen.fromJson(e as Map<String, dynamic>))
-          .toList() ??
-      const <Alergen>[],
+          .toSet() ??
+      const <Alergen>{},
   cena: (json['cena'] as num?)?.toDouble(),
   pocet: (json['pocet'] as num?)?.toInt(),
   url: json['url'] as String?,
