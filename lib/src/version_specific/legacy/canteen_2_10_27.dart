@@ -41,7 +41,13 @@ class Canteen2v10v27 extends legacy.Canteen {
   bool firstRequest = false;
 
   @override
-  get missingFeatures => <Features>[Features.alergeny, Features.burza, Features.verejnyJidelnicek, Features.burzaAmount, Features.vsechnyJidelnicky];
+  get missingFeatures => <Features>[
+    Features.alergeny,
+    Features.burza,
+    Features.verejnyJidelnicek,
+    Features.objednavatViceJidel,
+    Features.vsechnyJidelnicky,
+  ];
 
   /// Sušenky potřebné pro komunikaci
   Map<String, String> cookies = {"JSESSIONID": ""};

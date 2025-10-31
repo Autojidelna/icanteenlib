@@ -44,7 +44,7 @@ class Canteen2v18v19 extends legacy.Canteen {
   late String _url;
 
   @override
-  get missingFeatures => <Features>[Features.burzaAmount, Features.vydejny];
+  get missingFeatures => <Features>[Features.objednavatViceJidel, Features.vydejny];
 
   /// Je uživatel přihlášen?
   @override
