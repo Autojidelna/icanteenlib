@@ -18,7 +18,7 @@
   - Nová třída `FeatureSupport`
     - Obsahuje seznamy `missingInCode` a `unsupportedByCanteen`
     - Přidány pomocné metody `isAvailable()`, `isImplemented()` a `isSupported()`
-  - Staré třídy dostupné na `package:icanteen/legacy.dart`
+  - Staré třídy odstraněny
   - Třída `Canteen` je nyní plně interface z které extenduje nová třída `BaseCanteen`, ta má všechnu logiku
   - Třídu `BaseCanteen` extendují třídy specifické pro verze a přepisují hodnoty, případně i metody používané v `BaseCanteen`
   - Přidána metoda `Canteen.create()`, která zjistí verzi iCanteen a vrátí nejvhodnější verzi tříd `Canteen2vXvX`, toto bylo přesunuto z `login()` metody

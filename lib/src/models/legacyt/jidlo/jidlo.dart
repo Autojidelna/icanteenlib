@@ -1,5 +1,6 @@
-import 'package:icanteenlib/legacy.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:icanteenlib/canteenlib.dart';
+import 'package:icanteenlib/src/models/legacyt/jidlo_kategorizovano/jidlo_kategorizovano.dart';
 
 part 'generated/jidlo.freezed.dart';
 part 'generated/jidlo.g.dart';

@@ -41,12 +41,12 @@ $JidloCopyWith<Jidlo> get copyWith => _$JidloCopyWithImpl<Jidlo>(this as Jidlo, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Jidlo&&(identical(other.nazev, nazev) || other.nazev == nazev)&&(identical(other.kategorizovano, kategorizovano) || other.kategorizovano == kategorizovano)&&(identical(other.objednano, objednano) || other.objednano == objednano)&&(identical(other.varianta, varianta) || other.varianta == varianta)&&(identical(other.cena, cena) || other.cena == cena)&&(identical(other.lzeObjednat, lzeObjednat) || other.lzeObjednat == lzeObjednat)&&(identical(other.naBurze, naBurze) || other.naBurze == naBurze)&&(identical(other.den, den) || other.den == den)&&const DeepCollectionEquality().equals(other.alergeny, alergeny)&&(identical(other.orderUrl, orderUrl) || other.orderUrl == orderUrl)&&(identical(other.burzaUrl, burzaUrl) || other.burzaUrl == burzaUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Jidlo&&(identical(other.nazev, nazev) || other.nazev == nazev)&&const DeepCollectionEquality().equals(other.kategorizovano, kategorizovano)&&(identical(other.objednano, objednano) || other.objednano == objednano)&&(identical(other.varianta, varianta) || other.varianta == varianta)&&(identical(other.cena, cena) || other.cena == cena)&&(identical(other.lzeObjednat, lzeObjednat) || other.lzeObjednat == lzeObjednat)&&(identical(other.naBurze, naBurze) || other.naBurze == naBurze)&&(identical(other.den, den) || other.den == den)&&const DeepCollectionEquality().equals(other.alergeny, alergeny)&&(identical(other.orderUrl, orderUrl) || other.orderUrl == orderUrl)&&(identical(other.burzaUrl, burzaUrl) || other.burzaUrl == burzaUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,nazev,kategorizovano,objednano,varianta,cena,lzeObjednat,naBurze,den,const DeepCollectionEquality().hash(alergeny),orderUrl,burzaUrl);
+int get hashCode => Object.hash(runtimeType,nazev,const DeepCollectionEquality().hash(kategorizovano),objednano,varianta,cena,lzeObjednat,naBurze,den,const DeepCollectionEquality().hash(alergeny),orderUrl,burzaUrl);
 
 @override
 String toString() {
@@ -65,7 +65,7 @@ $Res call({
 });
 
 
-$JidloKategorizovanoCopyWith<$Res>? get kategorizovano;
+
 
 }
 /// @nodoc
@@ -94,19 +94,7 @@ as String?,burzaUrl: freezed == burzaUrl ? _self.burzaUrl : burzaUrl // ignore: 
 as String?,
   ));
 }
-/// Create a copy of Jidlo
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$JidloKategorizovanoCopyWith<$Res>? get kategorizovano {
-    if (_self.kategorizovano == null) {
-    return null;
-  }
 
-  return $JidloKategorizovanoCopyWith<$Res>(_self.kategorizovano!, (value) {
-    return _then(_self.copyWith(kategorizovano: value));
-  });
-}
 }
 
 
@@ -288,12 +276,12 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Jidlo&&(identical(other.nazev, nazev) || other.nazev == nazev)&&(identical(other.kategorizovano, kategorizovano) || other.kategorizovano == kategorizovano)&&(identical(other.objednano, objednano) || other.objednano == objednano)&&(identical(other.varianta, varianta) || other.varianta == varianta)&&(identical(other.cena, cena) || other.cena == cena)&&(identical(other.lzeObjednat, lzeObjednat) || other.lzeObjednat == lzeObjednat)&&(identical(other.naBurze, naBurze) || other.naBurze == naBurze)&&(identical(other.den, den) || other.den == den)&&const DeepCollectionEquality().equals(other._alergeny, _alergeny)&&(identical(other.orderUrl, orderUrl) || other.orderUrl == orderUrl)&&(identical(other.burzaUrl, burzaUrl) || other.burzaUrl == burzaUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Jidlo&&(identical(other.nazev, nazev) || other.nazev == nazev)&&const DeepCollectionEquality().equals(other.kategorizovano, kategorizovano)&&(identical(other.objednano, objednano) || other.objednano == objednano)&&(identical(other.varianta, varianta) || other.varianta == varianta)&&(identical(other.cena, cena) || other.cena == cena)&&(identical(other.lzeObjednat, lzeObjednat) || other.lzeObjednat == lzeObjednat)&&(identical(other.naBurze, naBurze) || other.naBurze == naBurze)&&(identical(other.den, den) || other.den == den)&&const DeepCollectionEquality().equals(other._alergeny, _alergeny)&&(identical(other.orderUrl, orderUrl) || other.orderUrl == orderUrl)&&(identical(other.burzaUrl, burzaUrl) || other.burzaUrl == burzaUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,nazev,kategorizovano,objednano,varianta,cena,lzeObjednat,naBurze,den,const DeepCollectionEquality().hash(_alergeny),orderUrl,burzaUrl);
+int get hashCode => Object.hash(runtimeType,nazev,const DeepCollectionEquality().hash(kategorizovano),objednano,varianta,cena,lzeObjednat,naBurze,den,const DeepCollectionEquality().hash(_alergeny),orderUrl,burzaUrl);
 
 @override
 String toString() {
@@ -312,7 +300,7 @@ $Res call({
 });
 
 
-@override $JidloKategorizovanoCopyWith<$Res>? get kategorizovano;
+
 
 }
 /// @nodoc
@@ -342,19 +330,7 @@ as String?,
   ));
 }
 
-/// Create a copy of Jidlo
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$JidloKategorizovanoCopyWith<$Res>? get kategorizovano {
-    if (_self.kategorizovano == null) {
-    return null;
-  }
 
-  return $JidloKategorizovanoCopyWith<$Res>(_self.kategorizovano!, (value) {
-    return _then(_self.copyWith(kategorizovano: value));
-  });
-}
 }
 
 // dart format on
