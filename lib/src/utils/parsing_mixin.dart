@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:icanteenlib/canteenlib.dart';
-import 'package:icanteenlib/src/models/legacyt/jidlo/jidlo.dart' as legacy;
-import 'package:icanteenlib/src/models/legacyt/jidlo_kategorizovano/jidlo_kategorizovano.dart' as legacy;
+import 'package:icanteenlib/src/models/legacy/jidlo/jidlo.dart' as legacy;
+import 'package:icanteenlib/src/models/legacy/jidlo_kategorizovano/jidlo_kategorizovano.dart' as legacy;
 import 'package:icanteenlib/src/utils/utils.dart';
 
 import 'package:html/dom.dart' as dom;
