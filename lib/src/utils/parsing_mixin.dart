@@ -3,6 +3,7 @@ import 'package:icanteenlib/canteenlib.dart';
 import 'package:icanteenlib/src/utils/utils.dart';
 
 import 'package:html/dom.dart' as dom;
+import 'package:html/parser.dart' as parser;
 import 'package:icanteenlib/legacy.dart' as legacy;
 
 // TODO: refactor legacy code
@@ -176,16 +177,22 @@ mixin ParsingMixin {
   @protected
   Set<Alergen> $parseAlergeny(List<dom.Element> rawAlergenyList) {
     if (rawAlergenyList.isEmpty) return {};
-    dom.Element rawAlergeny = rawAlergenyList.last;
+    final dom.Element rawAlergeny = rawAlergenyList.lastWhere((el) => el.querySelector('span[title]') != null, orElse: () => rawAlergenyList.last);
+
+    final Iterable<dom.Element> allergenSpans = rawAlergeny.querySelectorAll('span[title]');
 
     Set<Alergen> alergeny = {};
-    for (dom.Element rawAlergen in rawAlergeny.children) {
-      print(rawAlergen.attributes);
-      List<String> alergenInfo = rawAlergen.attributes['title']?.split('-') ?? [];
+    for (dom.Element span in allergenSpans) {
+      final titleRaw = span.attributes['title']?.trim();
+      if (titleRaw == null || titleRaw.isEmpty) continue;
+
+      final cleanedTitle = parser.parseFragment(titleRaw).text?.trim() ?? titleRaw.trim();
+
+      List<String> alergenInfo = cleanedTitle.split('-');
       if (alergenInfo.isEmpty) continue;
       alergeny.add(
         Alergen(
-          id: int.tryParse(rawAlergen.text),
+          id: int.tryParse(span.text.replaceAll(RegExp(r'[^0-9]'), '')),
           nazev: alergenInfo.first.intrusiveTrim(),
           popis: alergenInfo.length > 1 ? alergenInfo.last.intrusiveTrim() : null,
         ),
@@ -326,7 +333,7 @@ mixin ParsingMixin {
           }
         }
 
-        Set<Alergen> alergeny = $parseAlergeny(day.querySelectorAll('.textGrey'));
+        Set<Alergen> alergeny = $parseAlergeny(jidloRaw.querySelectorAll('.textGrey'));
 
         // Známe ostatní pole, můžeme vzít celý text a odstanit je pro získání jídla
         String jidloTextRaw = jidloRaw.text
