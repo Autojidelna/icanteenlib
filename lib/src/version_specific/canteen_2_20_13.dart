@@ -29,36 +29,28 @@ class Canteen2v20v13 extends BaseCanteen {
   }
 
   @override
-  Future<String> _strankaNastaveniRequest() async {
-    return await $getRequest(url, '/web/setting', _buildCookieHeader(), _cookies);
-  }
+  String _strankaNastaveniPath() => '/web/setting';
 
   @override
-  Future<String> _strankaBurzyRequest() async {
-    return await $getRequest(url, '/faces/secured/burza.jsp', _buildCookieHeader(), _cookies);
-  }
+  String _strankaBurzyPath() => '/faces/secured/burza.jsp';
 
   @override
-  Future<String> _strankaVsechJidelnickuRequest() async {
-    return await $getRequest(url, '/faces/secured/mobile.jsp', _buildCookieHeader(), _cookies);
-  }
-
-  @override
-  Future<String> _strankaSpecifickyJidelnicekRequest(DateTime datum) async {
+  String _strankaVsechJidelnickuPath() {
     String vydejna = (stavUctu != null && stavUctu!.vydejny.isNotEmpty) ? 'vydejna=$_novaVydejnaId&' : '';
-    return await $getRequest(
-      url,
-      "/faces/secured/main.jsp?${vydejna}day=${datum.year}-${datum.month.toString().padLeft(2, '0')}-${datum.day.toString().padLeft(2, '0')}&terminal=false&printer=false&keyboard=false",
-      _buildCookieHeader(),
-      _cookies,
-    );
+    return '/faces/secured/mobile.jsp?${vydejna}terminal=false&keyboard=&printer=';
   }
 
   @override
-  Future<String> _objednejJidloRequest(Jidlo jidlo, int pocetDoBurzy) async {
+  String _strankaSpecifickyJidelnicekPath(DateTime datum) {
+    String vydejna = (stavUctu != null && stavUctu!.vydejny.isNotEmpty) ? 'vydejna=$_novaVydejnaId&' : '';
+    return "/faces/secured/main.jsp?${vydejna}day=${datum.year}-${datum.month.toString().padLeft(2, '0')}-${datum.day.toString().padLeft(2, '0')}&terminal=false&printer=false&keyboard=false";
+  }
+
+  @override
+  String _objednejJidloPath(Jidlo jidlo, int pocetDoBurzy) {
     String? finalUrl = (jidlo.stav == StavJidla.objednanoPouzeNaBurzu && jidlo.url!.endsWith("amount=")) ? "${jidlo.url}$pocetDoBurzy" : jidlo.url;
     if (finalUrl == null) throw Exception(CanteenLibExceptions.neplatneUrl);
 
-    return await $getRequest(url, "/faces/secured/$finalUrl", _buildCookieHeader(), _cookies); // provést operaci
+    return "/faces/secured/$finalUrl";
   }
 }
