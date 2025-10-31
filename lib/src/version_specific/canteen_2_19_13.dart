@@ -12,26 +12,6 @@ class Canteen2v19v13 extends BaseCanteen {
   // TODO: implement featureSupport
   FeatureSupport get featureSupport => FeatureSupport(unsupportedByCanteen: [Features.burzaAmount, Features.vydejny]);
 
-  String _buildCookieHeader() {
-    final StringBuffer buf = StringBuffer();
-    buf.write("JSESSIONID=${_cookies["JSESSIONID"]!}; ");
-    buf.write("XSRF-TOKEN=${_cookies["XSRF-TOKEN"]!}; ");
-    if (_cookies.containsKey("remember-me")) buf.write("${_cookies["remember-me"]!};");
-
-    return buf.toString().trim();
-  }
-
-  @override
-  Future<void> _firstSessionCheck() async {
-    if (_cookies["JSESSIONID"] == "" || _cookies["XSRF-TOKEN"] == "") {
-      try {
-        await $getFirstSession(url, _cookies);
-      } catch (e) {
-        rethrow;
-      }
-    }
-  }
-
   @override
   Future<http.Response> _loginPostRequest(PrihlasovaciUdaje udaje) async {
     return await http.post(
@@ -64,10 +44,11 @@ class Canteen2v19v13 extends BaseCanteen {
   }
 
   @override
-  Future<String> _strankaSpecifickyJidelnicekRequest(DateTime datum) {
-    return $getRequest(
+  Future<String> _strankaSpecifickyJidelnicekRequest(DateTime datum) async {
+    String vydejna = (stavUctu != null && stavUctu!.vydejny.isNotEmpty) ? 'vydejna=$_novaVydejnaId&' : '';
+    return await $getRequest(
       url,
-      "/faces/secured/main.jsp?day=${datum.year}-${(datum.month < 10) ? "0${datum.month}" : datum.month}-${(datum.day < 10) ? "0${datum.day}" : datum.day}&terminal=false&printer=false&keyboard=false",
+      "/faces/secured/main.jsp?${vydejna}day=${datum.year}-${datum.month.toString().padLeft(2, '0')}-${datum.day.toString().padLeft(2, '0')}&terminal=false&printer=false&keyboard=false",
       _buildCookieHeader(),
       _cookies,
     );
