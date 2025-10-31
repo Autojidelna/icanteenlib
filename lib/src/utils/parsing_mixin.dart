@@ -257,7 +257,7 @@ mixin ParsingMixin {
     ).firstMatch(obedFormated)!.group(1).toString().replaceAll(' ,', ",").replaceAll(" <br>", "").replaceAll("\n", "");
     Set<Alergen> alergeny = $parseAlergeny(obed.querySelectorAll('.textGrey'));
 
-    String vydejna = RegExp(r'(?<=<span class="smallBoldTitle button-link-align">).+?(?=<)').firstMatch(obedFormated)!.group(0).toString();
+    String varianta = RegExp(r'(?<=<span class="smallBoldTitle button-link-align">).+?(?=<)').firstMatch(obedFormated)!.group(0).toString();
 
     String? orderUrl;
     String? burzaUrl;
@@ -281,7 +281,7 @@ mixin ParsingMixin {
 
     final legacy.Jidlo legacyJidlo = legacy.Jidlo(
       objednano: objednano,
-      varianta: vydejna,
+      varianta: varianta,
       lzeObjednat: lzeObjednat,
       orderUrl: orderUrl,
       den: obedDen,
@@ -289,12 +289,12 @@ mixin ParsingMixin {
       naBurze: (burzaUrl == null) ? false : burzaUrl.contains("minusburza"),
     );
 
-    Burza? jidloZBurzy = ziskejJidloZBurzy(obedDen, vydejna);
+    Burza? jidloZBurzy = ziskejJidloZBurzy(obedDen, varianta);
 
     return Jidlo(
       datum: obedDen,
       stav: getStavJidla(legacyJidlo, burza),
-      varianta: vydejna,
+      varianta: varianta,
       nazev: jidloJmeno.replaceAll(r' (?=[^a-zA-ZěščřžýáíéĚŠČŘŽÝÁÍÉŤŇťň])', ''),
       slozeniJidla: sj,
       alergeny: alergeny,
