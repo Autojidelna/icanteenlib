@@ -219,7 +219,7 @@ abstract class BaseCanteen extends Canteen {
     try {
       res = await _getRequest(_objednejJidloPath(jidlo, pocetDoBurzy));
     } catch (e) {
-      if (isEnumItem(e, CanteenLibExceptions.values)) rethrow;
+      if (CanteenLibExceptions.values.contains(e)) rethrow;
       throw Exception(CanteenLibExceptions.chybaObjednani);
     }
 

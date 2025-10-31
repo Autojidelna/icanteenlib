@@ -1,7 +1,3 @@
-bool isEnumItem(Object e, List enumValues) {
-  return enumValues.contains(e);
-}
-
 enum CanteenLibExceptions {
   /// nepodporovanaFunkce,
   featureNepodporovana,
