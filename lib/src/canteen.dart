@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:icanteenlib/canteenlib.dart';
-import 'package:icanteenlib/src/canteen_versions.dart';
+import 'package:icanteenlib/src/base_canteen.dart';
 import 'package:icanteenlib/src/utils/utils.dart';
 
 import 'package:http/http.dart' as http;
@@ -127,6 +127,12 @@ abstract class Canteen with HttpMixin, ParsingMixin {
 
 /// Zpracuje verzi iCanteenu a najde nejlepší podporovanou verzi
 class _CanteenVersionHandler {
+  /// Mapa minimálně podporovaných verzí, knihovna by měla podporovat převážnou vetšinu vyšších verzí než jsou v této mapě
+  final Map<String, Function(String, String)> canteenVersions = {
+    '2.16.15': (url, webWerze) => Canteen2v16v15(url, webWerze),
+    '2.18.03': (url, webWerze) => Canteen2v18v03(url, webWerze),
+  };
+
   String url;
 
   _CanteenVersionHandler._(this.url);
