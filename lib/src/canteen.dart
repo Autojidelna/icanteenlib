@@ -182,15 +182,41 @@ class _CanteenVersionHandler {
     if (canteenVersions[version] != null) {
       return canteenVersions[version]!(url, version);
     }
-    List<int> currentVersion = version.split('.').map((e) => int.parse(e)).toList();
-    List<String> versions = canteenVersions.keys.toList();
-    for (int i = 2; i >= 0; i--) {
-      versions.sort(((a, b) {
-        List<int> aList = a.split('.').map((e) => int.parse(e)).toList();
-        List<int> bList = b.split('.').map((e) => int.parse(e)).toList();
-        return (currentVersion[i] - aList[i]).abs() - (currentVersion[i] - bList[i]).abs();
-      }));
+
+    List<int> current = version.split('.').map(int.parse).toList();
+    List<String> available = canteenVersions.keys.toList();
+
+    // Parse all available versions into tuples of [major, minor, patch]
+    List<List<int>> parsed = available.map((v) => v.split('.').map(int.parse).toList()).toList();
+
+    // Filter for versions <= current
+    List<List<int>> lowerOrEqual = parsed.where((v) {
+      for (int i = 0; i < 3; i++) {
+        if (v[i] < current[i]) return true;
+        if (v[i] > current[i]) return false;
+      }
+      return true;
+    }).toList();
+
+    if (lowerOrEqual.isEmpty) {
+      // Fallback to the smallest available (if all are higher)
+      return canteenVersions[available.first]!(url, version);
     }
-    return canteenVersions[versions.first]!(url, version);
+
+    // Prefer same major+minor if possible
+    lowerOrEqual.sort((a, b) {
+      if (a[0] == current[0] && b[0] != current[0]) return -1;
+      if (b[0] == current[0] && a[0] != current[0]) return 1;
+      if (a[1] == current[1] && b[1] != current[1]) return -1;
+      if (b[1] == current[1] && a[1] != current[1]) return 1;
+      // Otherwise, sort by most recent
+      for (int i = 0; i < 3; i++) {
+        if (a[i] != b[i]) return b[i].compareTo(a[i]);
+      }
+      return 0;
+    });
+
+    String best = '${lowerOrEqual.first[0]}.${lowerOrEqual.first[1]}.${lowerOrEqual.first[2]}';
+    return canteenVersions[best]!(url, version);
   }
 }
