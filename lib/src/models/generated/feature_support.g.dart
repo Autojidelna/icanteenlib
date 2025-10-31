@@ -37,6 +37,6 @@ const _$FeaturesEnumMap = {
   Features.jidelnicekDen: 'jidelnicekDen',
   Features.vsechnyJidelnicky: 'vsechnyJidelnicky',
   Features.burza: 'burza',
-  Features.burzaAmount: 'burzaAmount',
+  Features.objednavatViceJidel: 'objednavatViceJidel',
   Features.alergeny: 'alergeny',
 };
