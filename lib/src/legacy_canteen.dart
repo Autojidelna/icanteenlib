@@ -386,7 +386,7 @@ class Canteen {
     return _canteenInstance!.jidelnicekMesic();
   }
 
-  /// Vrátí informace o uživateli ve formě instance [Uzivatel]
+  /// Vrátí informace o uživateli ve formě instance [legacy.Uzivatel]
   Future<legacy.Uzivatel> ziskejUzivatele() async {
     if (_canteenInstance == null) {
       return Future.error(CanteenLibExceptions.jePotrebaSePrihlasit);
