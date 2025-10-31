@@ -32,13 +32,24 @@ abstract class BaseCanteen extends Canteen {
   Map<String, String> _cookies = {};
 
   // Tyto funkce jsou pouze definované, je potřeba [override] z tříd pro dané verze
-  Future<void> _firstSessionCheck() => throw UnimplementedError();
   Future<http.Response> _loginPostRequest(PrihlasovaciUdaje udaje) => throw UnimplementedError();
   Future<String> _strankaNastaveniRequest() => throw UnimplementedError();
   Future<String> _strankaBurzyRequest() => throw UnimplementedError();
   Future<String> _strankaVsechJidelnickuRequest() => throw UnimplementedError();
   Future<String> _strankaSpecifickyJidelnicekRequest(DateTime datum) => throw UnimplementedError();
   Future<String> _objednejJidloRequest(Jidlo jidlo, int pocetDoBurzy) => throw UnimplementedError();
+
+  Future<void> _firstSessionCheck() async {
+    if (_cookies["JSESSIONID"] == "" || _cookies["XSRF-TOKEN"] == "") {
+      try {
+        await $getFirstSession(url, _cookies);
+      } catch (e) {
+        rethrow;
+      }
+    }
+  }
+
+  String _buildCookieHeader() => _cookies.entries.map((e) => '${e.key}=${e.value}').join('; ');
 
   @override
   Future<bool> login(String username, String password) async {
