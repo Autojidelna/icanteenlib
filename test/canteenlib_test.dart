@@ -95,7 +95,7 @@ void main() {
     print('Salátový bar: ${jidelnicky[0].nabidka[0].slozeniJidla!.salatovyBar}');
     print('ostatní: ${jidelnicky[0].nabidka[0].slozeniJidla!.ostatni}');
     print('--------------------------------------------------');
-    for (var alergen in jidelnicky[0].nabidka[0].alergeny) {
+    for (Alergen alergen in jidelnicky[0].nabidka[0].alergeny) {
       print('${alergen.nazev}: ${alergen.popis}');
     }
 
