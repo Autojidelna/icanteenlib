@@ -36,6 +36,9 @@ extension StringUtils on String {
     return split('').map((c) => map[c] ?? c).join();
   }
 
+  /// Stejný jako [trim], navíc zkrátí všechny mezery delší než 1 na délku 1
+  String intrusiveTrim() => replaceAll(RegExp(r'\s+'), ' ').trim();
+
   /// Odstraní diakritická znaménka, mezery nahradí [_] a odstraní cokoliv co není [^a-z], [0-9] nebo [_]
   String normalize() {
     return removeDiacritics()
