@@ -6,9 +6,6 @@ import 'package:html/parser.dart' as parser;
 
 part 'version_specific/canteen_2_16_15.dart';
 part 'version_specific/canteen_2_18_03.dart';
-part 'version_specific/canteen_2_18_19.dart';
-part 'version_specific/canteen_2_19_13.dart';
-part 'version_specific/canteen_2_20_13.dart';
 
 abstract class BaseCanteen extends Canteen {
   BaseCanteen(this._url, this._webVerze);
