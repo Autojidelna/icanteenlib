@@ -1,3 +1,14 @@
+/*
+Před testováním vytvořte .env soubor v rootu projektu
+
+TEMPLATE .env:
+URL=jidelna.example.cz
+USER=USERNAME
+PASS=HESLO
+
+Poté můžete spustit tento soubor
+*/
+
 import 'dart:async';
 
 import 'package:icanteenlib/canteenlib.dart';
