@@ -216,7 +216,11 @@ class _CanteenVersionHandler {
       return 0;
     });
 
-    String best = '${lowerOrEqual.first[0]}.${lowerOrEqual.first[1]}.${lowerOrEqual.first[2]}';
+    String major = lowerOrEqual.first[0].toString();
+    String minor = lowerOrEqual.first[1].toString().padLeft(2, '0');
+    String patch = lowerOrEqual.first[2].toString().padLeft(2, '0');
+
+    String best = '$major.$minor.$patch';
     return canteenVersions[best]!(url, version);
   }
 }
