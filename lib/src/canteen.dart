@@ -57,13 +57,13 @@ abstract class Canteen with HttpMixin, ParsingMixin {
   /// Přihlášení do iCanteen
   ///
   /// Vstup:
-  /// - `user` - uživatelské jméno | [String]
+  /// - `username` - uživatelské jméno | [String]
   /// - `password` - heslo | [String]
   ///
   /// Výstup:
   /// - [bool], v případě přihlášení `true`, v případě špatného hesla `false`
   /// - Chyba, pokud se nepodařilo přihlásit z jiného důvodu ([CanteenLibExceptions])
-  Future<bool> login(String user, String password);
+  Future<bool> login(String username, String password);
 
   /// Získá údaje o uživateli
   ///
@@ -155,12 +155,12 @@ class _CanteenVersionHandler {
     }
     url = 'https://$url';
     try {
-      var res = await http.get(Uri.parse(url));
+      http.Response res = await http.get(Uri.parse(url));
       webHtml = res.body;
     } catch (e) {
       try {
         url = url.replaceAll('https://', 'http://');
-        var res = await http.get(Uri.parse(url));
+        http.Response res = await http.get(Uri.parse(url));
         webHtml = res.body;
       } catch (e) {
         throw Exception(CanteenLibExceptions.neplatneUrl);
