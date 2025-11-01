@@ -23,6 +23,15 @@ Future<Jidelnicek>? druhaVydejnaJidelnicek;
 Future<List<Jidelnicek>>? jidelnicekMesic;
 Future<UzivatelskeUdaje>? uzivatel;
 DateTime date = DateTime(2025, 11, 4);
+
+String alergenyFalseNegativeReason =
+    '''
+Zkontrolujte, zda vaše jídelna využívá funkci alergenů, 
+nekteré jídelny mají funkci zakoupenou, ale nevyužívají ji.
+Na verzích >= 2.15.x by měli být dostupné funkce vypsané 
+na adrese "${(DotEnv(includePlatformEnvironment: true)..load())["URL"]}/help" v sekci Přehled funkcí
+''';
+
 Future<UzivatelskeUdaje> ziskatUzivatele() async {
   uzivatel ??= _ziskatUzivatele();
   return uzivatel!;
@@ -185,7 +194,7 @@ void main() {
         if (canteenInstance!.featureSupport.unsupportedByCanteen.contains(Features.specifickyJidelnicek)) return;
         if (canteenInstance!.featureSupport.unsupportedByCanteen.contains(Features.alergeny)) return;
         await ziskatJidelnicek();
-        expect((await jidelnicek!).nabidka[0].alergeny.isNotEmpty, true);
+        expect((await jidelnicek!).nabidka[0].alergeny.isNotEmpty, true, reason: alergenyFalseNegativeReason);
       });
 
       test('Jídelníček toJson() a fromJson()', () async {
@@ -329,7 +338,7 @@ void main() {
           }
           if (alergeny) break;
         }
-        expect(alergeny, true);
+        expect(alergeny, true, reason: alergenyFalseNegativeReason);
       });
     });
 
