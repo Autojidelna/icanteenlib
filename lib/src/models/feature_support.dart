@@ -4,40 +4,49 @@ part 'generated/feature_support.freezed.dart';
 part 'generated/feature_support.g.dart';
 
 enum Features {
-  /// zda má test očekávat vícero výdejen
-  vydejny,
+  // Pomocná stránka
+  help,
 
-  /// Získat informace o přihlášeném uživateli
-  uzivatelskeUdaje,
+  /// burza
+  burza,
+
+  // Hodnocení jídel
+  hodnoceni,
 
   /// Získat informace o jídelníčku zvěřejněném na webu bez nutnosti přihlášení
   verejnyJidelnicek,
 
   /// Získat informace o jídelníčku zvěřejněném na webu s nutností přihlášení + objednání obědů
-  jidelnicekDen,
+  specifickyJidelnicek,
 
   // Vsechny jidelnicky ziskane z mobilniho rozhrani
   vsechnyJidelnicky,
 
-  /// burza
-  burza,
+  /// alergeny
+  alergeny,
+
+  /// Získat informace o přihlášeném uživateli
+  uzivatelskeUdaje,
 
   // Možnost objednat více kusů jídla
   objednavatViceJidel,
 
-  /// alergeny
-  alergeny,
+  // Podpora pro výce jazyků
+  viceJazycnost,
+
+  /// zda má test očekávat vícero výdejen
+  viceVydejen,
 }
 
 /// Reprezentuje dostupnost funkcí
-@freezed
-sealed class FeatureSupport with _$FeatureSupport {
-  const factory FeatureSupport({
+@Freezed(makeCollectionsUnmodifiable: false)
+abstract class FeatureSupport with _$FeatureSupport {
+  factory FeatureSupport({
     /// Funkce nepodporované touto knihovnou
-    @Default([]) List<Features> missingInCode,
+    @JsonKey(name: 'missing_in_code') @Default({}) Set<Features> missingInCode,
 
     /// Funkce nepodporované instancí iCanteenu
-    @Default([]) List<Features> unsupportedByCanteen,
+    @JsonKey(name: 'unsupported_by_canteen') @Default({}) Set<Features> unsupportedByCanteen,
   }) = _FeatureSupport;
 
   factory FeatureSupport.fromJson(Map<String, Object?> json) => _$FeatureSupportFromJson(json);

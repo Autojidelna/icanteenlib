@@ -11,6 +11,13 @@ abstract class BaseCanteen extends Canteen {
   BaseCanteen(this._url, this._webVerze);
 
   @override
+  FeatureSupport get featureSupport => _featureSupport;
+  final FeatureSupport _featureSupport = FeatureSupport(
+    missingInCode: {Features.hodnoceni, Features.objednavatViceJidel, Features.viceJazycnost},
+    unsupportedByCanteen: {},
+  );
+
+  @override
   String get url => _url;
   final String _url;
 
@@ -49,6 +56,25 @@ abstract class BaseCanteen extends Canteen {
 
   String _buildCookieHeader() => _cookies.entries.map((e) => '${e.key}=${e.value}').join('; ');
   Future<String> _getRequest(String path) async => await $getRequest(url, path, _buildCookieHeader(), _cookies);
+
+  Future<void> _requestSupportedFeatures() async {
+    String res;
+    try {
+      res = await _getRequest('/help');
+    } catch (e) {
+      _featureSupport.unsupportedByCanteen.add(Features.help);
+      return;
+    }
+
+    dom.Document dokument = parser.parse(res);
+    _featureSupport.unsupportedByCanteen.addAll($parseFeatures(dokument));
+  }
+
+  /// Zjistí chybějící funkce v instance icanteen, funguje pouze nad verzi 2.15.x
+  static Future<T> create<T extends BaseCanteen>(T instance) async {
+    await instance._requestSupportedFeatures();
+    return instance;
+  }
 
   @override
   Future<bool> login(String username, String password) async {

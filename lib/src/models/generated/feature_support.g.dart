@@ -9,34 +9,37 @@ part of '../feature_support.dart';
 _FeatureSupport _$FeatureSupportFromJson(Map<String, dynamic> json) =>
     _FeatureSupport(
       missingInCode:
-          (json['missingInCode'] as List<dynamic>?)
+          (json['missing_in_code'] as List<dynamic>?)
               ?.map((e) => $enumDecode(_$FeaturesEnumMap, e))
-              .toList() ??
-          const [],
+              .toSet() ??
+          const {},
       unsupportedByCanteen:
-          (json['unsupportedByCanteen'] as List<dynamic>?)
+          (json['unsupported_by_canteen'] as List<dynamic>?)
               ?.map((e) => $enumDecode(_$FeaturesEnumMap, e))
-              .toList() ??
-          const [],
+              .toSet() ??
+          const {},
     );
 
 Map<String, dynamic> _$FeatureSupportToJson(_FeatureSupport instance) =>
     <String, dynamic>{
-      'missingInCode': instance.missingInCode
+      'missing_in_code': instance.missingInCode
           .map((e) => _$FeaturesEnumMap[e]!)
           .toList(),
-      'unsupportedByCanteen': instance.unsupportedByCanteen
+      'unsupported_by_canteen': instance.unsupportedByCanteen
           .map((e) => _$FeaturesEnumMap[e]!)
           .toList(),
     };
 
 const _$FeaturesEnumMap = {
-  Features.vydejny: 'vydejny',
-  Features.uzivatelskeUdaje: 'uzivatelskeUdaje',
-  Features.verejnyJidelnicek: 'verejnyJidelnicek',
-  Features.jidelnicekDen: 'jidelnicekDen',
-  Features.vsechnyJidelnicky: 'vsechnyJidelnicky',
+  Features.help: 'help',
   Features.burza: 'burza',
-  Features.objednavatViceJidel: 'objednavatViceJidel',
+  Features.hodnoceni: 'hodnoceni',
+  Features.verejnyJidelnicek: 'verejnyJidelnicek',
+  Features.specifickyJidelnicek: 'specifickyJidelnicek',
+  Features.vsechnyJidelnicky: 'vsechnyJidelnicky',
   Features.alergeny: 'alergeny',
+  Features.uzivatelskeUdaje: 'uzivatelskeUdaje',
+  Features.objednavatViceJidel: 'objednavatViceJidel',
+  Features.viceJazycnost: 'viceJazycnost',
+  Features.viceVydejen: 'viceVydejen',
 };
