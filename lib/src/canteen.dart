@@ -128,7 +128,7 @@ abstract class Canteen with HttpMixin, ParsingMixin {
 /// Zpracuje verzi iCanteenu a najde nejlepší podporovanou verzi
 class _CanteenVersionHandler {
   /// Mapa minimálně podporovaných verzí, knihovna by měla podporovat převážnou vetšinu vyšších verzí než jsou v této mapě
-  final Map<String, Function(String, String)> canteenVersions = {
+  final Map<String, BaseCanteen Function(String, String)> canteenVersions = {
     '2.16.15': (url, webWerze) => Canteen2v16v15(url, webWerze),
     '2.18.03': (url, webWerze) => Canteen2v18v03(url, webWerze),
   };
@@ -140,7 +140,7 @@ class _CanteenVersionHandler {
   static Future<Canteen?> create(String url) async {
     final handler = _CanteenVersionHandler._(url);
     String verze = await handler._detectVersion();
-    return handler._getClosestCanteenVersion(verze);
+    return await handler._getClosestCanteenVersion(verze);
   }
 
   Future<String> _detectVersion() async {
@@ -184,9 +184,9 @@ class _CanteenVersionHandler {
     }
   }
 
-  Canteen _getClosestCanteenVersion(String version) {
+  Future<BaseCanteen> _getClosestCanteenVersion(String version) async {
     if (canteenVersions[version] != null) {
-      return canteenVersions[version]!(url, version);
+      return await BaseCanteen.create(canteenVersions[version]!(url, version));
     }
 
     List<int> current = version.split('.').map(int.parse).toList();
@@ -206,7 +206,7 @@ class _CanteenVersionHandler {
 
     if (lowerOrEqual.isEmpty) {
       // Fallback to the smallest available (if all are higher)
-      return canteenVersions[available.first]!(url, version);
+      return await BaseCanteen.create(canteenVersions[available.first]!(url, version));
     }
 
     // Prefer same major+minor if possible
@@ -227,6 +227,6 @@ class _CanteenVersionHandler {
     String patch = lowerOrEqual.first[2].toString().padLeft(2, '0');
 
     String best = '$major.$minor.$patch';
-    return canteenVersions[best]!(url, version);
+    return await BaseCanteen.create(canteenVersions[best]!(url, version));
   }
 }

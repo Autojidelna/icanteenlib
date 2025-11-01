@@ -16,8 +16,8 @@ T _$identity<T>(T value) => value;
 mixin _$FeatureSupport {
 
 /// Funkce nepodporované touto knihovnou
- List<Features> get missingInCode;/// Funkce nepodporované instancí iCanteenu
- List<Features> get unsupportedByCanteen;
+@JsonKey(name: 'missing_in_code') Set<Features> get missingInCode;/// Funkce nepodporované instancí iCanteenu
+@JsonKey(name: 'unsupported_by_canteen') Set<Features> get unsupportedByCanteen;
 /// Create a copy of FeatureSupport
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -50,7 +50,7 @@ abstract mixin class $FeatureSupportCopyWith<$Res>  {
   factory $FeatureSupportCopyWith(FeatureSupport value, $Res Function(FeatureSupport) _then) = _$FeatureSupportCopyWithImpl;
 @useResult
 $Res call({
- List<Features> missingInCode, List<Features> unsupportedByCanteen
+@JsonKey(name: 'missing_in_code') Set<Features> missingInCode,@JsonKey(name: 'unsupported_by_canteen') Set<Features> unsupportedByCanteen
 });
 
 
@@ -70,8 +70,8 @@ class _$FeatureSupportCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? missingInCode = null,Object? unsupportedByCanteen = null,}) {
   return _then(_self.copyWith(
 missingInCode: null == missingInCode ? _self.missingInCode : missingInCode // ignore: cast_nullable_to_non_nullable
-as List<Features>,unsupportedByCanteen: null == unsupportedByCanteen ? _self.unsupportedByCanteen : unsupportedByCanteen // ignore: cast_nullable_to_non_nullable
-as List<Features>,
+as Set<Features>,unsupportedByCanteen: null == unsupportedByCanteen ? _self.unsupportedByCanteen : unsupportedByCanteen // ignore: cast_nullable_to_non_nullable
+as Set<Features>,
   ));
 }
 
@@ -118,7 +118,10 @@ return $default(_that);case _:
 final _that = this;
 switch (_that) {
 case _FeatureSupport():
-return $default(_that);}
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -153,7 +156,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Features> missingInCode,  List<Features> unsupportedByCanteen)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'missing_in_code')  Set<Features> missingInCode, @JsonKey(name: 'unsupported_by_canteen')  Set<Features> unsupportedByCanteen)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FeatureSupport() when $default != null:
 return $default(_that.missingInCode,_that.unsupportedByCanteen);case _:
@@ -174,10 +177,13 @@ return $default(_that.missingInCode,_that.unsupportedByCanteen);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Features> missingInCode,  List<Features> unsupportedByCanteen)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'missing_in_code')  Set<Features> missingInCode, @JsonKey(name: 'unsupported_by_canteen')  Set<Features> unsupportedByCanteen)  $default,) {final _that = this;
 switch (_that) {
 case _FeatureSupport():
-return $default(_that.missingInCode,_that.unsupportedByCanteen);}
+return $default(_that.missingInCode,_that.unsupportedByCanteen);case _:
+  throw StateError('Unexpected subclass');
+
+}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -191,7 +197,7 @@ return $default(_that.missingInCode,_that.unsupportedByCanteen);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Features> missingInCode,  List<Features> unsupportedByCanteen)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'missing_in_code')  Set<Features> missingInCode, @JsonKey(name: 'unsupported_by_canteen')  Set<Features> unsupportedByCanteen)?  $default,) {final _that = this;
 switch (_that) {
 case _FeatureSupport() when $default != null:
 return $default(_that.missingInCode,_that.unsupportedByCanteen);case _:
@@ -206,27 +212,13 @@ return $default(_that.missingInCode,_that.unsupportedByCanteen);case _:
 @JsonSerializable()
 
 class _FeatureSupport implements FeatureSupport {
-  const _FeatureSupport({final  List<Features> missingInCode = const [], final  List<Features> unsupportedByCanteen = const []}): _missingInCode = missingInCode,_unsupportedByCanteen = unsupportedByCanteen;
+   _FeatureSupport({@JsonKey(name: 'missing_in_code') this.missingInCode = const {}, @JsonKey(name: 'unsupported_by_canteen') this.unsupportedByCanteen = const {}});
   factory _FeatureSupport.fromJson(Map<String, dynamic> json) => _$FeatureSupportFromJson(json);
 
 /// Funkce nepodporované touto knihovnou
- final  List<Features> _missingInCode;
-/// Funkce nepodporované touto knihovnou
-@override@JsonKey() List<Features> get missingInCode {
-  if (_missingInCode is EqualUnmodifiableListView) return _missingInCode;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_missingInCode);
-}
-
+@override@JsonKey(name: 'missing_in_code') final  Set<Features> missingInCode;
 /// Funkce nepodporované instancí iCanteenu
- final  List<Features> _unsupportedByCanteen;
-/// Funkce nepodporované instancí iCanteenu
-@override@JsonKey() List<Features> get unsupportedByCanteen {
-  if (_unsupportedByCanteen is EqualUnmodifiableListView) return _unsupportedByCanteen;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_unsupportedByCanteen);
-}
-
+@override@JsonKey(name: 'unsupported_by_canteen') final  Set<Features> unsupportedByCanteen;
 
 /// Create a copy of FeatureSupport
 /// with the given fields replaced by the non-null parameter values.
@@ -241,12 +233,12 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeatureSupport&&const DeepCollectionEquality().equals(other._missingInCode, _missingInCode)&&const DeepCollectionEquality().equals(other._unsupportedByCanteen, _unsupportedByCanteen));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeatureSupport&&const DeepCollectionEquality().equals(other.missingInCode, missingInCode)&&const DeepCollectionEquality().equals(other.unsupportedByCanteen, unsupportedByCanteen));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_missingInCode),const DeepCollectionEquality().hash(_unsupportedByCanteen));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(missingInCode),const DeepCollectionEquality().hash(unsupportedByCanteen));
 
 @override
 String toString() {
@@ -261,7 +253,7 @@ abstract mixin class _$FeatureSupportCopyWith<$Res> implements $FeatureSupportCo
   factory _$FeatureSupportCopyWith(_FeatureSupport value, $Res Function(_FeatureSupport) _then) = __$FeatureSupportCopyWithImpl;
 @override @useResult
 $Res call({
- List<Features> missingInCode, List<Features> unsupportedByCanteen
+@JsonKey(name: 'missing_in_code') Set<Features> missingInCode,@JsonKey(name: 'unsupported_by_canteen') Set<Features> unsupportedByCanteen
 });
 
 
@@ -280,9 +272,9 @@ class __$FeatureSupportCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? missingInCode = null,Object? unsupportedByCanteen = null,}) {
   return _then(_FeatureSupport(
-missingInCode: null == missingInCode ? _self._missingInCode : missingInCode // ignore: cast_nullable_to_non_nullable
-as List<Features>,unsupportedByCanteen: null == unsupportedByCanteen ? _self._unsupportedByCanteen : unsupportedByCanteen // ignore: cast_nullable_to_non_nullable
-as List<Features>,
+missingInCode: null == missingInCode ? _self.missingInCode : missingInCode // ignore: cast_nullable_to_non_nullable
+as Set<Features>,unsupportedByCanteen: null == unsupportedByCanteen ? _self.unsupportedByCanteen : unsupportedByCanteen // ignore: cast_nullable_to_non_nullable
+as Set<Features>,
   ));
 }
 

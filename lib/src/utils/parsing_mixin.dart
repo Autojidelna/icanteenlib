@@ -232,7 +232,7 @@ mixin ParsingMixin {
 
   @protected
   Jidlo $parsePrihlasenyJidlo(dom.Element obed, List<Burza> burza) {
-    // TODO: nahradit
+    // TODO: Nahradit a Pridat podporu pro vydejny, jinak bude burza blbnout
     Burza? ziskejJidloZBurzy(DateTime datum, String varianta) {
       for (Burza burzaJidlo in burza) {
         if (burzaJidlo.datum == datum && burzaJidlo.varianta == varianta) return burzaJidlo;
@@ -458,5 +458,46 @@ mixin ParsingMixin {
 
   List<dom.Element> $parseJidloWrapperElements(dom.Document dokument) {
     return dokument.querySelectorAll('.jidelnicekItemWrapper');
+  }
+
+  Features? _mapFeatureFromText(String text) {
+    final String clean = text.intrusiveTrim().toLowerCase();
+    if (clean.contains('burzy jídel')) return Features.burza;
+    if (clean.contains('hodnocení')) return Features.hodnoceni;
+    if (clean.contains('či na měsíc')) return Features.specifickyJidelnicek;
+    if (clean.contains('alergen')) return Features.alergeny;
+    if (clean.contains('individuální')) return Features.uzivatelskeUdaje;
+    if (clean.contains('více kusů')) return Features.objednavatViceJidel;
+    if (clean.contains('vícejazyč')) return Features.viceJazycnost;
+    if (clean.contains('jinou výdejnu')) return Features.viceVydejen;
+
+    return null;
+  }
+
+  Set<Features> $parseFeatures(dom.Document dokument) {
+    dom.Element? checklist = dokument.querySelector('.tickList');
+    if (checklist == null) return {Features.help};
+
+    // Vynecháme vnořené seznamy
+    final topLevelList = checklist.children.where((el) => el.localName == 'li');
+
+    Set<Features> unsupportedFeatures = {};
+
+    for (final li in topLevelList) {
+      final text = li.text.intrusiveTrim();
+
+      // Najdeme ikonu
+      final icon = li.querySelector('i');
+      final classes = icon?.classes ?? {};
+
+      final bool isSupported = classes.contains('fa-check');
+
+      final feature = _mapFeatureFromText(text);
+
+      if (feature == null) continue;
+      if (isSupported) continue;
+      unsupportedFeatures.add(feature);
+    }
+    return unsupportedFeatures;
   }
 }

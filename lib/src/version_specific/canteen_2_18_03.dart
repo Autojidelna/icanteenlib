@@ -9,10 +9,6 @@ class Canteen2v18v03 extends BaseCanteen {
   String get verzeKnihovny => "2.18.03";
 
   @override
-  // TODO: implement featureSupport
-  FeatureSupport get featureSupport => FeatureSupport(unsupportedByCanteen: [Features.objednavatViceJidel, Features.vydejny]);
-
-  @override
   Future<http.Response> _loginPostRequest(PrihlasovaciUdaje udaje) async {
     return await http.post(
       Uri.parse("$url/j_spring_security_check"),
