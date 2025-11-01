@@ -26,10 +26,13 @@ DateTime date = DateTime(2025, 11, 4);
 
 String alergenyFalseNegativeReason =
     '''
-Zkontrolujte, zda vaše jídelna využívá funkci alergenů, 
-nekteré jídelny mají funkci zakoupenou, ale nevyužívají ji.
-Na verzích >= 2.15.x by měli být dostupné funkce vypsané 
-na adrese "${(DotEnv(includePlatformEnvironment: true)..load())["URL"]}/help" v sekci Přehled funkcí
+${'\x1B[33m'}Zkontrolujte, zda Vaše jídelna využívá funkci alergenů, 
+${'\x1B[33m'}některé jídelny mají funkci dostupnou, ale nevyužívají ji.
+${'\x1B[33m'}Na verzích iCanteen >= 2.15.x by měli být dostupné funkce vypsané 
+${'\x1B[33m'}na adrese ${'\x1B[34m'}${(DotEnv(includePlatformEnvironment: true)..load())["URL"]}/help${'\x1B[33m'} v sekci Přehled funkcí.
+${'\x1B[33m'}Pokud Vaše jídelna alergeny podporuje a v rozhraní webovévo iCanteenu 
+${'\x1B[33m'}nevidíte seznam alergenů, můžete tento error ignorovat.
+${'\x1B[0m'}
 ''';
 
 Future<UzivatelskeUdaje> ziskatUzivatele() async {
@@ -104,7 +107,7 @@ void main() {
   test('Získání instance', () async {
     envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
     canteenInstance ??= await Canteen.create(envSecrets!["URL"]!);
-    print('--Nepodporované funkce--------------------');
+    print('--${'Nepodporované funkce'.padRight(40, '-')}');
     for (Features feature in canteenInstance!.featureSupport.unsupportedByCanteen) {
       print('$feature');
     }
@@ -124,7 +127,7 @@ void main() {
     print('polévka: ${jidelnicky[0].nabidka[0].slozeniJidla!.polevka}');
     print('Salátový bar: ${jidelnicky[0].nabidka[0].slozeniJidla!.salatovyBar}');
     print('ostatní: ${jidelnicky[0].nabidka[0].slozeniJidla!.ostatni}');
-    print('--Alergeny--');
+    if (jidelnicky[0].nabidka[0].alergeny.isNotEmpty) print('--Alergeny--');
     for (Alergen alergen in jidelnicky[0].nabidka[0].alergeny) {
       print('${alergen.nazev}: ${alergen.popis}');
     }
@@ -157,7 +160,6 @@ void main() {
         await prihlasitSe();
         if (canteenInstance!.featureSupport.unsupportedByCanteen.contains(Features.specifickyJidelnicek)) return;
         await ziskatJidelnicek();
-        print((await jidelnicek!).nabidka[0].nazev);
         expect((await jidelnicek!).nabidka[0].nazev.isNotEmpty, true);
       });
 
@@ -179,13 +181,17 @@ void main() {
         await prihlasitSe();
         if (canteenInstance!.featureSupport.unsupportedByCanteen.contains(Features.specifickyJidelnicek)) return;
         await ziskatJidelnicek();
-        print('--Jídelníček------------------------------');
+        print('--${'Jídelníček'.padRight(40, '-')}');
         print('Jídlo: ${(await jidelnicek!).nabidka[0].nazev}');
         print('Hlavní jídlo: ${(await jidelnicek!).nabidka[0].slozeniJidla!.hlavniChod}');
         print('pití: ${(await jidelnicek!).nabidka[0].slozeniJidla!.piti}');
         print('polévka: ${(await jidelnicek!).nabidka[0].slozeniJidla!.polevka}');
         print('Salátový bar: ${(await jidelnicek!).nabidka[0].slozeniJidla!.salatovyBar}');
         print('ostatní: ${(await jidelnicek!).nabidka[0].slozeniJidla!.ostatni}');
+        if ((await jidelnicek!).nabidka[0].alergeny.isNotEmpty) print('--Alergeny--');
+        for (Alergen alergen in (await jidelnicek!).nabidka[0].alergeny) {
+          print('${alergen.nazev}: ${alergen.popis}');
+        }
         print('------------------------------------------\n');
         expect((await jidelnicek!).nabidka[0].slozeniJidla!.hlavniChod!.isNotEmpty, true);
       });
@@ -194,7 +200,15 @@ void main() {
         if (canteenInstance!.featureSupport.unsupportedByCanteen.contains(Features.specifickyJidelnicek)) return;
         if (canteenInstance!.featureSupport.unsupportedByCanteen.contains(Features.alergeny)) return;
         await ziskatJidelnicek();
-        expect((await jidelnicek!).nabidka[0].alergeny.isNotEmpty, true, reason: alergenyFalseNegativeReason);
+        bool alergeny = false;
+        for (int k = 0; k < (await jidelnicek!).nabidka.length; k++) {
+          if ((await jidelnicek!).nabidka[k].alergeny.isNotEmpty) {
+            alergeny = true;
+            break;
+          }
+          if (alergeny) break;
+        }
+        expect(alergeny, true, reason: alergenyFalseNegativeReason.trim());
       });
 
       test('Jídelníček toJson() a fromJson()', () async {
@@ -252,13 +266,17 @@ void main() {
         if (canteenInstance!.featureSupport.unsupportedByCanteen.contains(Features.viceVydejen)) return;
         if (canteenInstance!.featureSupport.unsupportedByCanteen.contains(Features.specifickyJidelnicek)) return;
         await ziskatDruhaVydejnaJidelnicek();
-        print('--Jídelníček------------------------------');
+        print('--${'Jídelníček'.padRight(40, '-')}');
         print('Jídlo: ${(await jidelnicek!).nabidka[0].nazev}');
         print('Hlavní jídlo: ${(await jidelnicek!).nabidka[0].slozeniJidla!.hlavniChod}');
         print('pití: ${(await jidelnicek!).nabidka[0].slozeniJidla!.piti}');
         print('polévka: ${(await jidelnicek!).nabidka[0].slozeniJidla!.polevka}');
         print('Salátový bar: ${(await jidelnicek!).nabidka[0].slozeniJidla!.salatovyBar}');
         print('ostatní: ${(await jidelnicek!).nabidka[0].slozeniJidla!.ostatni}');
+        if ((await jidelnicek!).nabidka[0].alergeny.isNotEmpty) print('--Alergeny--');
+        for (Alergen alergen in (await jidelnicek!).nabidka[0].alergeny) {
+          print('${alergen.nazev}: ${alergen.popis}');
+        }
         print('------------------------------------------\n');
 
         expect((await jidelnicek!).nabidka[0].slozeniJidla!.hlavniChod!.isNotEmpty, true);
@@ -313,13 +331,17 @@ void main() {
         await prihlasitSe();
         if (canteenInstance!.featureSupport.unsupportedByCanteen.contains(Features.vsechnyJidelnicky)) return;
         await ziskatJidelnicekMesic();
-        print('--Jídelníček------------------------------');
+        print('--${'Jídelníček'.padRight(40, '-')}');
         print('Jídlo: ${(await jidelnicekMesic!)[0].nabidka[0].nazev}');
         print('Hlavní jídlo: ${(await jidelnicekMesic!)[0].nabidka[0].slozeniJidla!.hlavniChod}');
         print('pití: ${(await jidelnicekMesic!)[0].nabidka[0].slozeniJidla!.piti}');
         print('polévka: ${(await jidelnicekMesic!)[0].nabidka[0].slozeniJidla!.polevka}');
         print('Salátový bar: ${(await jidelnicekMesic!)[0].nabidka[0].slozeniJidla!.salatovyBar}');
         print('ostatní: ${(await jidelnicekMesic!)[0].nabidka[0].slozeniJidla!.ostatni}');
+        if ((await jidelnicek!).nabidka[0].alergeny.isNotEmpty) print('--Alergeny--');
+        for (Alergen alergen in (await jidelnicek!).nabidka[0].alergeny) {
+          print('${alergen.nazev}: ${alergen.popis}');
+        }
         print('------------------------------------------\n');
         expect((await jidelnicekMesic!)[0].nabidka[0].slozeniJidla!.hlavniChod!.isNotEmpty, true);
       });
@@ -338,7 +360,7 @@ void main() {
           }
           if (alergeny) break;
         }
-        expect(alergeny, true, reason: alergenyFalseNegativeReason);
+        expect(alergeny, true, reason: alergenyFalseNegativeReason.trim());
       });
     });
 
