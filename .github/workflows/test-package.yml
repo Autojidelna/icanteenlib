@@ -149,11 +149,11 @@ jobs:
       #  run: dart test
 
       # Testing pro obedy.zs-mat5.cz
-      #- name: Credentials pro obedy.zs-mat5.cz
-      #  run: |
-      #    echo "URL= 'obedy.zs-mat5.cz'" > .env
-      #    echo "USER= '${{ secrets.ZS_MAT_USER }}'" >> .env
-      #    echo "PASS= '${{ secrets.ZS_MAT_PASS }}'" >> .env
+      - name: Credentials pro obedy.zs-mat5.cz
+        run: |
+          echo "URL= 'obedy.zs-mat5.cz'" > .env
+          echo "USER= '${{ secrets.ZS_MAT_USER }}'" >> .env
+          echo "PASS= '${{ secrets.ZS_MAT_PASS }}'" >> .env
 
       #- name: Test pro obedy.zs-mat5.cz
       #  run: dart test
