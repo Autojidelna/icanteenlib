@@ -411,7 +411,7 @@ mixin ParsingMixin {
     }
 
     (int, String)? vydejna;
-    if (vydejnaNazev != null && vydejny.containsValue(vydejnaNazev)) {
+    if (vydejnaNazev != null) {
       final int key = vydejny.keys.firstWhere(
         (k) => vydejny[k] == vydejnaNazev,
         orElse: () => 0, // optional, if value may not exist
