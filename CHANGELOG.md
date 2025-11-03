@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.1
+
+- Opraven bug, kdy `stavUctu.vydejna == null`, když `stavUctu.vydejny` neobsahují `stavUctu.vydejna`
+- Nastavit `stavUctuStream` na synchronní
+
 ## 5.0.0
 
 - Generované soubory se nyní pokaždé generují do `generated` složky

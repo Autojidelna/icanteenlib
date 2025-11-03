@@ -25,7 +25,7 @@ abstract class Canteen with HttpMixin, ParsingMixin {
   bool get $uzivatelPrihlasen;
 
   StavUctu? _stavUctu;
-  final _stavUctuController = StreamController<StavUctu?>.broadcast();
+  final _stavUctuController = StreamController<StavUctu?>.broadcast(sync: true);
 
   /// Stream, na kterém se dají poslouchat změny stavu účtu
   Stream<StavUctu?> get stavUctuStream => _stavUctuController.stream;
