@@ -45,7 +45,7 @@ abstract class BaseCanteen extends Canteen {
   String _objednejJidloPath(Jidlo jidlo, int pocetDoBurzy) => throw UnimplementedError();
 
   Future<void> _firstSessionCheck() async {
-    if (_cookies["JSESSIONID"] == "" || _cookies["XSRF-TOKEN"] == "") {
+    if ((_cookies["JSESSIONID"] ?? "").isEmpty || (_cookies["XSRF-TOKEN"] ?? "").isEmpty) {
       try {
         await $getFirstSession(url, _cookies);
       } catch (e) {
