@@ -379,7 +379,7 @@ mixin ParsingMixin {
 
           UzivatelskeUdajeKeys? field;
           try {
-            field = UzivatelskeUdajeKeys.values.firstWhere((f) => f.toString() == normalized);
+            field = UzivatelskeUdajeKeys.values.firstWhere((f) => f.name == normalized);
           } catch (e) {
             field = null; // unknown label, skip
           }
