@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.2
+
+- Oprava podmínek errorů v metodě `provedObjednavku()`, která blokovala objednávání objedů
+
 ## 5.0.1
 
 - Opraven bug, kdy `stavUctu.vydejna == null`, když `stavUctu.vydejny` neobsahují `stavUctu.vydejna`
