@@ -44,6 +44,8 @@ class Canteen2v18v03 extends BaseCanteen {
 
   @override
   String _objednejJidloPath(Jidlo jidlo, int pocetDoBurzy) {
+    if (pocetDoBurzy < 1 && jidlo.url!.endsWith("amount=")) throw Exception(CanteenLibExceptions.meneNezJedenKus);
+
     String? finalUrl = (jidlo.stav == StavJidla.objednanoPouzeNaBurzu && jidlo.url!.endsWith("amount=")) ? "${jidlo.url}$pocetDoBurzy" : jidlo.url;
     if (finalUrl == null) throw Exception(CanteenLibExceptions.neplatneUrl);
 
