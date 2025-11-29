@@ -239,7 +239,7 @@ abstract class BaseCanteen extends Canteen {
   Future<Jidelnicek> provedObjednavku(Jidlo jidlo, {int pocetDoBurzy = 1}) async {
     if (!_uzivatelPrihlasen) throw Exception(CanteenLibExceptions.jePotrebaSePrihlasit);
 
-    if (jidlo.url != null && jidlo.stav.muzesObjednat()) throw Exception(CanteenLibExceptions.jidloNelzeObjednat);
+    if (jidlo.url == null || !jidlo.stav.muzesObjednat()) throw Exception(CanteenLibExceptions.jidloNelzeObjednat);
 
     String res;
     try {
