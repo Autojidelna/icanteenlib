@@ -1,5 +1,6 @@
 /*
-Před testováním vytvořte .env soubor v rootu projektu
+Před testováním vytvořte .env soubor v rootu projektu 
+nebo zkopírujte a přejmenujte soubor .env.example
 
 TEMPLATE .env:
 URL=jidelna.example.cz
