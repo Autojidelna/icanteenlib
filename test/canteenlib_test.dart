@@ -5,6 +5,8 @@ TEMPLATE .env:
 URL=jidelna.example.cz
 USER=USERNAME
 PASS=HESLO
+ALRG=<TRUE/FALSE>
+
 
 Poté můžete spustit tento soubor
 */
@@ -23,6 +25,7 @@ Future<Jidelnicek>? druhaVydejnaJidelnicek;
 Future<List<Jidelnicek>>? jidelnicekMesic;
 Future<UzivatelskeUdaje>? uzivatel;
 DateTime date = DateTime(2025, 11, 4);
+bool? preskocitAlergeny;
 
 String alergenyFalseNegativeReason =
     '''
@@ -31,7 +34,8 @@ ${'\x1B[33m'}některé jídelny mají funkci dostupnou, ale nevyužívají ji.
 ${'\x1B[33m'}Na verzích iCanteen >= 2.15.x by měli být dostupné funkce vypsané 
 ${'\x1B[33m'}na adrese ${'\x1B[34m'}${(DotEnv(includePlatformEnvironment: true)..load())["URL"]}/help${'\x1B[33m'} v sekci Přehled funkcí.
 ${'\x1B[33m'}Pokud Vaše jídelna alergeny podporuje a v rozhraní webovévo iCanteenu 
-${'\x1B[33m'}nevidíte seznam alergenů, můžete tento error ignorovat.
+${'\x1B[33m'}nevidíte seznam alergenů, můžete tento error ignorovat a nastavit hodnotu 
+${'\x1B[33m'}"ALRG" v .env souboru na "FALSE".
 ${'\x1B[0m'}
 ''';
 
@@ -42,12 +46,14 @@ Future<UzivatelskeUdaje> ziskatUzivatele() async {
 
 Future<StavUctu> _ziskejStavUctu() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
+  preskocitAlergeny ??= envSecrets!["ALRG"]! == 'FALSE';
   canteenInstance ??= await Canteen.create(envSecrets!["URL"]!);
   return canteenInstance!.aktualizujStavUctu();
 }
 
 Future<UzivatelskeUdaje> _ziskatUzivatele() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
+  preskocitAlergeny ??= envSecrets!["ALRG"]! == 'FALSE';
   canteenInstance ??= await Canteen.create(envSecrets!["URL"]!);
   return canteenInstance!.ziskejUzivatelskeUdaje();
 }
@@ -59,6 +65,7 @@ Future<Jidelnicek> ziskatJidelnicek() async {
 
 Future<Jidelnicek> _ziskatJidelnicek() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
+  preskocitAlergeny ??= envSecrets!["ALRG"]! == 'FALSE';
   canteenInstance ??= await Canteen.create(envSecrets!["URL"]!);
   DateTime funkcniDatum = date;
   //canteenInstance!.vydejna = 1;
@@ -72,6 +79,7 @@ Future<Jidelnicek> ziskatDruhaVydejnaJidelnicek() async {
 
 Future<Jidelnicek> _ziskatDruhaVydejnaJidelnicek() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
+  preskocitAlergeny ??= envSecrets!["ALRG"]! == 'FALSE';
   canteenInstance ??= await Canteen.create(envSecrets!["URL"]!);
   DateTime funkcniDatum = date;
   await canteenInstance!.aktualizujStavUctu();
@@ -86,6 +94,7 @@ Future<List<Jidelnicek>> ziskatJidelnicekMesic() async {
 
 Future<List<Jidelnicek>> _ziskatJidelnicekMesic() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
+  preskocitAlergeny ??= envSecrets!["ALRG"]! == 'FALSE';
   canteenInstance ??= await Canteen.create(envSecrets!["URL"]!);
   List<Jidelnicek> jidelnickyProMesic = await canteenInstance!.vsechnyJidelnicky();
   return jidelnickyProMesic;
@@ -98,6 +107,7 @@ Future<bool> prihlasitSe() async {
 
 Future<bool> _prihlasitSe() async {
   envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
+  preskocitAlergeny ??= envSecrets!["ALRG"]! == 'FALSE';
   canteenInstance ??= await Canteen.create(envSecrets!["URL"]!);
   if (canteenInstance!.$uzivatelPrihlasen) return true;
   return await canteenInstance!.login(envSecrets!["USER"]!, envSecrets!["PASS"]!);
@@ -106,6 +116,7 @@ Future<bool> _prihlasitSe() async {
 void main() {
   test('Získání instance', () async {
     envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
+    preskocitAlergeny ??= envSecrets!["ALRG"]! == 'FALSE';
     canteenInstance ??= await Canteen.create(envSecrets!["URL"]!);
     print('--${'Nepodporované funkce'.padRight(40, '-')}');
     for (Features feature in canteenInstance!.featureSupport.unsupportedByCanteen) {
@@ -117,6 +128,7 @@ void main() {
 
   test('Veřejný jídelníček', () async {
     envSecrets ??= DotEnv(includePlatformEnvironment: true)..load();
+    preskocitAlergeny ??= envSecrets!["ALRG"]! == 'FALSE';
     canteenInstance ??= await Canteen.create(envSecrets!["URL"]!);
     List<Jidelnicek> jidelnicky = await canteenInstance!.verejneJidelnicky();
 
@@ -208,7 +220,7 @@ void main() {
           }
           if (alergeny) break;
         }
-        expect(alergeny, true, reason: alergenyFalseNegativeReason.trim());
+        expect(alergeny, true, reason: alergenyFalseNegativeReason.trim(), skip: preskocitAlergeny);
       });
 
       test('Jídelníček toJson() a fromJson()', () async {
@@ -287,7 +299,7 @@ void main() {
         if (canteenInstance!.featureSupport.unsupportedByCanteen.contains(Features.specifickyJidelnicek)) return;
         if (canteenInstance!.featureSupport.unsupportedByCanteen.contains(Features.alergeny)) return;
         await ziskatDruhaVydejnaJidelnicek();
-        expect((await jidelnicek!).nabidka[0].alergeny.isNotEmpty, true);
+        expect((await jidelnicek!).nabidka[0].alergeny.isNotEmpty, true, skip: preskocitAlergeny);
       });
     });
 
@@ -360,7 +372,7 @@ void main() {
           }
           if (alergeny) break;
         }
-        expect(alergeny, true, reason: alergenyFalseNegativeReason.trim());
+        expect(alergeny, true, reason: alergenyFalseNegativeReason.trim(), skip: preskocitAlergeny);
       });
     });
 

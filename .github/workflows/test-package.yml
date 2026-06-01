@@ -138,12 +138,14 @@ jobs:
       - name: Analyze project source
         run: dart analyze --fatal-infos
 
+      # REASON: Lost access
       # Testing pro jidelna.trebesin.cz
       #- name: Credentials pro jidelna.trebesin.cz
       #  run: |
       #    echo "URL= 'jidelna.trebesin.cz'" > .env
       #    echo "USER= '${{ secrets.TREBESIN_USER }}'" >> .env
       #    echo "PASS= '${{ secrets.TREBESIN_PASS }}'" >> .env
+      #    echo "ALRG= '${{ secrets.TREBESIN_ALRG }}'" >> .env
 
       #- name: test pro jidelna.trebesin.cz
       #  run: dart test
@@ -154,6 +156,7 @@ jobs:
           echo "URL= 'obedy.zs-mat5.cz'" > .env
           echo "USER= '${{ secrets.ZS_MAT_USER }}'" >> .env
           echo "PASS= '${{ secrets.ZS_MAT_PASS }}'" >> .env
+          echo "ALRG= '${{ secrets.ZS_MAT_ALRG }}'" >> .env
 
       #- name: Test pro obedy.zs-mat5.cz
       #  run: dart test
@@ -164,6 +167,7 @@ jobs:
           echo "URL= 'obedy.stavebkakolin.cz'" > .env
           echo "USER= '${{ secrets.STAV_KOLIN_USER }}'" >> .env
           echo "PASS= '${{ secrets.STAV_KOLIN_PASS }}'" >> .env
+          echo "ALRG= '${{ secrets.STAV_KOLIN_ALRG }}'" >> .env
 
       - name: Test pro obedy.stavebkakolin.cz
         run: dart test
@@ -175,6 +179,7 @@ jobs:
       #    echo "URL= 'jidelna.cza-hu.cz'" > .env
       #    echo "USER= '${{ secrets.CZA_HU_USER }}'" >> .env
       #    echo "PASS= '${{ secrets.CZA_HU_PASS }}'" >> .env
+      #    echo "ALRG= '${{ secrets.CZA_HU_ALRG }}'" >> .env
 
       #- name: Test pro jidelna.cza-hu.cz
       #  run: dart test
