@@ -3,6 +3,8 @@
 ## 5.0.3
 
 - Oprava porovnávání jmen polí ve funkci `$parseUzivatelskeUdaje()`, kdy se místo `UzivatelskeUdajeKeys.toString()` používalo `UzivatelskeUdajeKeys.name`
+- Přidání `.env.example`
+- Přidání pole `ALRG` do `.env` soboru pro přeskakování testů na alergeny, pokud jídelna nepoužívá/nepodporuje alergeny
 
 ## 5.0.2
 
