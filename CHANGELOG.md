@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.3
+
+- Oprava porovnávání jmen polí ve funkci `$parseUzivatelskeUdaje()`, kdy se místo `UzivatelskeUdajeKeys.toString()` používalo `UzivatelskeUdajeKeys.name`
+
 ## 5.0.2
 
 - Oprava podmínek errorů v metodě `provedObjednavku()`, která blokovala objednávání objedů

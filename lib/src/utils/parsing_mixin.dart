@@ -376,10 +376,9 @@ mixin ParsingMixin {
         if (directTextNodes.contains(':')) {
           final String label = directTextNodes.split(':').first.trim();
           final String normalized = label.normalize();
-
           UzivatelskeUdajeKeys? field;
           try {
-            field = UzivatelskeUdajeKeys.values.firstWhere((f) => f.name == normalized);
+            field = UzivatelskeUdajeKeys.values.firstWhere((f) => f.toString() == normalized);
           } catch (e) {
             field = null; // unknown label, skip
           }

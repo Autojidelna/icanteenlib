@@ -3,7 +3,7 @@ extension StringUtils on String {
     const map = {
       'á': 'a', // á
       'Á': 'A',
-      'č': 'c', // ć
+      'č': 'c', // č
       'Č': 'C',
       'ď': 'd', // ď
       'Ď': 'D',
